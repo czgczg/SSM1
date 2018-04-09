@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd
+          http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<context:component-scan base-package="com.wangdao"/>
+
+
+    <mvc:annotation-driven />
+
+    <!--Spring创建datasource-->
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="user" value="root"/>
+        <property name="password" value="aaa"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test"/>
+    </bean>
+
+    <!--spring如产生sqlsession-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="myDataSource"/>
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+    </bean>
+
+    <!--spring去用工厂根据接口产生dao的实例-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.wangdao."/>-->
+        <!--<property name="sqlSessionFactory"  ref="sqlSession"/>-->
+    <!--</bean>-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+    <!--<property name="mapperInterface" value="com.homework.czg.dao.UserDao"/>-->
+    <!--<property name="sqlSessionFactory"  ref="sqlSession"/>-->
+    <!--</bean>-->
+
+
+    <!--spring的事务管理-->
+    <tx:annotation-driven transaction-manager="txManager"/>
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="myDataSource"/>
+    </bean>
+
+
+
+
+    <!--&lt;!&ndash; 产生sqlsessionfactory &ndash;&gt;-->
+    <!--<bean id="mySqlSessionFactory" class="org.springframework.ib.spring.SqlSessionFactoryBean">-->
+    <!--<property name="dataSource" ref="dataSource" />-->
+    <!--<property name="configLocation" value="classpath:mybatis.xml" />-->
+
+    <!--&lt;!&ndash; 自动扫描mapper.xml文件 &ndash;&gt;-->
+    <!--<property name="mapperLocations" value="classpath:com/wechat/mapper/*.xml"></property>-->
+    <!--</bean>-->
+
+    <!--&lt;!&ndash; 自动生成dao层实现 &ndash;&gt;-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
+    <!--<property name="basePackage" value="com.wechat.dao" />-->
+    <!--<property name="sqlSessionFactoryBeanName" value="mySqlSessionFactory" />-->
+    <!--</bean>-->
+    <!---->
+    <!--&lt;!&ndash;文件上传解析器&ndash;&gt;-->
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">-->
+    <!--&lt;!&ndash;<property name="maxUploadSize" value="1024000"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="userDao" class="com.homework.czg.factory.DaoFactory" factory-method="getDaoInstance">-->
+    <!--</bean>-->
+
+    <!--<mvc:resources location="/WEB-INF/frontPage" mapping="/login.jsp"/>-->
+
+</beans>
