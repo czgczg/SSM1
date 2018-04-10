@@ -49,13 +49,13 @@
             <div class="control-group">
               <label class="control-label">用户名</label>
               <div class="controls">
-                <input name="userName" type="text">
+                <input name="userName" type="text""${admin.userName}">
               </div>
             </div>
              <div class="control-group">
               <label class="control-label">密码</label>
               <div class="controls">
-                <input name="password" type="password">
+                <input name="password" type="password" value="${admin.password}">
               </div>
             </div>
           </form>
