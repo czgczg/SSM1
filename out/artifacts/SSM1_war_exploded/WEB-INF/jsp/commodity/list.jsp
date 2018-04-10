@@ -23,11 +23,13 @@
   <link href="${ctx}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">  <!-- start 响应式布局要添加的 -->
   <link rel="stylesheet" href="${ctx}/css/amazeui.min.css" type="text/css"></link>
   <script src="${ctx}/bootstrap/js/jquery-3.1.1.min.js"></script>
+
+	  <%--<script type="text/javascript" src="https://www.imooc.com/static/lib/jquery/1.9.1/jquery.js"></script>--%>
   <script src="${ctx}/bootstrap/js/bootstrap.js"></script>
   <script type="text/javascript" src="${ctx}/js/page.js"></script>
   <script type="text/javascript" src="${ctx }/js/layer/layer.js"></script>
   <script type="text/javascript" src="${ctx }/js/amazeui.min.js"></script>
-  
+
    <style>
    
    .container{
@@ -99,7 +101,7 @@
        </div>
        <div class="span2">
          <button class="btn btn-info btn-small textone" type="button" onclick="addfunction()"><li class="icon-plus icon-white"></li>新增</button>
-       </div>
+	   </div>
        <div class="span2">
          <button class="btn btn-warning btn-small textone" type="button" onclick="updatefunction()"><li class="icon-pencil icon-white"></li>修改</button>
        </div>
@@ -166,10 +168,12 @@
     <br>
     <div class="dgvone" style="margin-top:-18px;width:267px;height:443px;overflow:scroll;">
        <table class="table table-condensed table-bordered table-striped" id="tableid" style="width: 250px;height: 20px;">
+
 	      <thead class="theadone">
 	        <tr>
 	          <th rowspan="2">选择</th>
 	          <th rowspan="2">商品名称</th>
+
 	      </thead>
 	      <tbody id="tbody">
 	        <c:forEach items="${listOne}" var="item">
@@ -180,7 +184,9 @@
 	        </c:forEach>
 	      </tbody>
 	    </table>
-    </div>
+
+
+	</div>
   </div>
  
   <div/>   
@@ -188,12 +194,13 @@
 <div/>
 </div>
 <div/>
- 
- 
+
  <script type="text/javascript">
    function addfunction(){
+       alert(111);
      parent.document.getElementById('Mainid').src='${ctx}/Commodity/toadd.do';
    }
+
    
    function updatefunction(){
    var chk_value=[];

@@ -19,6 +19,9 @@
     -->
     commodityMeasurementId, commodityMeasurementName, del_flag
   </sql>
+  <select id="getAllCommoditymeasurement" resultType="commoditymeasurement">
+    SELECT * FROM commoditymeasurement where del_flag=0;
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     <!--
       WARNING - @mbg.generated

@@ -162,7 +162,7 @@
 	      <div class="row-fluid">
 		      <div class="span5">
 			   	  <label class="labelroomnumber">商品名称：</label>
-			      <input id="commodityNameId" name="commodityName" class="textone inputone"
+			      <input id="commodityNameId" name="commodityname" class="textone inputone"
 			       style="height:26px;" type="text" onchange="onchangeOne()" onblur="YZ(this.value)">
 			      <div id="divOne">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -170,10 +170,10 @@
 			  </div> 
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">商品类别：</label>
-			      <select name="commodityTypeID" class="cboone inputone">
+			      <select name="commoditytypeid" class="cboone inputone">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==16}" >selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+			          <option value="${item.commoditytypeid}" <c:if test="${item.commoditytypeid==16}" >selected="selected"</c:if>>
+			            ${item.commoditytypename}
 			          </option>
 			        </c:forEach> 
 		          </select>
@@ -187,7 +187,7 @@
                   <div class="input-prepend" style="float:left;">
 			        <span class="add-on" style="margin-top: 12px; height: 16px;">&yen;</span>
 			      </div>
-			      <input id="salePriceId" name="salePrice" class="textone inputthree radiusone" onchange="onchangeOne()" 
+			      <input id="salePriceId" name="commodityprice" class="textone inputthree radiusone" onchange="onchangeOne()"
 			      style="float:left;border-radius:0px; border-top-right-radius:4px; border-bottom-right-radius:4px; height:26px;" type="text">
 			      <div id="divTwo">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -195,10 +195,10 @@
 			  </div> 
 			  <div class="span5">
 			   	  <label class="labelroomnumber">计量单位：</label>
-			      <select name="uOMID" class="cboone inputone">
+			      <select name="commoditymeasurementid" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==57}">selected="selected"</c:if>>
-			            ${item.attributeDetailsName}
+			          <option value="${item.commoditymeasurementid}" <c:if test="${item.commoditymeasurementid==57}">selected="selected"</c:if>>
+			            ${item.commoditymeasurementname}
 			          </option>
 			        </c:forEach> 
 		          </select>

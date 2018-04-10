@@ -198,4 +198,16 @@ public class Commodity {
     public void setDelFlag(Integer delFlag) {
         this.delFlag = delFlag;
     }
+
+    @Override
+    public String toString() {
+        return "Commodity{" +
+                "commodityid=" + commodityid +
+                ", commodityname='" + commodityname + '\'' +
+                ", commoditytypeid=" + commoditytypeid +
+                ", commoditymeasurementid=" + commoditymeasurementid +
+                ", commodityprice=" + commodityprice +
+                ", delFlag=" + delFlag +
+                '}';
+    }
 }
