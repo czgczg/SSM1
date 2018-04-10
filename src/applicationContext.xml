@@ -14,7 +14,7 @@
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!--配置spring的注解扫描包-->
-    <context:component-scan base-package="com.wangdao"/>
+    <context:component-scan base-package="com.cskaoyan"/>
 
     <!--配置mvc注解扫描-->
     <mvc:annotation-driven />
@@ -35,7 +35,7 @@
 
     <!--spring去用工厂根据接口产生dao的实例-->
     <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-        <!--<property name="mapperInterface" value="com.wangdao."/>-->
+        <!--<property name="mapperInterface" value="com.cskaoyann."/>-->
         <!--<property name="sqlSessionFactory"  ref="sqlSession"/>-->
     <!--</bean>-->
     <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->

@@ -7,10 +7,10 @@
     <properties resource="dbcpconfig.properties"/>
     <!--给bean类下所有类取别名,结果集可以直接用小写表示-->
     <typeAliases>
-        <package name="com.wangdao.bean"/>
+        <package name="com.cskaoyan.bean"/>
     </typeAliases>
     <mappers>
         <!--扫描dao包下所有的接口，然后找到对应的接口的xml实现文件-->
-        <package name="com.wangdao.dao"/>
+        <package name="com.cskaoyan.dao"/>
     </mappers>
 </configuration>
