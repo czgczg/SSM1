@@ -6,9 +6,11 @@ import java.io.IOException;
 
 @WebFilter(filterName = "EncodingFilter",urlPatterns = "/*")
 public class EncodingFilter implements Filter {
+    @Override
     public void destroy() {
     }
 
+    @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         //解决post请求乱码，设置正文
         req.setCharacterEncoding("utf-8");
@@ -17,6 +19,7 @@ public class EncodingFilter implements Filter {
         chain.doFilter(req, resp);
     }
 
+    @Override
     public void init(FilterConfig config) throws ServletException {
 
     }
