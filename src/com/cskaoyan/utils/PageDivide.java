@@ -12,15 +12,15 @@ public class PageDivide<T>
 
     private  int totalCount;  //总记录数
 
-    private int currentPageNum;  //当前处于第几页. 请求参数里应该告诉后台要去显示的页码
+    private int currentPage;  //当前处于第几页. 请求参数里应该告诉后台要去显示的页码
 
-    private int totalPageNum; //总的页数
+    private int totalPage; //总的页数
 
     private  int prevPageNum;  //前一页
 
     private  int nextPageNum;  //后一页
 
-    private List<T>  records;
+    private List<T> result;
 
 
 
@@ -36,20 +36,20 @@ public class PageDivide<T>
         this.totalCount = totalCount;
     }
 
-    public int getCurrentPageNum() {
-        return currentPageNum;
+    public int getCurrentPage() {
+        return currentPage;
     }
 
-    public void setCurrentPageNum(int currentPageNum) {
-        this.currentPageNum = currentPageNum;
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
     }
 
-    public int getTotalPageNum() {
-        return totalPageNum;
+    public int getTotalPage() {
+        return totalPage;
     }
 
-    public void setTotalPageNum(int totalPageNum) {
-        this.totalPageNum = totalPageNum;
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
     }
 
     public int getPrevPageNum() {
@@ -68,17 +68,17 @@ public class PageDivide<T>
         this.nextPageNum = nextPageNum;
     }
 
-    public List<T> getRecords() {
-        return records;
+    public List<T> getResult() {
+        return result;
     }
 
-    public void setRecords(List<T> records) {
-        this.records = records;
+    public void setResult(List<T> result) {
+        this.result = result;
     }
 
     public void init(){
         int totalPageNum = totalCount % CAGEGORY_NUM_PER_PAGE == 0 ? totalCount / CAGEGORY_NUM_PER_PAGE : totalCount / CAGEGORY_NUM_PER_PAGE + 1;
-        this.setTotalPageNum(totalPageNum);
+        this.setTotalPage(totalPageNum);
         this.setNextPageNum(nextPageNum >= totalCount?nextPageNum:totalPageNum);
         this.setPrevPageNum(prevPageNum <= 1?1:prevPageNum);
     }

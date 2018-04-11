@@ -1,6 +1,9 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Roomset;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface RoomsetMapper {
     /**
@@ -50,4 +53,11 @@ public interface RoomsetMapper {
      * @mbg.generated Tue Apr 10 17:39:01 CST 2018
      */
     int updateByPrimaryKey(Roomset record);
+
+    /**
+     * 查找所有的roomset并返回
+     * @return
+     */
+    @Select("SELECT * FROM roomset")
+    List<Roomset> selectAllRoomset();
 }
