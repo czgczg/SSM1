@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
+@RequestMapping("/Login")
 @Controller
 public class AdminController {
 
@@ -19,7 +20,7 @@ public class AdminController {
     @Autowired
     AdminMapper adminMapper;
 
-    @GetMapping("Login/tologin")
+    @GetMapping("/tologin")
     public String tologin(){
         return "/WEB-INF/jsp/login/login.jsp";
     }
