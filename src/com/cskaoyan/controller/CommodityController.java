@@ -28,7 +28,7 @@ public class CommodityController {
     }
 
 
-    @PostMapping("Commodity/toadd")
+    @PostMapping("/toadd")
     public String commodityToAdd(HttpServletRequest request){
 
         ArrayList<Commoditytype> allCommoditytype = commodityService.getAllCommoditytype();
@@ -40,7 +40,7 @@ public class CommodityController {
     }
 
 
-    @PostMapping("Commodity/add")
+    @PostMapping("/add")
     public String commodityAdd(Commodity commodity, HttpServletRequest request){
         int i = commodityService.commodityAdd(commodity, request);
         return "/WEB-INF/jsp/commodity/list.jsp";
