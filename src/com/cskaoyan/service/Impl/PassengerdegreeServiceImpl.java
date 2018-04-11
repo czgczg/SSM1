@@ -6,6 +6,8 @@ import com.cskaoyan.service.PassengerdegreeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class PassengerdegreeServiceImpl implements PassengerdegreeService {
@@ -15,8 +17,8 @@ public class PassengerdegreeServiceImpl implements PassengerdegreeService {
 
 
     @Override
-    public Passengerdegree findall() {
-        Passengerdegree allPassengerdegree = passengerdegreeMapper.find();
+    public  List<Passengerdegree> findall() {
+        List<Passengerdegree> allPassengerdegree = passengerdegreeMapper.find();
         return allPassengerdegree;
     }
 }
