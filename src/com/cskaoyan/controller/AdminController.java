@@ -25,7 +25,7 @@ public class AdminController {
         return "/WEB-INF/jsp/login/login.jsp";
     }
 
-    @PostMapping("/tomain")
+    @PostMapping("/tomain.do")
     public String tomain(HttpServletRequest request){
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
