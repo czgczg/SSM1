@@ -233,26 +233,26 @@
 	}
 	
   }
-  
-  
+
   
    function selectChange(){
      var commodityTypeID=document.getElementById("selectCboId").value;
      parent.document.getElementById('Mainid').src='${ctx}/Commodity/tolist.do?commodityTypeID='+commodityTypeID;
    }
-  
-   
+
+
    /* 分页要用的 */
    $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPage}1,
+     current:${list.currentPage}1,
      backFn:function(p){
      var txtname=document.getElementById("txtnameid").value;
      var commodityTypeID=document.getElementById("selectCboId").value;
      location.href="${ctx}/Commodity/tolist.do?currentPage="+p+"&txtname="+txtname+"&commodityTypeID="+commodityTypeID;
      }
    });
-   
+
+
    function selectFunction(){
      var txtname=document.getElementById("txtnameid").value;
      var commodityTypeID=document.getElementById("selectCboId").value;

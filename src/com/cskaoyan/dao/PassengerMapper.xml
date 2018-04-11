@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cskaoyan.dao.PassengerMapper">
+
+
+  <select id="findPassengerByName" parameterType="string" resultType="passenger">
+
+    SELECT * from passenger WHERE NAME LIKE #{name}
+
+  </select>
+
+
+  <select id="findAllPassengerCount" resultType="passenger">
+    SELECT count(*) FROM passenger
+  </select>
+
+  <!--mybaits逆向工程自动生成的-->
   <resultMap id="BaseResultMap" type="com.cskaoyan.bean.Passenger">
     <!--
       WARNING - @mbg.generated

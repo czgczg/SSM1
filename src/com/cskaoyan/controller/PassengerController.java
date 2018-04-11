@@ -1,26 +1,35 @@
 package com.cskaoyan.controller;
 
+import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.service.PassengerService;
+import com.cskaoyan.utils.PageDivide;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-@RequestMapping("/Passenger")
+@RequestMapping("/passenger")
 @Controller
 public class PassengerController {
 
-    @GetMapping("/tolist")
+    @Autowired
+    PassengerService passengerService;
+
+    @RequestMapping("/tolist")
     public String roomsetToList(){
 
         return "/WEB-INF/jsp/passenger/list.jsp";
     }
 
 
-    @GetMapping("/toadd")
+    //
+
+    @RequestMapping("/toadd")
     public String passengerToAdd(HttpServletRequest request){
         HashMap<String,String> male = new HashMap<>(10);
         male.put("far_id","1");
@@ -58,5 +67,26 @@ public class PassengerController {
 
 
         return "/WEB-INF/jsp/passenger/add.jsp";
+    }
+
+
+
+    @PostMapping("/tolist.do")
+    public String findPassengerByName(HttpServletRequest request) {
+
+        String passenName = request.getParameter("txtname");
+
+        List<Passenger> passenger = passengerService.findPassengerByName(passenName);
+
+        PageDivide<Passenger> pageDivide = new PageDivide<>();
+
+        //获取所有旅客数量
+       int  totalCount= passengerService.findAllPassengerCount();
+
+       pageDivide.setTotalCount(totalCount);
+        pageDivide.init();
+
+        return null;
+
     }
 }
