@@ -17,18 +17,7 @@
     <context:component-scan base-package="com.cskaoyan"/>
 
     <!--配置mvc注解扫描-->
-    <!--<mvc:annotation-driven />-->
-    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
-
-    <!--日期注入配置-->
-    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="converters">
-            <set>
-                <bean class="com.cskaoyan.utils.MyDateConverter"/>
-            </set>
-        </property>
-    </bean>
-
+    <mvc:annotation-driven />
 
     <!--Spring创建datasource-->
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
