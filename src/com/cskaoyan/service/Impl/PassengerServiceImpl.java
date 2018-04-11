@@ -4,9 +4,11 @@ import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
