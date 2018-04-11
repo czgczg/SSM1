@@ -44,7 +44,7 @@
 
     <!--批量spring提供工厂根据接口获取接口的实现-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionF"/>
         <property name="basePackage" value="com.cskaoyan.dao"/>
     </bean>
 
