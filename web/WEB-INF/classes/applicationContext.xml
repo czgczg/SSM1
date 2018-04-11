@@ -34,11 +34,38 @@
     </bean>
 
 
-    <!--spring提供工厂根据接口批量获取接口的实现-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
         <property name="basePackage" value="com.cskaoyan.dao"/>
     </bean>
+
+    <!--spring提供工厂根据接口获取接口的实现-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.cskaoyan.dao.AdminMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSession"/>-->
+    <!--</bean>-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.cskaoyan.dao.CommoditytypeMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSession"/>-->
+    <!--</bean>-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.cskaoyan.dao.CommoditymeasurementMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSession"/>-->
+    <!--</bean>-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.cskaoyan.dao.CommodityMapper"/>-->
+        <!--<property name="sqlSessionFactory" ref="sqlSession"/>-->
+    <!--</bean>-->
+
+    <!--spring去用工厂根据接口产生dao的实例-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+        <!--<property name="mapperInterface" value="com.cskaoyann."/>-->
+        <!--<property name="sqlSessionFactory"  ref="sqlSession"/>-->
+    <!--</bean>-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperFactoryBean">-->
+    <!--<property name="mapperInterface" value="com.homework.czg.dao.UserDao"/>-->
+    <!--<property name="sqlSessionFactory"  ref="sqlSession"/>-->
+    <!--</bean>-->
 
 
     <!--spring的事务管理-->

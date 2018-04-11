@@ -9,6 +9,7 @@ public class ReceiveTargetController {
     @RequestMapping("ReceiveTarget/tolist")
     public String roomsetToList(){
 
+
         return "/WEB-INF/jsp/receivetarget/list.jsp";
     }
 }
