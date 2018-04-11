@@ -17,7 +17,18 @@
     <context:component-scan base-package="com.cskaoyan"/>
 
     <!--配置mvc注解扫描-->
-    <mvc:annotation-driven />
+    <!--<mvc:annotation-driven />-->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+    <!--日期注入配置-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.cskaoyan.utils.MyDateConverter"/>
+            </set>
+        </property>
+    </bean>
+
 
     <!--Spring创建datasource-->
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
@@ -33,7 +44,7 @@
         <property name="configLocation" value="classpath:mybatis.xml"/>
     </bean>
 
-
+    <!--批量spring提供工厂根据接口获取接口的实现-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
         <property name="basePackage" value="com.cskaoyan.dao"/>
