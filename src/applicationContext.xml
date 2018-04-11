@@ -29,18 +29,10 @@
         </property>
     </bean>
 
-    <!--Spring创建datasource-->
-    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
-        <property name="user" value="root"/>
-        <property name="password" value="123"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3308/ssm01"/>
-    </bean>
-
 
     <!--批量spring提供工厂根据接口获取接口的实现-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="sqlSessionFactoryBeanName" value="sqlSession"/>
+        <property name="sqlSessionFactoryBeanName" value="SqlSessionFactory"/>
         <property name="basePackage" value="com.cskaoyan.dao"/>
     </bean>
 
@@ -51,17 +43,20 @@
         <property name="dataSource" ref="myDataSource"/>
     </bean>
 
+    <!--Spring创建datasource-->
+    <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="user" value="root"/>
+        <property name="password" value="aaa"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ssm01"/>
+    </bean>
 
 
-
-    <!--&lt;!&ndash; 产生sqlsessionfactory &ndash;&gt;-->
-    <!--<bean id="mySqlSessionFactory" class="org.springframework.ib.spring.SqlSessionFactoryBean">-->
-    <!--<property name="dataSource" ref="dataSource" />-->
-    <!--<property name="configLocation" value="classpath:mybatis.xml" />-->
-
-    <!--&lt;!&ndash; 自动扫描mapper.xml文件 &ndash;&gt;-->
-    <!--<property name="mapperLocations" value="classpath:com/wechat/mapper/*.xml"></property>-->
-    <!--</bean>-->
+    <!-- 产生sqlsessionfactory -->
+    <bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="myDataSource" />
+    <property name="configLocation" value="classpath:mybatis.xml" />
+    </bean>
 
 
 </beans>
