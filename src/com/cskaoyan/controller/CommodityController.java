@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
+@RequestMapping("/Commodity")
 @Controller
 public class CommodityController {
 
-    @RequestMapping("Commodity/tolist")
+    @RequestMapping("/tolist")
     public String commodityToList(){
 
         return "/WEB-INF/jsp/commodity/list.jsp";
@@ -28,7 +29,7 @@ public class CommodityController {
     @Autowired
     CommoditymeasurementMapper commoditymeasurementMapper;
 
-    @RequestMapping("Commodity/toadd")
+    @RequestMapping("/toadd")
     public String commodityToAdd(HttpServletRequest request){
         ArrayList<Commoditytype> allCommoditytype = commoditytypeMapper.getAllCommoditytype();
         ArrayList<Commoditymeasurement> allCommoditymeasurement = commoditymeasurementMapper.getAllCommoditymeasurement();
@@ -40,7 +41,7 @@ public class CommodityController {
     @Autowired
     CommodityMapper commodityMapper;
 
-    @RequestMapping("Commodity/add")
+    @RequestMapping("/add")
     public String commodityAdd(Commodity commodity, HttpServletRequest request){
         int i = commodityMapper.insertSelective(commodity);
         System.out.println(i);

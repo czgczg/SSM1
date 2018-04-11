@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
+@RequestMapping("/Login")
 @Controller
 public class AdminController {
 
     @Autowired
     AdminMapper adminMapper;
 
-    @RequestMapping("Login/tologin")
+    @RequestMapping("/tologin")
     public String tologin(){
 
         return "/WEB-INF/jsp/login/login.jsp";
     }
 
-    @RequestMapping("/Login/tomain")
+    @RequestMapping("/tomain")
     public String tomain(HttpServletRequest request){
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
