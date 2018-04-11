@@ -1,7 +1,6 @@
 package com.cskaoyan.controller;
 
 import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.utils.PageDivide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,8 @@ import java.util.List;
 @Controller
 public class PassengerController {
 
-    @Autowired
-    PassengerService passengerService;
+//    @Autowired
+//    PassengerService passengerService;
 
     @RequestMapping("/tolist")
     public String roomsetToList(){
@@ -71,22 +70,22 @@ public class PassengerController {
 
 
 
-    @PostMapping("/tolist.do")
-    public String findPassengerByName(HttpServletRequest request) {
-
-        String passenName = request.getParameter("txtname");
-
-        List<Passenger> passenger = passengerService.findPassengerByName(passenName);
-
-        PageDivide<Passenger> pageDivide = new PageDivide<>();
-
-        //获取所有旅客数量
-       int  totalCount= passengerService.findAllPassengerCount();
-
-       pageDivide.setTotalCount(totalCount);
-        pageDivide.init();
-
-        return null;
-
-    }
+//    @PostMapping("/tolist.do")
+//    public String findPassengerByName(HttpServletRequest request) {
+//
+//        String passenName = request.getParameter("txtname");
+//
+//        List<Passenger> passenger = passengerService.findPassengerByName(passenName);
+//
+//        PageDivide<Passenger> pageDivide = new PageDivide<>();
+//
+//        //获取所有旅客数量
+////       int  totalCount= passengerService.findAllPassengerCount();
+//
+//       pageDivide.setTotalCount(totalCount);
+//        pageDivide.init();
+//
+//        return null;
+//
+//    }
 }
