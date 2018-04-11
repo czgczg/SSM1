@@ -1,5 +1,8 @@
 package com.cskaoyan.bean;
 
+/**
+ * 商品类别类
+ */
 public class Commoditytype {
     /**
      *

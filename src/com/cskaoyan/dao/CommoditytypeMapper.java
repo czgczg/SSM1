@@ -5,6 +5,10 @@ import com.cskaoyan.bean.Commoditytype;
 import java.util.ArrayList;
 
 public interface CommoditytypeMapper {
+    /**
+     * 获取全部的商品类别
+     * @return
+     */
     ArrayList<Commoditytype> getAllCommoditytype();
 
     /**
