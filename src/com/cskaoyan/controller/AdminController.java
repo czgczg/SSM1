@@ -4,26 +4,27 @@ import com.cskaoyan.bean.Admin;
 import com.cskaoyan.dao.AdminMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-@RequestMapping("/Login")
 @Controller
 public class AdminController {
+
 
     @Autowired
     AdminMapper adminMapper;
 
-    @RequestMapping("/tologin")
+    @GetMapping("Login/tologin")
     public String tologin(){
-
         return "/WEB-INF/jsp/login/login.jsp";
     }
 
-    @RequestMapping("/tomain")
+    @PostMapping("/Login/tomain")
     public String tomain(HttpServletRequest request){
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
