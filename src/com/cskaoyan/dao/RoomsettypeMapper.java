@@ -1,8 +1,10 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Roomsettype;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface RoomsettypeMapper {
     /**
@@ -22,4 +24,11 @@ public interface RoomsettypeMapper {
      * @mbg.generated Tue Apr 10 17:39:01 CST 2018
      */
     int insertSelective(Roomsettype record);
+
+    /**
+     *
+     * @return
+     */
+    @Select("SELECT * FROM roomsettype")
+    List<Roomsettype> findAllRoomsettype();
 }
