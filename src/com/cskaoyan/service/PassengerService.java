@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface PassengerService {
     //分页
-    public Page<Passenger> findPage(String num);
+    public Page<Passenger> findPage(int  currentPage);
 
 
     List<Passenger> findPassengerByName(String passenName);
-
 
     int findAllPassengerCount();
 
     List<Passenger> findAllPassenger();
 
+    int  addPassenger(Passenger passenger);
 }
