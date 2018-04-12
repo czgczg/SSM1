@@ -3,9 +3,7 @@ package com.cskaoyan.service;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.bean.Roomsetstatus;
 import com.cskaoyan.bean.Roomsettype;
-import com.cskaoyan.utils.PageDivide;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface RoomsetService {
@@ -36,4 +34,17 @@ public interface RoomsetService {
     List<Roomset> findAllRoomset();
 
 
+    /**
+     * 删除roomset
+     * @param id
+     * @return true表示删除成功，false表示删除失败
+     */
+    boolean deleteRoom(int id);
+
+    /**
+     * 根据id查找相印的Roomset
+     * @param id
+     * @return
+     */
+    Roomset findRoomsetById(int id);
 }

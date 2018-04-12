@@ -4,7 +4,7 @@ import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.bean.Roomsetstatus;
 import com.cskaoyan.bean.Roomsettype;
 import com.cskaoyan.service.RoomsetService;
-import com.cskaoyan.utils.PageDivide;
+import com.cskaoyan.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,7 @@ public class RoomsetController {
      */
     @GetMapping("/tolist")
     public String roomsetToList(Model model){
-        PageDivide<Roomset> pageDivide = new PageDivide<>();
+        Page<Roomset> pageDivide = new Page<>();
         List<Roomset> listRoomset = roomsetService.findAllRoomset();
         pageDivide.setResult(listRoomset);
         model.addAttribute("list", pageDivide);
@@ -65,13 +65,22 @@ public class RoomsetController {
     }
 
     @RequestMapping("/toupdate")
-    public String toupdate(){
+    public String toupdate(int id,Model model){
+        Roomset roomset = roomsetService.findRoomsetById(id);
+        model.addAttribute("listPo", roomset);
         return "/WEB-INF/jsp/roomset/update.jsp";
     }
 
-    @RequestMapping("/delete")
-    public String delete(Model model){
 
+    /**
+     * 删除房间
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/delete")
+    public String deleteRoom(int id, Model model){
+        roomsetService.deleteRoom(id);
         return roomsetToList(model);
     }
 
