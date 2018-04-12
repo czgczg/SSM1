@@ -25,6 +25,7 @@
         <property name="converters">
             <set>
                 <bean class="com.cskaoyan.utils.MyDateConverter"/>
+                <bean class="com.cskaoyan.utils.StringToPhoneNumberConverter"/>
             </set>
         </property>
     </bean>
@@ -48,9 +49,12 @@
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="user" value="root"/>
         <property name="password" value="123"/>
+<<<<<<< Updated upstream
         <property name="jdbcUrl" value="jdbc:mysql://192.168.3.47:3308/ssm01"/>
+=======
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3308/ssm01"/>
+>>>>>>> Stashed changes
     </bean>
-
 
     <!-- 产生sqlsessionfactory -->
     <bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

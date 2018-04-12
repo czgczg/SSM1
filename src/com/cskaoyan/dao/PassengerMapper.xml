@@ -309,4 +309,5 @@
       del_flag = #{del_flag,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>
