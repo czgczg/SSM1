@@ -3,9 +3,7 @@ package com.cskaoyan.service;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.bean.Roomsetstatus;
 import com.cskaoyan.bean.Roomsettype;
-import com.cskaoyan.utils.PageDivide;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface RoomsetService {

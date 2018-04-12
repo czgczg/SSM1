@@ -562,7 +562,7 @@
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("passengerInformationId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/Passenger/tolist.do?currentPage=1';
+			     document.getElementById('Mainid').src='${ctx}/Passenger/tolist.do';
 			}
 			function receiveTarget(){
 			     var a=document.getElementById("passengerManageId").getElementsByTagName('span')[0].innerHTML;
