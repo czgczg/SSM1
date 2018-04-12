@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface PassengerdegreeService {
     public List<Passengerdegree> findall();
+
+
+    public String findPassengerDegreeNameById(Integer far_id);
 }

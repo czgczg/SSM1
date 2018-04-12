@@ -21,4 +21,10 @@ public class PassengerdegreeServiceImpl implements PassengerdegreeService {
         List<Passengerdegree> allPassengerdegree = passengerdegreeMapper.find();
         return allPassengerdegree;
     }
+
+    @Override
+    public String findPassengerDegreeNameById(Integer far_id) {
+
+        return passengerdegreeMapper.findPassengerDegreeNameById(far_id);
+    }
 }

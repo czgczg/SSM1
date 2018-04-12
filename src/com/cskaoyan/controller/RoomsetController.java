@@ -4,7 +4,7 @@ import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.bean.Roomsetstatus;
 import com.cskaoyan.bean.Roomsettype;
 import com.cskaoyan.service.RoomsetService;
-import com.cskaoyan.utils.PageDivide;
+import com.cskaoyan.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,7 +27,7 @@ public class RoomsetController {
      */
     @GetMapping("/tolist")
     public String roomsetToList(Model model){
-        PageDivide<Roomset> pageDivide = new PageDivide<>();
+        Page<Roomset> pageDivide = new Page<>();
         List<Roomset> listRoomset = roomsetService.findAllRoomset();
         pageDivide.setResult(listRoomset);
         model.addAttribute("list", pageDivide);

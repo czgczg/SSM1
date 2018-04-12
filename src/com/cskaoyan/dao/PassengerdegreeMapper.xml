@@ -14,10 +14,12 @@
 
 
   <select id="find"  resultType="com.cskaoyan.bean.Passengerdegree">
-    select * FROM passengerdegree
+    select *  FROM  passengerdegree
   </select>
 
 
-
+<select id="findPassengerDegreeNameById" parameterType="INTEGER" resultType="String">
+  select passengerDegreeName FROM passengerdegree where far_id=#{far_id}
+</select>
 
 </mapper>

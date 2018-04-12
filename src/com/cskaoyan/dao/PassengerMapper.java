@@ -2,6 +2,8 @@ package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Passenger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface PassengerMapper {
@@ -57,4 +59,8 @@ public interface PassengerMapper {
 
 
     int  findAllPassengerCount();
+
+    List<Passenger> findAllPassenger();
+
+    List<Passenger> findPartPassenger(HashMap<String,Integer> map);
 }

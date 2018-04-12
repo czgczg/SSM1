@@ -4,11 +4,11 @@ import java.util.List;
 
 
 
-public class PageDivide<T>
+public class Page<T>
 {
 
 
-    public static final int CAGEGORY_NUM_PER_PAGE =3;
+    public static final int PASSENGER__NUM_PER_PAGE =3;
 
     private  int totalCount;  //总记录数
 
@@ -20,12 +20,12 @@ public class PageDivide<T>
 
     private  int nextPageNum;  //后一页
 
-    private List<T> result;
+
+    private List<T>  result;
 
 
-
-    public static int getCagegoryNumPerPage() {
-        return CAGEGORY_NUM_PER_PAGE;
+    public static int getPassenger_numPerPage() {
+        return PASSENGER__NUM_PER_PAGE;
     }
 
     public int getTotalCount() {
@@ -76,12 +76,24 @@ public class PageDivide<T>
         this.result = result;
     }
 
-    public void init(){
-        int totalPageNum = totalCount % CAGEGORY_NUM_PER_PAGE == 0 ? totalCount / CAGEGORY_NUM_PER_PAGE : totalCount / CAGEGORY_NUM_PER_PAGE + 1;
-        this.setTotalPage(totalPageNum);
-        this.setNextPageNum(nextPageNum >= totalCount?nextPageNum:totalPageNum);
-        this.setPrevPageNum(prevPageNum <= 1?1:prevPageNum);
+    public void init(int num_int){
+        int totalPageNum = totalCount % PASSENGER__NUM_PER_PAGE == 0 ? totalCount / PASSENGER__NUM_PER_PAGE : totalCount / PASSENGER__NUM_PER_PAGE + 1;
+        this.setTotalCount(totalPageNum);
+        this.setNextPageNum(num_int-1==0?num_int:num_int-1);
+        this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
+
     }
 
 
+    @Override
+    public String toString() {
+        return "Page{" +
+                "totalCount=" + totalCount +
+                ", currentPage=" + currentPage +
+                ", totalPage=" + totalPage +
+                ", prevPageNum=" + prevPageNum +
+                ", nextPageNum=" + nextPageNum +
+                ", records=" + result +
+                '}';
+    }
 }
