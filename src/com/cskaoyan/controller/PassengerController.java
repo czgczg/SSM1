@@ -1,7 +1,8 @@
+/*
 package com.cskaoyan.controller;
 
 import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.service.PassengerService;
+
 import com.cskaoyan.utils.PageDivide;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -90,3 +91,4 @@ public class PassengerController {
 
     }
 }
+*/
