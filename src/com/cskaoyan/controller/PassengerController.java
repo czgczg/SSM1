@@ -7,9 +7,11 @@ import com.cskaoyan.service.PassengerdegreeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class PassengerController {
     PassengerdegreeService passengerdegreeService;
     @Autowired
     PassengerService passengerService;
+
+
     //
 
     @RequestMapping("/toadd")
@@ -113,25 +117,18 @@ public class PassengerController {
     }
 
 
-    @PostMapping("/add")
-    public String passengerAdd(HttpServletRequest request, Passenger passenger) {
+    @RequestMapping("/add")
+    public String passengerAdd(Passenger passenger) {
+
+
         int i = passengerService.passengerAdd(passenger);
-        return "/WEB-INF/jsp/passenger/list.jsp";
+
+
+        System.out.println(passenger);
+        if(i==1){
+            return "/WEB-INF/jsp/passenger/list.jsp";
+        }
+        return "/WEB-INF/jsp/passenger/add.jsp";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
