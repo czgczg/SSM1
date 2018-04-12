@@ -85,4 +85,17 @@ public interface RoomsetMapper {
     @Select("SELECT * FROM roomset WHERE del_flag=0 AND roomNumber LIKE #{txtname}")
     List<Roomset> findSpecial(String txtname);
 
+    /**
+     * 通过id更改房间状态
+     * 请提供一个HashMap，Map中包含三个键值对
+     * roomStateID：xxx
+     * roomStateName：xxx
+     * id：xxx
+     *
+     * 提示：roomStateName可以使用RoomsetstatusMapper接口的selectByPrimaryKey方法来查找
+     * @param hashMap
+     * @return
+     */
+    @Update("UPDATE roomset SET roomStateID = #{roomStateID}, roomStateName = #{roomStateName} WHERE id = #{id}")
+    Integer updateRoomStateById(HashMap hashMap);
 }

@@ -115,11 +115,11 @@
 		        <tr>
 		          <td><input type="checkbox" name="id" value="${item.id}"></td>
 		          <td>${item.name}</td>
-		          <td>${item.genderName}</td>
+		          <td>${item.genderID}</td>
 		          <td>${item.birthDate}</td>
-		          <td>${item.nationName}</td>
-		          <td>${item.passengerLevelName}</td>
-		          <td>${item.papersName}</td>
+		          <td>${item.nationID}</td>
+		          <td>${item.passengerLevelID}</td>
+		          <td>${item.papersID}</td>
 		          <td>${item.papersNumber}</td>
 		          <td>${item.contactPhoneNumber}</td>
 		        </tr>
@@ -175,9 +175,7 @@
 	}
 	
   }
-  
-  
-  
+
   
    
    
