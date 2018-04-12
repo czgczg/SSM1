@@ -102,7 +102,6 @@ public class ReceiveObjectController {
     }
 */
 
-
     @RequestMapping("/ReceiveTarget/toadd")
     public String toadd(HttpSession session){
 
