@@ -82,4 +82,41 @@
       </if>
     </trim>
   </insert>
+
+  <select id="findAllObj" resultType="recepobject">
+    select * from recepobject where del_flag = 0;
+  </select>
+
+  <insert id="insertRecept" parameterType="recepobject">
+    insert into recepobject values (null,#{targetTypeName},#{teamName},#{teamCode},#{principal},#{registerTime},#{contactPhoneNUmber},0);
+  </insert>
+
+  <update id="updateRecept" parameterType="recepobject">
+    UPDATE recepobject set targetTypeName=#{targetTypeName},teamName=#{teamName},teamCode=#{teamCode},principal=#{principal},
+    registerTime=#{registerTime},contactPhoneNUmber=#{contactPhoneNUmber} where id = #{id};
+  </update>
+
+  <select id="findReceptById" parameterType="int" resultType="recepobject">
+    select * from recepobject where id=#{id} and del_flag = 0;
+  </select>
+
+  <update id="deleteRecept" parameterType="int">
+    UPDATE recepobject set del_flag = 1 where id=#{id};
+  </update>
+
+  <!--<select id="findAllRecepObjLike" parameterType="string" resultType="recepobject">-->
+    <!--select * from recepobject where teamName like #{txtname} and del_flag = 0 limit #{NUM_LIMIT_OF_RECORDS} offset #{offset};-->
+  <!--</select>-->
+
+    <select id="findAllRecepObjLike" parameterType="com.cskaoyan.page.PageVo" resultType="recepobject">
+        select * from recepobject
+        <where>
+            <if test="txtname != null and !txtname.isEmpty()">
+               AND teamName like '%${txtname}%'
+            </if>
+            and del_flag = 0
+        </where>
+        limit #{NUM_LIMIT_OF_RECORDS} offset #{offset};
+    </select>
+
 </mapper>

@@ -1,6 +1,9 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Recepobject;
+import com.cskaoyan.page.PageVo;
+
+import java.util.List;
 
 public interface RecepobjectMapper {
     /**
@@ -18,4 +21,18 @@ public interface RecepobjectMapper {
      * @mbg.generated Wed Apr 11 11:16:49 CST 2018
      */
     int insertSelective(Recepobject record);
+
+    List<Recepobject> findAllObj();
+
+    int insertRecept(Recepobject recepobject);
+
+    int updateRecept(Recepobject recepobject);
+
+    Recepobject findReceptById(int id);
+
+    int deleteRecept(int id);
+
+    List<Recepobject> findAllRecepObjLike(String txtname);
+
+    List<Recepobject> findAllRecepObjLike(PageVo pageVo);
 }
