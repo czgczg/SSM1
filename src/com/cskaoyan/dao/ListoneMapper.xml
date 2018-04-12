@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cskaoyan.dao.ListoneMapper">
+
+  <select id="getRoomset" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getRoomLevel" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getComodityType" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getPayWay" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getRendWay" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getPayUnit" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getPassengerType" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getSex" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getNation" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getIdentifyCard" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getEducationDegree" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getThingReason" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getpassengerLevel" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getObjectType" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getMeasureUnit" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getOrderStatus" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+  <select id="getPayMoney" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
+</mapper>

@@ -179,7 +179,7 @@
 		        <label>性别：</label>
 		        <select name="genderID" style="width:100%;height:27px;">
 		            <c:forEach items="${listGender}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==31}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==31}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -193,7 +193,7 @@
 		        <label>民族：</label>
 		         <select name="nationID" style="width:100%;height:27px;">
 		            <c:forEach items="${listNation}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==33}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==33}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -220,7 +220,7 @@
 		        <label>文化程度：</label>
 		         <select name="educationDegreeID" style="width:100%;height:27px;">
 		            <c:forEach items="${listEducationDegree}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==43}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==43}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -235,7 +235,7 @@
 		        <label>旅客级别：</label>
 		         <select name="passengerLevelID" style="width:100%;height:27px;">
 		            <c:forEach items="${listPassengerLevel}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==52}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==52}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -245,7 +245,7 @@
 		        <label>证件类型：</label>
 		        <select id="papersId" name="papersID" style="width:100%;height:27px;">
 		            <c:forEach items="${listPapers}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==37}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==37}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -273,7 +273,7 @@
 		        <label>事由：</label>
 		        <select name="thingReasonID" style="width:100%;height:27px;">
 		            <c:forEach items="${listThingReason}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==51}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==51}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 

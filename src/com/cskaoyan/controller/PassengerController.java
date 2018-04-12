@@ -1,15 +1,16 @@
 package com.cskaoyan.controller;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.service.PassengerService;
+import com.cskaoyan.service.optionService;
 import com.cskaoyan.utils.Page;
+import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @RequestMapping("/Passenger")
@@ -19,78 +20,83 @@ public class PassengerController {
     @Autowired
     PassengerService passengerService;
 
-    @RequestMapping("/tolist")
-    public String roomsetToList() {
+    @Autowired
+    optionService optionService;
 
+    /**
+     * 点击旅客信息的时候，页面的初始化处理
+     * 需要查到所有的旅客信息，并作分页处理
+     *
+     * 同时处理 前台的搜索，根据用户名搜索结果，并进行分页
+     * @return
+     */
+    @RequestMapping("/tolist.do")
+    public String passengerToList(Integer  currentPage,Model model ,HttpServletRequest request ) {
+        if (currentPage == null || currentPage==0) {
+
+            currentPage =1;
+
+        }
+        //拿到输入用户名
+        String passengerName = request.getParameter("txtname");
+        //根据用户名查出旅客
+        List<Passenger> passengerByName = passengerService.findPassengerByName(passengerName);
+
+        //查出所有旅客
+        passengerService.findAllPassenger();
+
+        //根据分页，查出限定的记录条数
+        Page<Passenger> page = passengerService.findPage(currentPage);
+
+        //将分页的记录数返回给前台
+        model.addAttribute("list", page);
+        //返回视图层
         return "/WEB-INF/jsp/passenger/list.jsp";
     }
 
 
-    @RequestMapping("/toadd")
-    public String passengerToAdd(HttpServletRequest request) {
-        HashMap<String, String> male = new HashMap<>(10);
-        male.put("far_id", "1");
-        male.put("attributeDetailsName", "男");
-        HashMap<String, String> female = new HashMap<>(10);
-        female.put("far_id", "2");
-        female.put("attributeDetailsName", "女");
+    @RequestMapping("/toadd.do")
+    public String passengerToAdd(HttpServletRequest request,Model model) {
 
-        ArrayList<HashMap> listGender = new ArrayList<>();
-        listGender.add(male);
-        listGender.add(female);
-        request.setAttribute("listGender", listGender);
 
-        //-------------------------------------------
-        //民族
-        HashMap<String, String> nation1 = new HashMap<>(10);
-        nation1.put("far_id", "1");
-        nation1.put("attributeDetailsName", "汉族");
+        List<Listone> sex = optionService.getSex();
+        List<Listone> nation = optionService.getNation();
+        List<Listone> educationDegree = optionService.getEducationDegree();
+        //旅客级别
+        List<Listone> level = optionService.getpassengerLevel();
+        List<Listone> identifyCard = optionService.getIdentifyCard();
+        List<Listone> thingReason = optionService.getThingReason();
 
-        HashMap<String, String> nation2 = new HashMap<>(10);
-        nation2.put("far_id", "2");
-        nation2.put("attributeDetailsName", "其他");
-        ArrayList<HashMap> listNation = new ArrayList<>();
-
-        listNation.add(nation1);
-        listNation.add(nation2);
-
-        request.setAttribute("listNation", listNation);
-//-----------------------------------------------------
-        //文化程度  去数据库获取
-
+        model.addAttribute("listGender", sex);
+        model.addAttribute("listNation", nation);
+        model.addAttribute("listEducationDegree", educationDegree);
+        model.addAttribute("listPassengerLevel",level );
+        model.addAttribute("listPapers", identifyCard);
+        model.addAttribute("listThingReason", thingReason);
 
         return "/WEB-INF/jsp/passenger/add.jsp";
     }
 
 
+    /**
+     * Author:czg
+     * 增加旅客信息到数据库
+     * @param passenger
+     * @return
+     */
+    @PostMapping("/add.do")
+    public String addPassenger(Passenger passenger) {
 
+        int i = passengerService.addPassenger(passenger);
 
-    @RequestMapping("/tolist.do")
-    public String findPassengerByName(HttpServletRequest request, Model model,String currentPage) {
+        System.out.println(i);
 
-
-        System.out.println(currentPage);
-        //查找所有的旅客信息
-        List<Passenger>  passengers= passengerService.findAllPassenger();
-
-        ArrayList<Passenger> list = new ArrayList<>();
-
-
-        String passenName = request.getParameter("txtname");
-
-//        String currentPage = request.getParameter("currentPage");
-
-        List<Passenger> passenger = passengerService.findPassengerByName(passenName);
-
-
-        //获取所有旅客数量
-       int  totalCount= passengerService.findAllPassengerCount();
-
-        Page<Passenger> page = passengerService.findPage(currentPage);
-
-
-        model.addAttribute("list", page);
 
         return "/WEB-INF/jsp/passenger/list.jsp";
     }
+
 }
+
+
+
+
