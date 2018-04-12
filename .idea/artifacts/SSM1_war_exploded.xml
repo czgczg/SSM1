@@ -38,6 +38,8 @@
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/spring-expression-5.0.4.RELEASE.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/com.springsource.org.aopalliance-1.0.0.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/com.springsource.com.mchange.v2.c3p0-0.9.1.2.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/jsp-api.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/web/WEB-INF/lib/servlet-api.jar" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="SSM1/web/Web" />

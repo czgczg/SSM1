@@ -168,11 +168,14 @@
 	      <div class="row-fluid">
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">对象类别：</label>
-			      <select name="targetTypeID" class="cboone inputone">
+			      <select name="targetTypeName" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==list.targetTypeID}" >selected="selected"</c:if>>
+			         <%-- <option value="${item.far_id}" <c:if test="${item.far_id==list.targetTypeID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
-			          </option>
+			          </option>--%>
+						<option value="${item}" >
+								${item}
+						</option>
 			        </c:forEach> 
 		          </select>
 			  </div>
@@ -305,7 +308,7 @@
    }
    
     function deletefunction(){
-     parent.document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do';
+     parent.document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do?currentPageNum=1';
    }
    
    var shijian="";

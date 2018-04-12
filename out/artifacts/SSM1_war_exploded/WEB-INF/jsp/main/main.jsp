@@ -126,7 +126,7 @@
 
 						<ul class="submenu">
 							<li>
-								<a id="roomSetId" onclick="roomSet()">
+								<a id="roomSetId" onclick="roomset()">
 									<i class="icon-double-angle-right"></i>
 									<span>客房设置</span>
 								</a>
@@ -569,18 +569,18 @@
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("receiveTargetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do?currentPageNum=1';
 			}
 			
 			function roomManage(){
 			    
 			}
-			function roomSet(){
+			function roomset(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("roomSetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/Roomset/tolist.do';
 			}
 			function commoditySet(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
