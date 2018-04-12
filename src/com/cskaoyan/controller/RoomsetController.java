@@ -65,13 +65,22 @@ public class RoomsetController {
     }
 
     @RequestMapping("/toupdate")
-    public String toupdate(){
+    public String toupdate(int id,Model model){
+        Roomset roomset = roomsetService.findRoomsetById(id);
+        model.addAttribute("listPo", roomset);
         return "/WEB-INF/jsp/roomset/update.jsp";
     }
 
-    @RequestMapping("/delete")
-    public String delete(Model model){
 
+    /**
+     * 删除房间
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/delete")
+    public String deleteRoom(int id, Model model){
+        roomsetService.deleteRoom(id);
         return roomsetToList(model);
     }
 

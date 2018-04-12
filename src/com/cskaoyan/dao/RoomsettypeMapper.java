@@ -26,9 +26,17 @@ public interface RoomsettypeMapper {
     int insertSelective(Roomsettype record);
 
     /**
-     *
+     * 发现所有房间类型，并以List返回
      * @return
      */
     @Select("SELECT * FROM roomsettype")
     List<Roomsettype> findAllRoomsettype();
+
+    /**
+     * 根据主键返回房间状态
+     * @param guestRoomLevelID
+     * @return
+     */
+    //@Select("SELECT * FROM roomsettype WHERE far_id = #{guestRoomLevelID}")
+    Roomsettype selectByPrimaryKey(Integer guestRoomLevelID);
 }

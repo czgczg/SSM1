@@ -37,6 +37,12 @@ public class RoomsetServiceImpl implements RoomsetService{
 
     @Override
     public boolean insertRoomset(Roomset roomset) {
+        Integer roomStateID = roomset.getRoomStateID();
+        Roomsetstatus roomsetstatus = roomsetstatusMapper.selectByPrimaryKey(roomStateID);
+        roomset.setRoomStateName(roomsetstatus.getAttributeDetailsName());
+        Integer guestRoomLevelID = roomset.getGuestRoomLevelID();
+        Roomsettype roomsettype = roomsettypeMapper.selectByPrimaryKey(guestRoomLevelID);
+        roomset.setGuestRoomLevelName(roomsettype.getAttributeDetailsName());
         int i = roomsetMapper.insertSelective(roomset);
         return i==1;
     }
@@ -44,6 +50,18 @@ public class RoomsetServiceImpl implements RoomsetService{
     @Override
     public List<Roomset> findAllRoomset() {
         return roomsetMapper.selectAllRoomset();
+    }
+
+    @Override
+    public boolean deleteRoom(int id) {
+        Integer i = roomsetMapper.deleteRoomsetByRoomNumber(id);
+        return i==1;
+    }
+
+    @Override
+    public Roomset findRoomsetById(int id) {
+        Roomset roomset = roomsetMapper.selectByPrimaryKey(id);
+        return roomset;
     }
 
 }
