@@ -1,5 +1,6 @@
 package com.cskaoyan.controller;
 
+import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Orderpayment;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
@@ -9,6 +10,7 @@ import com.cskaoyan.dao.RoomsetMapper;
 import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,6 +65,47 @@ public class PredetermineController {
         List<Roomset> roomsets = roomsetMapper.selectAllRoomset();
         System.out.println(roomsets);
         return roomsets;
+    }
+
+
+
+    //http://localhost:8080/Predetermine/add.do?id=2&type=1&roomIdShuZu=undefined
+
+    //新增订单
+    @PostMapping("/add")
+
+
+
+
+    /**
+     * {
+     "commodityName":	"A级旅行社",
+     "predetermineDay":"5",
+     "deposit"	:"23",
+     "payWayID":	"1",
+     "arriveTime":	"2018-04-13+14:52:13"
+     }
+     */
+
+    public String addOrder(Ordermain ordermain, HttpServletRequest request){
+        String id = request.getParameter("id");
+        Roomset roomset = roomsetMapper.selectByPrimaryKey(Integer.valueOf(id));
+
+        String type = request.getParameter("type");//1是团队2是散客
+        if(type.equals(1)){
+            //取团队对象
+
+        }else if(type.equals(2)){
+            //取散客对象
+        }
+        String[] split = request.getParameter("roomIdShuZu").split(",");
+        for (String s : split) {
+
+        }
+
+        System.out.println(ordermain);
+
+        return "";
     }
 
 
