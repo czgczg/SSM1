@@ -42,24 +42,21 @@ public class ReceiveObjectController {
     }
 */
 
-    @RequestMapping("ReceiveTarget/tolist")
+    @RequestMapping("/ReceiveTarget/tolist")
     public String roomsetToList(HttpSession session,int currentPageNum,String txtname){
         //查询总数
-        List<Recepobject> allRecepObj = service.findAllRecepObj();
-        int totalNum = allRecepObj.size();
+        int totalNum = service.countAllRecepObjLike(txtname);
         // get方法得到的page currentPageNum和totalPageNum已经确定,txtname 为 "";
         PageVo page = PageVo.getPage(totalNum, currentPageNum);
-        //如果txtname不为null，则填充到page中
-        if(txtname != null){
-            page.setTxtname(txtname);
-        }
+        page.setTxtname(txtname);
+
         //此时page三个参数currentPageNum和totalPageNum已经确定，txtname 为 txtname
         //将page作为参数进行查询.
         List<Recepobject> allRecepObjLike = service.findAllRecepObjLike(page);
-        //分页新的页数
-        int totalPageNum = page.getTotalPageNum(allRecepObjLike.size());
+//        //分页新的页数
+//        int totalPageNum = page.getTotalPageNum(allRecepObjLike.size());
 
-        page.setTotalPageNum(totalPageNum);
+//        page.setTotalPageNum(totalPageNum);
 
         // 将得到的list放入page中。
         page.setRecords(allRecepObjLike);
@@ -131,12 +128,9 @@ public class ReceiveObjectController {
     @RequestMapping("/ReceiveTarget/toupdate")
     public String toupdate(int id, HttpSession session, Model model){
 
-        System.out.println("toupdate-----------");
         //搜索id得到对象，填充
         Recepobject receptById = service.findReceptById(id);
 
-        System.out.println(receptById);
-        System.out.println("toupdate--------------------------");
         //填充团队类别list
         List<String> list = new ArrayList<>();
         list.add(0,"团队");

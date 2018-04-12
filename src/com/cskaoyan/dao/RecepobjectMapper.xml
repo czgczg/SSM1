@@ -104,9 +104,6 @@
     UPDATE recepobject set del_flag = 1 where id=#{id};
   </update>
 
-  <!--<select id="findAllRecepObjLike" parameterType="string" resultType="recepobject">-->
-    <!--select * from recepobject where teamName like #{txtname} and del_flag = 0 limit #{NUM_LIMIT_OF_RECORDS} offset #{offset};-->
-  <!--</select>-->
 
     <select id="findAllRecepObjLike" parameterType="com.cskaoyan.page.PageVo" resultType="recepobject">
         select * from recepobject
@@ -117,6 +114,16 @@
             and del_flag = 0
         </where>
         limit #{NUM_LIMIT_OF_RECORDS} offset #{offset};
+    </select>
+
+    <select id="countAllRecepObjLike" parameterType="string" resultType="int">
+        select count(*) from recepobject
+        <where>
+            <if test="_parameter != null and !_parameter.isEmpty()">
+                AND teamName like '%${_parameter}%'
+            </if>
+            and del_flag = 0
+        </where>
     </select>
 
 </mapper>
