@@ -1,6 +1,9 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Roomsetstatus;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 public interface RoomsetstatusMapper {
     /**
@@ -58,4 +61,11 @@ public interface RoomsetstatusMapper {
      * @mbg.generated Tue Apr 10 17:39:01 CST 2018
      */
     int updateByPrimaryKey(Roomsetstatus record);
+
+    /**
+     * 查找所有的房间状态并返回
+     * @return
+     */
+    @Select("SELECT * FROM roomsetstatus")
+    List<Roomsetstatus> findAllRoomsetstatus();
 }
