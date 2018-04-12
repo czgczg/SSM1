@@ -118,33 +118,33 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
 		        <tr>
-		          <td><input type="checkbox" name="id" value="${item.id}"></td>
-		          <td>${item.roomNumber}</td>
-		          <td>${item.guestRoomLevelName}</td>
+		          <td><input type="checkbox" name="id" value="${item.roomNumber}"></td>
+		          <td>${item.roomNumber}</td><!-- 房间号 -->
+		          <td>${item.guestRoomLevelID}</td><!-- 房间等级 -->
 		          
 		          <c:if test="${item.roomStateID==1}">
-		            <td style="background:#99FF99;">${item.roomName}</td>
+		            <td style="background:#99FF99;">${item.roomStateID}</td><!-- 房态 -->
 		          </c:if>
 		          <c:if test="${item.roomStateID==2}">
-		            <td style="background:#DDDDDD;">${item.roomName}</td>
+		            <td style="background:#DDDDDD;">${item.roomStateID}</td>
 		          </c:if>
 		          <c:if test="${item.roomStateID==4}">
-		            <td style="background:#99FFFF;">${item.roomName}</td>
+		            <td style="background:#99FFFF;">${item.roomStateID}</td>
 		          </c:if>
 		          <c:if test="${item.roomStateID==5}">
-		            <td style="background:#BBBB00;">${item.roomName}</td>
+		            <td style="background:#BBBB00;">${item.roomStateID}</td>
 		          </c:if>
 		          <c:if test="${item.roomStateID==6}">
-		            <td style="background:#FF7744;">${item.roomName}</td>
+		            <td style="background:#FF7744;">${item.roomStateID}</td>
 		          </c:if>
 		          <c:if test="${item.roomStateID==7}">
-		            <td style="background:#FF0088;">${item.roomName}</td>
+		            <td style="background:#FF0088;">${item.roomStateID}</td>
 		          </c:if>
 		          <c:if test="${item.roomStateID==65}">
-		            <td style="background:#FF00FF;">${item.roomName}</td>
+		            <td style="background:#FF00FF;">${item.roomStateID}</td>
 		          </c:if>
 		          
-		          <td>${item.roomAmount}</td>
+		          <td>${item.roomAmount}</td><!-- 床位数 -->
 		          <td>￥${item.standardPriceDay}</td>
 		          <td>￥${item.standardPrice}</td>
 		          <td>${item.maxDuration}</td>
@@ -168,7 +168,7 @@
  
  <script type="text/javascript">
    function addfunction(){
-     parent.document.getElementById('Mainid').src='${ctx}/RoomSet/toadd.do';
+     parent.document.getElementById('Mainid').src='${ctx}/Roomset/toadd.do';
    }
    
    function updatefunction(){
@@ -180,7 +180,7 @@
 		if(chk_value.toString().indexOf(",")>0){
 		   alert("修改只能选择一条");
 		}else{
-		   parent.document.getElementById("Mainid").src='${ctx}/RoomSet/toupdate.do?id='+chk_value;
+		   parent.document.getElementById("Mainid").src='${ctx}/Roomset/toupdate.do?id='+chk_value;
 		}
 	}else{
 	  alert("请选择一条数据进行修改");
@@ -195,7 +195,7 @@
   	if(chk_value!=""){
   	var flag=window.confirm("注意：您确定要永久删除该信息吗?");
      if(flag){
-  	  parent.document.getElementById("Mainid").src='${ctx}/RoomSet/delete.do?id='+chk_value;
+  	  parent.document.getElementById("Mainid").src='${ctx}/Roomset/delete.do?id='+chk_value;
   	}
   	}else{
 	  alert("请选择一条或多条数据进行删除");
@@ -214,7 +214,7 @@
     $.ajax({                                                      
           cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
           type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/RoomSet/fuzzyfind.do',       //地址 type 带参数
+          url: '${ctx}/Roomset/fuzzyfind.do',       //地址 type 带参数
           data:"txtname="+name,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
 //        dataType:"json",                                       // json 数据类型提交 
           async:false,  
@@ -260,11 +260,11 @@
    
    /* 分页要用的 */
    $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPage}10086,
+     current:${list.currentPage}10086,
      backFn:function(p){
      var txtname=document.getElementById("txtnameid").value;
-     location.href="${ctx}/RoomSet/tolist.do?currentPage="+p+"&txtname="+txtname;
+     location.href="${ctx}/Roomset/tolist.do?currentPage="+p+"&txtname="+txtname;
      }
    });
   

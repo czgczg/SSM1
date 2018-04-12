@@ -126,7 +126,7 @@
 
 						<ul class="submenu">
 							<li>
-								<a id="roomSetId" onclick="roomSet()">
+								<a id="roomSetId" onclick="roomset()">
 									<i class="icon-double-angle-right"></i>
 									<span>客房设置</span>
 								</a>
@@ -562,7 +562,7 @@
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("passengerInformationId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/Passenger/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/Passenger/tolist.do?currentPage=1';
 			}
 			function receiveTarget(){
 			     var a=document.getElementById("passengerManageId").getElementsByTagName('span')[0].innerHTML;
@@ -575,12 +575,12 @@
 			function roomManage(){
 			    
 			}
-			function roomSet(){
+			function roomset(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("roomSetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/Roomset/tolist.do';
 			}
 			function commoditySet(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;

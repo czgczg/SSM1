@@ -20,12 +20,12 @@ public class AdminController {
     @Autowired
     AdminMapper adminMapper;
 
-    @GetMapping("/tologin")
+    @GetMapping("/tologin.do")
     public String tologin(){
         return "/WEB-INF/jsp/login/login.jsp";
     }
 
-    @PostMapping("/tomain")
+    @PostMapping("/tomain.do")
     public String tomain(HttpServletRequest request){
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
