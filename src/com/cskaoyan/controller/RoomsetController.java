@@ -29,7 +29,7 @@ public class RoomsetController {
     public String roomsetToList(Model model){
         Page<Roomset> pageDivide = new Page<>();
         List<Roomset> listRoomset = roomsetService.findAllRoomset();
-        pageDivide.setResult(listRoomset);
+//        pageDivide.setResult(listRoomset);
         model.addAttribute("list", pageDivide);
         return "/WEB-INF/jsp/roomset/roomset.jsp";
     }

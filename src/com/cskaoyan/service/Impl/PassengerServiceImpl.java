@@ -2,13 +2,12 @@ package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.dao.PassengerMapper;
+import com.cskaoyan.dao.PassengerdegreeMapper;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -17,6 +16,10 @@ public class PassengerServiceImpl implements PassengerService {
 
     @Autowired
     PassengerMapper passengerMapper;
+
+    @Autowired
+    PassengerdegreeMapper passengerdegreeMapper;
+
 
     /**
      * 分页处理
@@ -61,6 +64,74 @@ public class PassengerServiceImpl implements PassengerService {
 
     }
 
+    /**
+     * 添加用户到数据库
+     */
+    @Override
+    public int passengerAdd(Passenger passenger) {
+        switch (passenger.getGenderID()){
+            case "1":
+                passenger.setGenderID("男");
+                break;
+            case "2":
+                passenger.setGenderID("女");
+                break;
+        }
+        switch (passenger.getNationID()){
+            case "1":
+                passenger.setNationID("汉族");
+                break;
+            case "2":
+                passenger.setNationID("其他");
+                break;
+        }
+
+        switch (passenger.getPassengerLevelID()){
+            case "1":
+                passenger.setPassengerLevelID("首次");
+                break;
+            case "2":
+                passenger.setPassengerLevelID("熟客");
+                break;
+            case "3":
+                passenger.setPassengerLevelID("VIP");
+                break;
+        }
+
+        switch (passenger.getPapersID()){
+            case "1":
+                passenger.setPapersID("二代身份证");
+                break;
+            case "2":
+                passenger.setPapersID("护照");
+                break;
+            case "3":
+                passenger.setPapersID("其他");
+        }
+
+
+        switch (passenger.getThingReasonID()){
+            case "1":
+                passenger.setThingReasonID("个人旅行");
+                break;
+            case "2":
+                passenger.setThingReasonID("公务出差");
+                break;
+            case "3":
+                passenger.setThingReasonID("其他");
+        }
+
+
+        if( passenger.getEducationDegreeID().matches("^[0-9]*[1-9][0-9]*$")){
+
+            int i = Integer.parseInt(passenger.getEducationDegreeID());
+            String passengerDegreeNameById = passengerdegreeMapper.findPassengerDegreeNameById(i);
+            passenger.setEducationDegreeID(passengerDegreeNameById);
+        }
+
+        int i=passengerMapper.insert(passenger);
+        return i;
+    }
 
     /**
      * 查找所有的旅客数量
@@ -68,9 +139,8 @@ public class PassengerServiceImpl implements PassengerService {
      */
     @Override
     public int findAllPassengerCount() {
-        return   2;
+        return   0;
     }
-
 
     /**
      * 查找所有的旅客
@@ -82,4 +152,6 @@ public class PassengerServiceImpl implements PassengerService {
 
         return passengerMapper.findAllPassenger();
     }
+
+
 }

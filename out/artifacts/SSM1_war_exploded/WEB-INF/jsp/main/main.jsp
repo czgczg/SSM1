@@ -126,7 +126,7 @@
 
 						<ul class="submenu">
 							<li>
-								<a id="roomSetId" onclick="roomset()">
+								<a id="roomSetId" onclick="roomSet()">
 									<i class="icon-double-angle-right"></i>
 									<span>客房设置</span>
 								</a>
@@ -575,12 +575,12 @@
 			function roomManage(){
 			    
 			}
-			function roomset(){
+			function roomSet(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("roomSetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/Roomset/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
 			}
 			function commoditySet(){
 			     var a=document.getElementById("roomManageId").getElementsByTagName('span')[0].innerHTML;

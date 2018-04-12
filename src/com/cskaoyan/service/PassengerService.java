@@ -6,15 +6,14 @@ import com.cskaoyan.utils.Page;
 import java.util.List;
 
 public interface PassengerService {
+
     //分页
     public Page<Passenger> findPage(String num);
 
 
     List<Passenger> findPassengerByName(String passenName);
-
-
-    int findAllPassengerCount();
-
+    int passengerAdd(Passenger passenger);
+     int findAllPassengerCount();
     List<Passenger> findAllPassenger();
 
 }
