@@ -3,6 +3,7 @@ package com.cskaoyan.service;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.bean.Roomsetstatus;
 import com.cskaoyan.bean.Roomsettype;
+import com.cskaoyan.utils.Page;
 
 import java.util.List;
 
@@ -47,4 +48,27 @@ public interface RoomsetService {
      * @return
      */
     Roomset findRoomsetById(int id);
+
+    /**
+     * 修改Roomset
+     * @param id
+     * @return 修改成功返回true，失败返回false
+     */
+    boolean updateRoomsetById(Roomset roomset);
+
+    /**
+     * 发现一页房间
+     * @param currentPage
+     * @param txtname
+     * @return
+     */
+    Page<Roomset> findPage(int currentPage, String txtname);
+
+    /**
+     * 查找特定商品
+     * @param txtname
+     * @return
+     */
+    List<Roomset> findSpecial(String txtname);
+
 }

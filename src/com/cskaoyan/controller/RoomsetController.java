@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -25,12 +26,13 @@ public class RoomsetController {
      * 发送页面去客房设置管理页面
      * @return
      */
-    @GetMapping("/tolist")
-    public String roomsetToList(Model model){
-        Page<Roomset> pageDivide = new Page<>();
-        List<Roomset> listRoomset = roomsetService.findAllRoomset();
-        pageDivide.setResult(listRoomset);
-        model.addAttribute("list", pageDivide);
+    @RequestMapping("/tolist")
+    public String roomsetToList(Integer currentPage, String txtname, Model model){
+        if(currentPage==null){
+            currentPage = 1;
+        }
+        Page<Roomset> roomsetPage = roomsetService.findPage(currentPage, txtname);
+        model.addAttribute("list", roomsetPage);
         return "/WEB-INF/jsp/roomset/roomset.jsp";
     }
 
@@ -61,16 +63,41 @@ public class RoomsetController {
     @PostMapping("/add")
     public String add(Roomset roomset, Model model){
         roomsetService.insertRoomset(roomset);
-        return roomsetToList(model);
+        return roomsetToList(1, "",model);
     }
 
+    /**
+     * 转发到update.jsp页面，并提供必要的数据
+     * @param id
+     * @param model
+     * @return
+     */
     @RequestMapping("/toupdate")
     public String toupdate(int id,Model model){
-        Roomset roomset = roomsetService.findRoomsetById(id);
+
+        List<Roomsetstatus> listStatus;
+        List<Roomsettype> listType;
+        Roomset roomset;
+        listStatus = roomsetService.findAllRoomsetstatus();
+        listType = roomsetService.findAllRoomsettype();
+        roomset = roomsetService.findRoomsetById(id);
+        model.addAttribute("listTwo", listStatus);
+        model.addAttribute("listOne", listType);
         model.addAttribute("listPo", roomset);
         return "/WEB-INF/jsp/roomset/update.jsp";
     }
 
+    /**
+     * 修改roomset，并且转发到roomset.jsp
+     * @param roomset
+     * @param model
+     * @return
+     */
+    @RequestMapping("/update")
+    public String update(Roomset roomset, Model model){
+        roomsetService.updateRoomsetById(roomset);
+        return roomsetToList(1, "",model);
+    }
 
     /**
      * 删除房间
@@ -79,9 +106,24 @@ public class RoomsetController {
      * @return
      */
     @RequestMapping("/delete")
-    public String deleteRoom(int id, Model model){
-        roomsetService.deleteRoom(id);
-        return roomsetToList(model);
+    public String deleteRoom(int[] id, Model model){
+        for(int i : id){
+            roomsetService.deleteRoom(i);
+        }
+        return roomsetToList(1, "",model);
     }
+
+//    /**
+//     * 模糊查询（用这个的话，分页不好弄）
+//     * @param txtname
+//     * @return
+//     */
+//    @RequestMapping("/fuzzyfind")
+//    @ResponseBody
+//    public List<Roomset> fuzzyfind(String txtname){
+//        System.out.println(txtname);
+//        List<Roomset> result = roomsetService.findSpecial(txtname);
+//        return result;
+//    }
 
 }
