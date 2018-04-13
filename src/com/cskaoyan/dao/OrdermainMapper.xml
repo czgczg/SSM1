@@ -37,6 +37,7 @@
     <result column="changingRoomNumber" jdbcType="VARCHAR" property="changingRoomNumber" />
     <result column="changRoomMoney" jdbcType="DOUBLE" property="changRoomMoney" />
     <result column="del_flag" jdbcType="INTEGER" property="del_flag" />
+    <result column="orderFrom" jdbcType="INTEGER" property="orderFrom" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -48,7 +49,7 @@
     rentOutTypeId, rentOutTypeName, stayNumber, predetermineDay, deposit, payWayID, payWayName,
     arriveTime, roomNumber, guestRoomLevelName, roomAmount, orderTime, registerTime,
     payTime, billUnitID, billUnitName, passengerTypeName, passengerTypeID, sumConst,
-    timestamp, changingRoomNumber, changRoomMoney, del_flag
+    timestamp, changingRoomNumber, changRoomMoney, del_flag, orderFrom
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--
@@ -76,8 +77,8 @@
       orderTime, registerTime, payTime,
       billUnitID, billUnitName, passengerTypeName,
       passengerTypeID, sumConst, timestamp,
-      changingRoomNumber, changRoomMoney, del_flag
-      )
+      changingRoomNumber, changRoomMoney, del_flag,
+      orderFrom)
     values (#{ordID,jdbcType=VARCHAR}, #{passengerOrReceiveID,jdbcType=INTEGER}, #{commodityName,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{teamname,jdbcType=VARCHAR}, #{receiveTargetID,jdbcType=INTEGER}, 
       #{state,jdbcType=INTEGER}, #{rentOutTypeId,jdbcType=INTEGER}, #{rentOutTypeName,jdbcType=VARCHAR},
@@ -87,8 +88,8 @@
       #{orderTime,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
       #{billUnitID,jdbcType=INTEGER}, #{billUnitName,jdbcType=VARCHAR}, #{passengerTypeName,jdbcType=VARCHAR},
       #{passengerTypeID,jdbcType=INTEGER}, #{sumConst,jdbcType=REAL}, #{timestamp,jdbcType=DATE},
-      #{changingRoomNumber,jdbcType=VARCHAR}, #{changRoomMoney,jdbcType=DOUBLE}, #{del_flag,jdbcType=INTEGER}
-      )
+      #{changingRoomNumber,jdbcType=VARCHAR}, #{changRoomMoney,jdbcType=DOUBLE}, #{del_flag,jdbcType=INTEGER},
+      #{orderFrom,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.bean.Ordermain">
     <!--
@@ -188,6 +189,9 @@
       <if test="del_flag != null">
         del_flag,
       </if>
+      <if test="orderFrom != null">
+        orderFrom,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ordID != null">
@@ -279,6 +283,9 @@
       </if>
       <if test="del_flag != null">
         #{del_flag,jdbcType=INTEGER},
+      </if>
+      <if test="orderFrom != null">
+        #{orderFrom,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -377,6 +384,9 @@
       <if test="del_flag != null">
         del_flag = #{del_flag,jdbcType=INTEGER},
       </if>
+      <if test="orderFrom != null">
+        orderFrom = #{orderFrom,jdbcType=INTEGER},
+      </if>
     </set>
     where ordID = #{ordID,jdbcType=VARCHAR}
   </update>
@@ -415,7 +425,8 @@
       timestamp = #{timestamp,jdbcType=DATE},
       changingRoomNumber = #{changingRoomNumber,jdbcType=VARCHAR},
       changRoomMoney = #{changRoomMoney,jdbcType=DOUBLE},
-      del_flag = #{del_flag,jdbcType=INTEGER}
+      del_flag = #{del_flag,jdbcType=INTEGER},
+      orderFrom = #{orderFrom,jdbcType=INTEGER}
     where ordID = #{ordID,jdbcType=VARCHAR}
   </update>
 
