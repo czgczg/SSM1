@@ -2,6 +2,7 @@ package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Ordermain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface OrdermainMapper {
@@ -45,5 +46,5 @@ public interface OrdermainMapper {
      */
     int updateByPrimaryKey(Ordermain record);
 
-    List<Ordermain> selectAllOrderIsBeBooking();
+    ArrayList<Ordermain> getAllOrderIsOnBooking();
 }

@@ -10,7 +10,7 @@ public class MyDateConverter implements Converter<String,Date> {
     @Override
     public Date convert(String s) {
         Date parse = null;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         try {
             parse = simpleDateFormat.parse(s);
         } catch (ParseException e) {
