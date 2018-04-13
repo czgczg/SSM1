@@ -13,7 +13,7 @@ public interface RoomsetMapper {
      * 查找所有的roomset并返回
      * @return
      */
-    @Select("SELECT * FROM roomset")
+    @Select("SELECT * FROM roomset where del_flag = 0")
     List<Roomset> findAllRoomset();
 
     /**
@@ -61,6 +61,8 @@ public interface RoomsetMapper {
     @Update("UPDATE roomset SET roomStateID = #{roomStateID}, roomStateName = #{roomStateName} WHERE id = #{id}")
     Integer updateRoomStateById(HashMap hashMap);
 
+    @Update("update roomset set roomStateID= 2 where roomNumber=#{roomNumber}")
+    int modifyRoomStatus(String roomNumber);
     /**
      * 插入房间
      * @param roomset

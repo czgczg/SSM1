@@ -384,7 +384,7 @@
    }
    
     function deletefunction(){
-     parent.document.getElementById('Mainid').src='${ctx}/Roomset/tolist.do';
+     parent.document.getElementById('Mainid').src='${ctx}/RoomSet/tolist.do';
    }
    
    
@@ -393,7 +393,7 @@
        $.ajax({                                                      
           cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
           type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/Roomset/YZ.do',       //地址 type 带参数
+          url: '${ctx}/RoomSet/YZ.do',       //地址 type 带参数
           data:"roomNumber="+value,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
           async:false,                                          // 是否 异步 提交
           success: function (result) {                          // 不出现异常 进行立面方

@@ -68,7 +68,7 @@ public class PredetermineController {
     @ResponseBody
     public List<Roomset> predetermineSelectRoom(Roomset roomset){
         //System.out.println(roomset.getRoomNumber());
-        List<Roomset> roomsets = roomsetMapper.findAllRoomset();
+        List<Roomset> roomsets = roomsetMapper.selectAllRoomset();
         //System.out.println(roomsets);
         return roomsets;
     }
@@ -130,7 +130,7 @@ public class PredetermineController {
 
 
         if(null == ordermain.getRentOutTypeName()){
-            ordermain.setRentOutTypeName(1);
+            ordermain.setRentOutTypeName("1");
         }
 
 

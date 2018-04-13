@@ -14,20 +14,30 @@
     <result column="teamname" jdbcType="VARCHAR" property="teamname" />
     <result column="receiveTargetID" jdbcType="INTEGER" property="receiveTargetID" />
     <result column="state" jdbcType="INTEGER" property="state" />
-    <result column="rentOutTypeName" jdbcType="INTEGER" property="rentOutTypeName" />
+    <result column="rentOutTypeId" jdbcType="INTEGER" property="rentOutTypeId" />
+    <result column="rentOutTypeName" jdbcType="VARCHAR" property="rentOutTypeName" />
     <result column="stayNumber" jdbcType="INTEGER" property="stayNumber" />
-    <result column="predetermineDay" jdbcType="VARCHAR" property="predetermineDay" />
+    <result column="predetermineDay" jdbcType="INTEGER" property="predetermineDay" />
     <result column="deposit" jdbcType="REAL" property="deposit" />
     <result column="payWayID" jdbcType="INTEGER" property="payWayID" />
     <result column="payWayName" jdbcType="VARCHAR" property="payWayName" />
-    <result column="arriveTime" jdbcType="DATE" property="arriveTime" />
+    <result column="arriveTime" jdbcType="TIMESTAMP" property="arriveTime" />
     <result column="roomNumber" jdbcType="VARCHAR" property="roomNumber" />
     <result column="guestRoomLevelName" jdbcType="VARCHAR" property="guestRoomLevelName" />
-    <result column="orderTime" jdbcType="DATE" property="orderTime" />
-    <result column="registerTime" jdbcType="DATE" property="registerTime" />
-    <result column="payTime" jdbcType="DATE" property="payTime" />
+    <result column="roomAmount" jdbcType="INTEGER" property="roomAmount" />
+    <result column="orderTime" jdbcType="TIMESTAMP" property="orderTime" />
+    <result column="registerTime" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="payTime" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="billUnitID" jdbcType="INTEGER" property="billUnitID" />
+    <result column="billUnitName" jdbcType="VARCHAR" property="billUnitName" />
+    <result column="passengerTypeName" jdbcType="VARCHAR" property="passengerTypeName" />
+    <result column="passengerTypeID" jdbcType="INTEGER" property="passengerTypeID" />
     <result column="sumConst" jdbcType="REAL" property="sumConst" />
+    <result column="timestamp" jdbcType="DATE" property="timestamp" />
+    <result column="changingRoomNumber" jdbcType="VARCHAR" property="changingRoomNumber" />
+    <result column="changRoomMoney" jdbcType="DOUBLE" property="changRoomMoney" />
     <result column="del_flag" jdbcType="INTEGER" property="del_flag" />
+    <result column="orderFrom" jdbcType="INTEGER" property="orderFrom" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -36,8 +46,10 @@
       This element was generated on Thu Apr 12 17:56:44 CST 2018.
     -->
     ordID, passengerOrReceiveID, commodityName, name, teamname, receiveTargetID, state,
-    rentOutTypeName, stayNumber, predetermineDay, deposit, payWayID, payWayName, arriveTime, 
-    roomNumber, guestRoomLevelName, orderTime, registerTime, payTime, sumConst, del_flag
+    rentOutTypeId, rentOutTypeName, stayNumber, predetermineDay, deposit, payWayID, payWayName,
+    arriveTime, roomNumber, guestRoomLevelName, roomAmount, orderTime, registerTime,
+    payTime, billUnitID, billUnitName, passengerTypeName, passengerTypeID, sumConst,
+    timestamp, changingRoomNumber, changRoomMoney, del_flag, orderFrom
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!--
@@ -58,20 +70,26 @@
     -->
     insert into ordermain (ordID, passengerOrReceiveID, commodityName, 
       name, teamname, receiveTargetID, 
-      state, rentOutTypeName, stayNumber,
-      predetermineDay, deposit, payWayID, 
-      payWayName, arriveTime, roomNumber, 
-      guestRoomLevelName, orderTime, registerTime, 
-      payTime, sumConst, del_flag
-      )
+      state, rentOutTypeId, rentOutTypeName,
+      stayNumber, predetermineDay, deposit,
+      payWayID, payWayName, arriveTime,
+      roomNumber, guestRoomLevelName, roomAmount,
+      orderTime, registerTime, payTime,
+      billUnitID, billUnitName, passengerTypeName,
+      passengerTypeID, sumConst, timestamp,
+      changingRoomNumber, changRoomMoney, del_flag,
+      orderFrom)
     values (#{ordID,jdbcType=VARCHAR}, #{passengerOrReceiveID,jdbcType=INTEGER}, #{commodityName,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{teamname,jdbcType=VARCHAR}, #{receiveTargetID,jdbcType=INTEGER}, 
-      #{state,jdbcType=INTEGER}, #{rentOutTypeName,jdbcType=INTEGER}, #{stayNumber,jdbcType=INTEGER},
-      #{predetermineDay,jdbcType=VARCHAR}, #{deposit,jdbcType=REAL}, #{payWayID,jdbcType=INTEGER}, 
-      #{payWayName,jdbcType=VARCHAR}, #{arriveTime,jdbcType=DATE}, #{roomNumber,jdbcType=VARCHAR}, 
-      #{guestRoomLevelName,jdbcType=VARCHAR}, #{orderTime,jdbcType=DATE}, #{registerTime,jdbcType=DATE}, 
-      #{payTime,jdbcType=DATE}, #{sumConst,jdbcType=REAL}, #{del_flag,jdbcType=INTEGER}
-      )
+      #{state,jdbcType=INTEGER}, #{rentOutTypeId,jdbcType=INTEGER}, #{rentOutTypeName,jdbcType=VARCHAR},
+      #{stayNumber,jdbcType=INTEGER}, #{predetermineDay,jdbcType=INTEGER}, #{deposit,jdbcType=REAL},
+      #{payWayID,jdbcType=INTEGER}, #{payWayName,jdbcType=VARCHAR}, #{arriveTime,jdbcType=TIMESTAMP},
+      #{roomNumber,jdbcType=VARCHAR}, #{guestRoomLevelName,jdbcType=VARCHAR}, #{roomAmount,jdbcType=INTEGER},
+      #{orderTime,jdbcType=TIMESTAMP}, #{registerTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP},
+      #{billUnitID,jdbcType=INTEGER}, #{billUnitName,jdbcType=VARCHAR}, #{passengerTypeName,jdbcType=VARCHAR},
+      #{passengerTypeID,jdbcType=INTEGER}, #{sumConst,jdbcType=REAL}, #{timestamp,jdbcType=DATE},
+      #{changingRoomNumber,jdbcType=VARCHAR}, #{changRoomMoney,jdbcType=DOUBLE}, #{del_flag,jdbcType=INTEGER},
+      #{orderFrom,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.cskaoyan.bean.Ordermain">
     <!--
@@ -102,6 +120,9 @@
       <if test="state != null">
         state,
       </if>
+      <if test="rentOutTypeId != null">
+        rentOutTypeId,
+      </if>
       <if test="rentOutTypeName != null">
         rentOutTypeName,
       </if>
@@ -129,6 +150,9 @@
       <if test="guestRoomLevelName != null">
         guestRoomLevelName,
       </if>
+      <if test="roomAmount != null">
+        roomAmount,
+      </if>
       <if test="orderTime != null">
         orderTime,
       </if>
@@ -138,11 +162,35 @@
       <if test="payTime != null">
         payTime,
       </if>
+      <if test="billUnitID != null">
+        billUnitID,
+      </if>
+      <if test="billUnitName != null">
+        billUnitName,
+      </if>
+      <if test="passengerTypeName != null">
+        passengerTypeName,
+      </if>
+      <if test="passengerTypeID != null">
+        passengerTypeID,
+      </if>
       <if test="sumConst != null">
         sumConst,
       </if>
+      <if test="timestamp != null">
+        timestamp,
+      </if>
+      <if test="changingRoomNumber != null">
+        changingRoomNumber,
+      </if>
+      <if test="changRoomMoney != null">
+        changRoomMoney,
+      </if>
       <if test="del_flag != null">
         del_flag,
+      </if>
+      <if test="orderFrom != null">
+        orderFrom,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -167,14 +215,17 @@
       <if test="state != null">
         #{state,jdbcType=INTEGER},
       </if>
+      <if test="rentOutTypeId != null">
+        #{rentOutTypeId,jdbcType=INTEGER},
+      </if>
       <if test="rentOutTypeName != null">
-        #{rentOutTypeName,jdbcType=INTEGER},
+        #{rentOutTypeName,jdbcType=VARCHAR},
       </if>
       <if test="stayNumber != null">
         #{stayNumber,jdbcType=INTEGER},
       </if>
       <if test="predetermineDay != null">
-        #{predetermineDay,jdbcType=VARCHAR},
+        #{predetermineDay,jdbcType=INTEGER},
       </if>
       <if test="deposit != null">
         #{deposit,jdbcType=REAL},
@@ -186,7 +237,7 @@
         #{payWayName,jdbcType=VARCHAR},
       </if>
       <if test="arriveTime != null">
-        #{arriveTime,jdbcType=DATE},
+        #{arriveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="roomNumber != null">
         #{roomNumber,jdbcType=VARCHAR},
@@ -194,20 +245,47 @@
       <if test="guestRoomLevelName != null">
         #{guestRoomLevelName,jdbcType=VARCHAR},
       </if>
+      <if test="roomAmount != null">
+        #{roomAmount,jdbcType=INTEGER},
+      </if>
       <if test="orderTime != null">
-        #{orderTime,jdbcType=DATE},
+        #{orderTime,jdbcType=TIMESTAMP},
       </if>
       <if test="registerTime != null">
-        #{registerTime,jdbcType=DATE},
+        #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
-        #{payTime,jdbcType=DATE},
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billUnitID != null">
+        #{billUnitID,jdbcType=INTEGER},
+      </if>
+      <if test="billUnitName != null">
+        #{billUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerTypeName != null">
+        #{passengerTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerTypeID != null">
+        #{passengerTypeID,jdbcType=INTEGER},
       </if>
       <if test="sumConst != null">
         #{sumConst,jdbcType=REAL},
       </if>
+      <if test="timestamp != null">
+        #{timestamp,jdbcType=DATE},
+      </if>
+      <if test="changingRoomNumber != null">
+        #{changingRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="changRoomMoney != null">
+        #{changRoomMoney,jdbcType=DOUBLE},
+      </if>
       <if test="del_flag != null">
         #{del_flag,jdbcType=INTEGER},
+      </if>
+      <if test="orderFrom != null">
+        #{orderFrom,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -237,14 +315,17 @@
       <if test="state != null">
         state = #{state,jdbcType=INTEGER},
       </if>
+      <if test="rentOutTypeId != null">
+        rentOutTypeId = #{rentOutTypeId,jdbcType=INTEGER},
+      </if>
       <if test="rentOutTypeName != null">
-        rentOutTypeName = #{rentOutTypeName,jdbcType=INTEGER},
+        rentOutTypeName = #{rentOutTypeName,jdbcType=VARCHAR},
       </if>
       <if test="stayNumber != null">
         stayNumber = #{stayNumber,jdbcType=INTEGER},
       </if>
       <if test="predetermineDay != null">
-        predetermineDay = #{predetermineDay,jdbcType=VARCHAR},
+        predetermineDay = #{predetermineDay,jdbcType=INTEGER},
       </if>
       <if test="deposit != null">
         deposit = #{deposit,jdbcType=REAL},
@@ -256,7 +337,7 @@
         payWayName = #{payWayName,jdbcType=VARCHAR},
       </if>
       <if test="arriveTime != null">
-        arriveTime = #{arriveTime,jdbcType=DATE},
+        arriveTime = #{arriveTime,jdbcType=TIMESTAMP},
       </if>
       <if test="roomNumber != null">
         roomNumber = #{roomNumber,jdbcType=VARCHAR},
@@ -264,20 +345,47 @@
       <if test="guestRoomLevelName != null">
         guestRoomLevelName = #{guestRoomLevelName,jdbcType=VARCHAR},
       </if>
+      <if test="roomAmount != null">
+        roomAmount = #{roomAmount,jdbcType=INTEGER},
+      </if>
       <if test="orderTime != null">
-        orderTime = #{orderTime,jdbcType=DATE},
+        orderTime = #{orderTime,jdbcType=TIMESTAMP},
       </if>
       <if test="registerTime != null">
-        registerTime = #{registerTime,jdbcType=DATE},
+        registerTime = #{registerTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
-        payTime = #{payTime,jdbcType=DATE},
+        payTime = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="billUnitID != null">
+        billUnitID = #{billUnitID,jdbcType=INTEGER},
+      </if>
+      <if test="billUnitName != null">
+        billUnitName = #{billUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerTypeName != null">
+        passengerTypeName = #{passengerTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="passengerTypeID != null">
+        passengerTypeID = #{passengerTypeID,jdbcType=INTEGER},
       </if>
       <if test="sumConst != null">
         sumConst = #{sumConst,jdbcType=REAL},
       </if>
+      <if test="timestamp != null">
+        timestamp = #{timestamp,jdbcType=DATE},
+      </if>
+      <if test="changingRoomNumber != null">
+        changingRoomNumber = #{changingRoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="changRoomMoney != null">
+        changRoomMoney = #{changRoomMoney,jdbcType=DOUBLE},
+      </if>
       <if test="del_flag != null">
         del_flag = #{del_flag,jdbcType=INTEGER},
+      </if>
+      <if test="orderFrom != null">
+        orderFrom = #{orderFrom,jdbcType=INTEGER},
       </if>
     </set>
     where ordID = #{ordID,jdbcType=VARCHAR}
@@ -295,24 +403,40 @@
       teamname = #{teamname,jdbcType=VARCHAR},
       receiveTargetID = #{receiveTargetID,jdbcType=INTEGER},
       state = #{state,jdbcType=INTEGER},
-      rentOutTypeName = #{rentOutTypeName,jdbcType=INTEGER},
+      rentOutTypeId = #{rentOutTypeId,jdbcType=INTEGER},
+      rentOutTypeName = #{rentOutTypeName,jdbcType=VARCHAR},
       stayNumber = #{stayNumber,jdbcType=INTEGER},
-      predetermineDay = #{predetermineDay,jdbcType=VARCHAR},
+      predetermineDay = #{predetermineDay,jdbcType=INTEGER},
       deposit = #{deposit,jdbcType=REAL},
       payWayID = #{payWayID,jdbcType=INTEGER},
       payWayName = #{payWayName,jdbcType=VARCHAR},
-      arriveTime = #{arriveTime,jdbcType=DATE},
+      arriveTime = #{arriveTime,jdbcType=TIMESTAMP},
       roomNumber = #{roomNumber,jdbcType=VARCHAR},
       guestRoomLevelName = #{guestRoomLevelName,jdbcType=VARCHAR},
-      orderTime = #{orderTime,jdbcType=DATE},
-      registerTime = #{registerTime,jdbcType=DATE},
-      payTime = #{payTime,jdbcType=DATE},
+      roomAmount = #{roomAmount,jdbcType=INTEGER},
+      orderTime = #{orderTime,jdbcType=TIMESTAMP},
+      registerTime = #{registerTime,jdbcType=TIMESTAMP},
+      payTime = #{payTime,jdbcType=TIMESTAMP},
+      billUnitID = #{billUnitID,jdbcType=INTEGER},
+      billUnitName = #{billUnitName,jdbcType=VARCHAR},
+      passengerTypeName = #{passengerTypeName,jdbcType=VARCHAR},
+      passengerTypeID = #{passengerTypeID,jdbcType=INTEGER},
       sumConst = #{sumConst,jdbcType=REAL},
-      del_flag = #{del_flag,jdbcType=INTEGER}
+      timestamp = #{timestamp,jdbcType=DATE},
+      changingRoomNumber = #{changingRoomNumber,jdbcType=VARCHAR},
+      changRoomMoney = #{changRoomMoney,jdbcType=DOUBLE},
+      del_flag = #{del_flag,jdbcType=INTEGER},
+      orderFrom = #{orderFrom,jdbcType=INTEGER}
     where ordID = #{ordID,jdbcType=VARCHAR}
   </update>
 
-  <select id="selectAllOrderIsBeBooking" resultType="ordermain">
-    select * from ordermain where del_flag=0 and
+  <select id="getAllOrderIsOnBooking" resultType="ordermain">
+    select * from ordermain where del_flag=0 and state=66;
+  </select>
+
+
+
+  <select id="findPartOrder" parameterType="map" resultType="ordermain">
+    SELECT * FROM ordermain  WHERE  `name` LIKE #{name} and del_flag=0   limit #{limit}  offset #{offset}
   </select>
 </mapper>
