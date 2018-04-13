@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
-
-
 @RequestMapping("/Login")
 @Controller
 public class AdminController {
 
+
     @Autowired
     AdminMapper adminMapper;
 
-    @RequestMapping("/tologin")
+    @GetMapping("/tologin.do")
     public String tologin(){
         return "/WEB-INF/jsp/login/login.jsp";
     }
 
-    @RequestMapping("/tomain")
+    @PostMapping("/tomain.do")
     public String tomain(HttpServletRequest request){
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");

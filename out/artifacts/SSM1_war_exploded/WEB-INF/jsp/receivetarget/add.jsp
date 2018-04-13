@@ -167,17 +167,20 @@
 	      <div class="row-fluid">
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">对象类别：</label>
-			      <select name="targetTypeID" class="cboone inputone">
+			      <select name="targetTypeName" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==56}" >selected="selected"</c:if>>
+			          <%--<option value="${item.far_id}" <c:if test="${item.far_id==56}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
-			          </option>
+			          </option>--%>
+						<option value="${item}" >
+							${item}
+						</option>
 			        </c:forEach> 
 		          </select>
 			  </div>
 			  <div class="span5">
 			   	  <label class="labelroomnumber" style="margin-right:16px;">负责人：</label>
-			      <input id="principalId" name="principal" class="textone inputone" 
+			      <input id="principalId" name="principal" class="textone inputone"
 			      style="height:26px;" type="text" onchange="onchangeOne()">
 			      <div id="divOne">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -197,7 +200,7 @@
 			  </div> 
 			  <div class="span5">
 			   	  <label class="labelroomnumber">团队编号：</label>
-                  <input id="teamCodeId" name="teamCode" class="textone inputone" 
+                  <input id="teamCodeId" name="teamCode" class="textone inputone"
                   style="height:26px;" type="text" onchange="onchangeOne()" onblur="YZ(this.value)">
 			      <div id="divThree">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -210,7 +213,7 @@
 	      <div class="row-fluid">
 	        <div class="span5">
 	           <label class="labelroomnumber">登记时间：</label>
-		       <input id="registerTimeId" name="registerTime" class="textone inputone" style="height:26px;" id="date" class="Wdate" type="text" 
+		       <input id="registerTimeId" name="registerTime" class="textone inputone" style="height:26px;" id="date" class="Wdate" type="text"
 		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" onchange="onchangeOne()"/>
 		       <div id="divFour">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -218,7 +221,7 @@
 		    </div>
 		    <div class="span5">
 			   	<label class="labelroomnumber">联系电话：</label>
-                <input id="contactPhoneNUmberId" name="contactPhoneNUmber" class="textone inputone" 
+                <input id="contactPhoneNUmberId" name="contactPhoneNUmber" class="textone inputone"
                 style="height:26px;" type="text" onchange="onchangeOne()">
 		        <div id="divOne">
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -302,7 +305,7 @@
    }
    
     function deletefunction(){
-     parent.document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do';
+     parent.document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do?currentPageNum=1';
    }
    
    var shijian="";

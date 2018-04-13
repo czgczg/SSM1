@@ -569,7 +569,7 @@
 			     document.getElementById("bigGuide").innerHTML=a+"";
 			     var s=document.getElementById("receiveTargetId").getElementsByTagName('span')[0].innerHTML;
 			     document.getElementById("smallGuide").innerHTML=s+"";
-			     document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do';
+			     document.getElementById('Mainid').src='${ctx}/ReceiveTarget/tolist.do?currentPageNum=1';
 			}
 			
 			function roomManage(){
