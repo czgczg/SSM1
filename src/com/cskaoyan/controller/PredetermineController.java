@@ -130,7 +130,7 @@ public class PredetermineController {
 
 
         if(null == ordermain.getRentOutTypeName()){
-            ordermain.setRentOutTypeName(1);
+            ordermain.setRentOutTypeName("1");
         }
 
 

@@ -209,50 +209,54 @@
 	      </thead>
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
-		        <c:if test="${item.remind==1}">
+				<%--原来是1改为和数据库对应 56 是团队--%>
+		        <c:if test="${item.receiveTargetID==56}">
 			        <tr style="color: red;">
-			          <td><input type="checkbox" name="id" value="${item.id}"></td>
+			          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 			          <td>${item.roomNumber}</td>
 			          <td>${item.roomGuestRoomLevelName}</td>
 			          <td>${item.roomAmount}</td>
-			          <c:if test="${item.receiveTargetID==2}">
-			              <td>${item.predetermineReceiveTargeTypeName}</td>
+			          <c:if test="${item.receiveTargetID==56}">
+			              <td>${item.teamname}</td>
 			          </c:if>
-			          <c:if test="${item.receiveTargetID!=2}">
+			          <c:if test="${item.receiveTargetID!=56}">
 			              <td style="width:12%;">${item.receiveTeamName}</td>
 			          </c:if>
 			          <td>${item.passengerName}</td>
 			          <td>${item.passengerTypeName}</td>
 			          <td>${item.changingRoomNumber}</td>
 			          <td>${item.changRoomMoney}</td>
-			          <td>${item.changRoomTime}</td>
+			          <td>${item.timestamp}</td>
 			          <td>${item.registerTime}</td>
 			          <td>${item.sumConst}</td>
-			          <td hidden>${item.isBillID}</td>
-			          <td hidden>${item.stayregisterdetailsId}</td>
+			          <td hidden>${item.orderFrom}</td>
+							<%--不知道干嘛的 先删除--%>
+							<%--<td hidden>${item.stayregisterdetailsId}</td>--%>
 			        </tr>
 		        </c:if>
-		        <c:if test="${item.remind==0}">
+				<%--默认是散客，原来是0，为了和数据库对应，改为55--%>
+		        <c:if test="${item.receiveTargetID==55}">
 			        <tr >
-			          <td><input type="checkbox" name="id" value="${item.id}"></td>
+			          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 			          <td>${item.roomNumber}</td>
-			          <td>${item.roomGuestRoomLevelName}</td>
+			          <td>${item.guestRoomLevelName}</td>
 			          <td>${item.roomAmount}</td>
-			          <c:if test="${item.receiveTargetID==2}">
-			              <td>${item.predetermineReceiveTargeTypeName}</td>
+			          <c:if test="${item.receiveTargetID==55}">
+			              <td>${item.name}</td>
 			          </c:if>
-			          <c:if test="${item.receiveTargetID!=2}">
+			          <c:if test="${item.receiveTargetID!=55}">
 			              <td>${item.receiveTeamName}</td>
 			          </c:if>
-			          <td>${item.passengerName}</td>
+			          <td>${item.name}</td>
 			          <td>${item.passengerTypeName}</td>
 			          <td>${item.changingRoomNumber}</td>
 			          <td>${item.changRoomMoney}</td>
-			          <td>${item.changRoomTime}</td>
+			          <td>${item.timestamp}</td>
 			          <td>${item.registerTime}</td>
 			          <td>${item.sumConst}</td>
-			          <td hidden>${item.isBillID}</td>
-			          <td hidden>${item.stayregisterdetailsId}</td>
+			          <td hidden>${item.orderFrom}</td>
+						<%--不知道干嘛的 先删除--%>
+			          <%--<td hidden>${item.stayregisterdetailsId}</td>--%>
 			        </tr>
 		        </c:if>
 	        </c:forEach>
@@ -393,7 +397,7 @@
 	}else{
 	  alert("请选择一条房间进行登记");
 	}
-     /* parent.document.getElementById('Mainid').src='${ctx}/StayRegister/toregister.do'; */
+     <%--/* parent.document.getElementById('Mainid').src='${ctx}/StayRegister/toregister.do'; */--%>
    }
    
    function teamRegisterfunction(){
@@ -422,7 +426,7 @@
 	}else{
 	  alert("请选择一条房间进行登记");
 	}
-     /* parent.document.getElementById('Mainid').src='${ctx}/StayRegister/toregister.do'; */
+     <%--/* parent.document.getElementById('Mainid').src='${ctx}/StayRegister/toregister.do'; */--%>
    }
    
    
