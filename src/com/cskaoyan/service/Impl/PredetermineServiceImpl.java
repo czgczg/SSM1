@@ -58,7 +58,7 @@ public class PredetermineServiceImpl implements PredetermineService{
             //订单号201804120001
             String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,5);
             ordermain.setOrdID(ordId);
-            Roomset roomset = roomsetMapper.findRoomsetById(Integer.parseInt(s));
+            Roomset roomset = roomsetMapper.findById(Integer.parseInt(s));
             ordermain.setRoomNumber(roomset.getRoomNumber());
             ordermain.setGuestRoomLevelName(roomset.getGuestRoomLevelName());
             ordermain.setSumConst(roomset.getStandardPriceDay()*Integer.valueOf(ordermain.getPredetermineDay()));
