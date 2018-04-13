@@ -211,7 +211,7 @@
 	      <div class="row-fluid">
 		     <div class="span3">
 		        <label>房间号：</label>
-		        <input id="roomNameId" name="roomName" type="text" style="width:100%;height:27px;" readonly="readonly"> 
+		        <input id="roomNameId" name="roomStateName" type="text" style="width:100%;height:27px;" readonly="readonly"> 
 		     </div>
 		     <div class="span3">
 		        <label>登记时间：</label>
@@ -336,7 +336,7 @@
 	             <input style="display: none;" value="${item.id}" />
 	             <input style="display: none;" value="${item.roomStateID}" />
 	             <label>${item.roomNumber}</label>
-	             <label style="margin-top:-5px;">${item.roomName}</label>
+	             <label style="margin-top:-5px;">${item.roomStateName}</label>
 	             <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 	             <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	             <input style="display: none;" value="${item.standardPrice}" />
@@ -349,7 +349,7 @@
 	             <input style="display: none;" value="${item.id}" />
 	             <input style="display: none;" value="${item.roomStateID}" />
 	             <label>${item.roomNumber}</label>
-	             <label style="margin-top:-5px;">${item.roomName}</label>
+	             <label style="margin-top:-5px;">${item.roomStateName}</label>
 	             <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 	             <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	             <input style="display: none;" value="${item.standardPrice}" />
@@ -362,7 +362,7 @@
 		           <input style="display: none;" value="${item.id}" />
 		           <input style="display: none;" value="${item.roomStateID}" />
 		           <label>${item.roomNumber}</label>
-		           <label style="margin-top:-5px;">${item.roomName}</label>
+		           <label style="margin-top:-5px;">${item.roomStateName}</label>
 		           <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 		           <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	             <input style="display: none;" value="${item.standardPrice}" />
@@ -375,7 +375,7 @@
 		           <input style="display: none;" value="${item.id}" />
 		           <input style="display: none;" value="${item.roomStateID}" />
 		           <label>${item.roomNumber}</label>
-		           <label style="margin-top:-5px;">${item.roomName}</label>
+		           <label style="margin-top:-5px;">${item.roomStateName}</label>
 		           <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 		           <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	               <input style="display: none;" value="${item.standardPrice}" />
@@ -388,7 +388,7 @@
 		           <input style="display: none;" value="${item.id}" />
 		           <input style="display: none;" value="${item.roomStateID}" />
 		           <label>${item.roomNumber}</label>
-		           <label style="margin-top:-5px;">${item.roomName}</label>
+		           <label style="margin-top:-5px;">${item.roomStateName}</label>
 		           <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 		           <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	               <input style="display: none;" value="${item.standardPrice}" />
@@ -401,7 +401,7 @@
 		           <input style="display: none;" value="${item.id}" />
 		           <input style="display: none;" value="${item.roomStateID}" />
 		           <label>${item.roomNumber}</label>
-		           <label style="margin-top:-5px;">${item.roomName}</label>
+		           <label style="margin-top:-5px;">${item.roomStateName}</label>
 		           <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 		           <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	               <input style="display: none;" value="${item.standardPrice}" />
@@ -414,7 +414,7 @@
 		           <input style="display: none;" value="${item.id}" />
 		           <input style="display: none;" value="${item.roomStateID}" />
 		           <label>${item.roomNumber}</label>
-		           <label style="margin-top:-5px;">${item.roomName}</label>
+		           <label style="margin-top:-5px;">${item.roomStateName}</label>
 		           <label style="margin-top:-5px;">${item.guestRoomLevelName}</label>
 		           <label style="margin-top:-5px;">￥${item.standardPriceDay}</label>
 	               <input style="display: none;" value="${item.standardPrice}" />
@@ -556,6 +556,7 @@
           data:"guestRoomLevelID="+guestRoomLevelID,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
           async:false,                                          // 是否 异步 提交
           success: function (result) {                          // 不出现异常 进行立面方
+
              for (var key in result) {
                 var item = result[key];
                 if(item.roomStateID==1){
@@ -563,7 +564,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -577,7 +578,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -591,7 +592,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -605,7 +606,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -619,7 +620,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -633,7 +634,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+
@@ -647,7 +648,7 @@
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
 			      "<label>"+item.roomNumber+"</label>"+
-			      "<label style='margin-top:-5px;'>"+item.roomName+"</label>"+
+			      "<label style='margin-top:-5px;'>"+item.roomStateName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+item.guestRoomLevelName+"</label>"+
 			      "<label style='margin-top:-5px;'>"+"￥"+item.standardPriceDay+"</label>"+
 			      "<input style='display: none;' value="+item.standardPrice+" />"+

@@ -3,6 +3,8 @@ package com.cskaoyan.dao;
 import com.cskaoyan.bean.Roomset;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -51,7 +53,7 @@ public interface RoomsetMapper {
      * 查找所有的roomset并返回
      * @return
      */
-    @Select("SELECT * FROM roomset")
+    @Select("SELECT * FROM roomset where del_flag=0")
     List<Roomset> selectAllRoomset();
 
     /**
@@ -98,4 +100,12 @@ public interface RoomsetMapper {
      */
     @Update("UPDATE roomset SET roomStateID = #{roomStateID}, roomStateName = #{roomStateName} WHERE id = #{id}")
     Integer updateRoomStateById(HashMap hashMap);
+
+    /**
+     * 发现roomset通过guestRoomLevelID
+     * @param guestRoomLevelID
+     * @return
+     */
+    @Select("SELECT * FROM roomset WHERE  del_flag=0 AND guestRoomLevelID=#{guestRoomLevelID}")
+    List<Roomset> findRoomsetByLevelID(Integer guestRoomLevelID);
 }
