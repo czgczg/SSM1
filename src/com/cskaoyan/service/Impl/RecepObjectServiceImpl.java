@@ -42,10 +42,9 @@ public class RecepObjectServiceImpl implements RecepObjectService {
     }
 
     @Override
-    public List<Recepobject> findAllRecepObjLike(String txtname) {
-        return dao.findAllRecepObjLike(txtname);
+    public int countAllRecepObjLike(String txtname) {
+        return dao.countAllRecepObjLike(txtname);
     }
-
     @Override
     public List<Recepobject> findAllRecepObjLike(PageVo pageVo) {
         return dao.findAllRecepObjLike(pageVo);

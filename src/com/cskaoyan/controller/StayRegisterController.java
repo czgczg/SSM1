@@ -1,31 +1,53 @@
 package com.cskaoyan.controller;
 
+import com.cskaoyan.bean.Listone;
+import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.dao.ListoneMapper;
+import com.cskaoyan.dao.PassengerMapper;
+import com.cskaoyan.dao.RoomsetMapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @RequestMapping("/StayRegister")
 @Controller
 public class StayRegisterController {
+    @Autowired
+    PassengerMapper passengerMapper;
+    @Autowired
+    RoomsetMapper roomsetMapper;
+    @Autowired
+    ListoneMapper listoneMapper;
+
 
 
     /*
     * 显示页面
     * */
     @GetMapping("/tolist")
-    public String roomsetToList(HttpServletRequest request){
-        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
-        String isBillID = request.getParameter("isBillID");//68未结账，69已结账
+    public String roomsetToList(Integer LvKeLeiXingId,Model model){
+//        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
+//       request.getParameter("isBillID");//68未结账，69已结账
+//
+
+        LvKeLeiXingId=  LvKeLeiXingId==null?55:LvKeLeiXingId;
+        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+
         return "/WEB-INF/jsp/stayregister/list.jsp";
     }
 /*
 * 登记
 * */
     @RequestMapping("/toregister")
-    public void toregister(HttpServletRequest request){
+    public void toregister(HttpServletRequest request,@RequestParam Integer LvKeLeiXingId){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
         String id = request.getParameter("id");
         String roomNumber = request.getParameter("roomNumber");
@@ -37,7 +59,9 @@ public class StayRegisterController {
 //选择旅客
 
     @PostMapping("/selectPassenger")
-    public void selectPassenger(){
+    public void selectPassenger(String txtname){
+        List<Passenger> passengers = passengerMapper.findPassengerByName(txtname);
+        System.out.println(passengers);
 
     }
 
@@ -51,10 +75,74 @@ public class StayRegisterController {
 /*
 *安排房间
  *  */
-    @RequestMapping("/toanrrangeroom")
-    public void toanrrangeroom(){
+    @RequestMapping("/toarrangeroom")
+    public String toanrrangeroom(Model model,@RequestParam Integer LvKeLeiXingId){
+
+        List<Listone> rendWay = listoneMapper.getRendWay(5);
+        List<Listone> passengerType = listoneMapper.getPassengerType(7);
+        List<Listone> measureUnit = listoneMapper.getMeasureUnit(6);
+        List<Listone> payWay = listoneMapper.getPayWay(4);
+       ArrayList<HashMap>listRentOutType=new ArrayList<>();
+        ArrayList<HashMap>listPassengerType=new ArrayList<>();
+        ArrayList<HashMap>listBillUnit=new ArrayList<>();
+        ArrayList<HashMap>listPayWay=new ArrayList<>();
+        listRentOutType=getHashMaps(rendWay,listRentOutType);
+        listPassengerType=getHashMaps(passengerType,listPassengerType);
+        listBillUnit=getHashMaps(measureUnit,listBillUnit);
+        listPayWay=getHashMaps(payWay,listPayWay);
+        if(LvKeLeiXingId==55){
+            listBillUnit.remove(1);
+        }
+        if(LvKeLeiXingId==56){
+            listBillUnit.remove(0);
+        }
+           model.addAttribute("listRentOutType",listRentOutType);//出租方式
+            model.addAttribute("listPassengerType",listPassengerType);//旅客类别
+            model.addAttribute("listBillUnit",listBillUnit);//结账单位
+            model.addAttribute("listPayWay",listPayWay);//支付方式
+        List<Roomset> result=roomsetMapper.selectAllRoomset();
+          model.addAttribute("list",result);
+          model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
 
     }
+
+    private ArrayList<HashMap> getHashMaps(List<Listone> payWay,ArrayList<HashMap>listRentOutType) {
+
+
+        for (Listone i:payWay) {
+            HashMap<String, String> j = new HashMap<>();
+            j.put("far_id", i.getId().toString());
+            j.put("attributeDetailsName", i.getAttributeDetailsName());
+            listRentOutType.add(j);
+        }
+        return listRentOutType;
+    }
+
+    //选择房间类型，根据房间类型查询。
+    @RequestMapping("/guestRoomLevelSelectRoom")
+    @ResponseBody
+        public List<Roomset>guestRoomLevelSelectRoom(@RequestParam Integer guestRoomLevelID) {
+            if(guestRoomLevelID==0){
+                List<Roomset> result=roomsetMapper.selectAllRoomset();
+                return result;
+            }
+
+        List<Roomset> result = roomsetMapper.findRoomsetByLevelID(guestRoomLevelID);
+
+           return result;
+
+    }
+
+
+
+    //保存到数据库并转发
+    @RequestMapping("/arrangeroom")
+    public String arrangeroom(Model model) {
+
+        return "/WEB-INF/jsp/stayregister/list.jsp";
+    }
+
 /*
 * 换房
 * */
@@ -65,7 +153,16 @@ public void tochangeroom(HttpServletRequest request){
     String lvKeName = request.getParameter("lvKeName");
 
 }
-//选择房间
+
+
+
+
+
+
+
+
+
+
     @RequestMapping("/changeRoomSelectPassenger")
     public void changeRoomSelectPassenger(){
 

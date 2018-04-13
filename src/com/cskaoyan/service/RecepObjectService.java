@@ -11,6 +11,6 @@ public interface RecepObjectService {
     boolean updateRecept(Recepobject recepobject);
     Recepobject findReceptById(int id);
     boolean deleteRecept(int id);
-    List<Recepobject> findAllRecepObjLike(String txtname);
+    int countAllRecepObjLike(String txtname);
     List<Recepobject> findAllRecepObjLike(PageVo pageVo);
 }

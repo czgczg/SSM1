@@ -35,4 +35,5 @@ public interface RecepobjectMapper {
     List<Recepobject> findAllRecepObjLike(String txtname);
 
     List<Recepobject> findAllRecepObjLike(PageVo pageVo);
+    int countAllRecepObjLike(String txtname);
 }
