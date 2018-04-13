@@ -391,14 +391,14 @@
           alert("你还没有添加对象信息哦！")
         }else{
           parent.document.getElementById('Mainid').src='${ctx}/Predetermine/toadd.do?id='+one+
-          '&name='+teamName+'&type=1';
+          '&name='+teamName+'&type=56';
         }
      }else{
        if(two == "" ){
           alert("你还没有添加旅客信息哦！")
         }else{
           parent.document.getElementById('Mainid').src='${ctx}/Predetermine/toadd.do?id='+two+
-          '&name='+lvKeName+'&type=2';
+          '&name='+lvKeName+'&type=55';
         }
      }
      
@@ -613,8 +613,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPage}22,
+     current:${list.currentPage}22,
      backFn:function(p){
      var txtname=document.getElementById("txtnameid").value;
      var state=document.getElementById("stateId").value;
