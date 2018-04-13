@@ -95,4 +95,12 @@ public interface RoomsetMapper {
             "standardPrice=#{standardPrice},maxDuration=#{maxDuration},firstDuration=#{firstDuration}," +
             "roomStateName=#{roomStateName},guestRoomLevelName=#{guestRoomLevelName} WHERE del_flag=0 AND id=#{id}")
     int updateById(Roomset roomset);
+
+    /**
+     * 发现roomset通过guestRoomLevelID
+     * @param guestRoomLevelID
+     * @return
+     */
+    @Select("SELECT * FROM roomset WHERE  del_flag=0 AND guestRoomLevelID=#{guestRoomLevelID}")
+    List<Roomset> findRoomsetByLevelID(Integer guestRoomLevelID);
 }

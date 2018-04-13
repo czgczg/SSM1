@@ -1,6 +1,5 @@
 package com.cskaoyan.dao;
 
-import com.cskaoyan.*;
 import com.cskaoyan.bean.Admin;
 
 import java.util.HashMap;
