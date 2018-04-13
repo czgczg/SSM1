@@ -1,8 +1,10 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Ordermain;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public interface OrdermainMapper {
@@ -46,5 +48,17 @@ public interface OrdermainMapper {
      */
     int updateByPrimaryKey(Ordermain record);
 
-    ArrayList<Ordermain> getAllOrderIsOnBooking();
+    List<Ordermain> selectAllOrderIsBeBooking();
+
+    /**
+    *修改订单状态为未结账
+     */
+    @Update("update ordermain set state=68")
+    int modifyOrderStatus();
+
+    @Select("select count(*) from ordermain ")
+    int findAllOrderCount();
+
+     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
+
 }

@@ -7,8 +7,9 @@ import java.util.List;
 public class Page<T>
 {
 
-
+    //修改分页要显示的每页的记录条数
     public static final int PASSENGER__NUM_PER_PAGE =3;
+    public static final int ORDERMAIN__NUM_PER_PAGE =8;
 
     private  int totalCount;  //总记录数
 
@@ -83,7 +84,6 @@ public class Page<T>
         this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
 
     }
-
 
     @Override
     public String toString() {
