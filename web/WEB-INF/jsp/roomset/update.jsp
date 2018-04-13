@@ -157,7 +157,7 @@
       </fieldset>
     </div>
     
-    <form action="${ctx}/RoomSet/update.do" method="post" onsubmit="return verify()">
+    <form action="${ctx}/Roomset/update.do" method="post" onsubmit="return verify()">
 	   <input type="hidden" name="id" value="${listPo.id}">
 	    <div class="span12 margin-top-two">
 	      <div class="row-fluid">

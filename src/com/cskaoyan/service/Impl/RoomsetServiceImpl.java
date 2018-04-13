@@ -39,18 +39,18 @@ public class RoomsetServiceImpl implements RoomsetService{
     @Override
     public boolean insertRoomset(Roomset roomset) {
         Integer roomStateID = roomset.getRoomStateID();
-        Roomsetstatus roomsetstatus = roomsetstatusMapper.selectByPrimaryKey(roomStateID);
+        Roomsetstatus roomsetstatus = roomsetstatusMapper.findStatusByPrimaryKey(roomStateID);
         roomset.setRoomStateName(roomsetstatus.getAttributeDetailsName());
         Integer guestRoomLevelID = roomset.getGuestRoomLevelID();
-        Roomsettype roomsettype = roomsettypeMapper.selectByPrimaryKey(guestRoomLevelID);
+        Roomsettype roomsettype = roomsettypeMapper.findByPrimaryKey(guestRoomLevelID);
         roomset.setGuestRoomLevelName(roomsettype.getAttributeDetailsName());
-        int i = roomsetMapper.insertSelective(roomset);
+        Integer i = roomsetMapper.insertRoomset(roomset);
         return i==1;
     }
 
     @Override
     public List<Roomset> findAllRoomset() {
-        return roomsetMapper.selectAllRoomset();
+        return roomsetMapper.findAllRoomset();
     }
 
     @Override
@@ -61,20 +61,20 @@ public class RoomsetServiceImpl implements RoomsetService{
 
     @Override
     public Roomset findRoomsetById(int id) {
-        Roomset roomset = roomsetMapper.selectByPrimaryKey(id);
+        Roomset roomset = roomsetMapper.findById(id);
         return roomset;
     }
 
     @Override
     public boolean updateRoomsetById(Roomset roomset) {
         Integer roomStateID = roomset.getRoomStateID();
-        Roomsetstatus roomsetstatus = roomsetstatusMapper.selectByPrimaryKey(roomStateID);
+        Roomsetstatus roomsetstatus = roomsetstatusMapper.findStatusByPrimaryKey(roomStateID);
         roomset.setRoomStateName(roomsetstatus.getAttributeDetailsName());
         Integer guestRoomLevelID = roomset.getGuestRoomLevelID();
-        Roomsettype roomsettype = roomsettypeMapper.selectByPrimaryKey(guestRoomLevelID);
+        Roomsettype roomsettype = roomsettypeMapper.findByPrimaryKey(guestRoomLevelID);
         roomset.setGuestRoomLevelName(roomsettype.getAttributeDetailsName());
         roomset.setDel_flag(0);
-        int i = roomsetMapper.updateByPrimaryKey(roomset);
+        int i = roomsetMapper.updateById(roomset);
         return i==1;
     }
 
@@ -85,21 +85,21 @@ public class RoomsetServiceImpl implements RoomsetService{
         } else {
             txtname = "%" + txtname + "%";
         }
-        Page<Roomset> roomsetPage = new Page<>();
+        Page<Roomset> page = new Page<>();
         HashMap<String, Object> hashMap = new HashMap<>();
-        Integer sumCount = roomsetMapper.selectAllCountRoomset();
+        Integer sumCount = roomsetMapper.findAllCountRoomset();
         if(sumCount != null) {
             final int PAGE_NUMBER = 5;
-            roomsetPage.setCurrentPage(currentPage);
+            page.setCurrentPage(currentPage);
             int i = sumCount / PAGE_NUMBER;
-            roomsetPage.setTotalPage(sumCount % PAGE_NUMBER == 0 ? i : i + 1);
+            page.setTotalPage(sumCount % PAGE_NUMBER == 0 ? i : i + 1);
             hashMap.put("txtname", txtname);
             hashMap.put("offset", PAGE_NUMBER * (currentPage - 1));
             hashMap.put("limit", PAGE_NUMBER);
-            List<Roomset> listRoomset = roomsetMapper.findPartRoomset(hashMap);
-            roomsetPage.setResult(listRoomset);
+            List<Roomset> list = roomsetMapper.findPartRoomset(hashMap);
+            page.setResult(list);
         }
-        return roomsetPage;
+        return page;
     }
 
     @Override

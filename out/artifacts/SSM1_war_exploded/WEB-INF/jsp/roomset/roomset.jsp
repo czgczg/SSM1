@@ -73,10 +73,10 @@
     <div class="span5">
 	    <div class="row-fluid">
 		    <label class="labelroomnumber">房间号：</label>
-		    <form action="${ctx}/RoomSet/tolist.do" method="post" style="float: left;">
+		    <form action="${ctx}/Roomset/tolist.do" method="post" style="float: left;">
 			   <input id="txtnameid" name="txtname" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
 			   <div class="input-append">  
-			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
+			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;" ><li class="icon-search icon-white"></li>搜索</button>
 			   </div>
 		    </form>
 	    </div>
@@ -117,40 +117,42 @@
 	      </thead>
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
+				<c:if test="${item.del_flag==0}">
 		        <tr>
 		          <td><input type="checkbox" name="id" value="${item.id}"></td>
-		          <td>${item.roomNumber}</td>
-		          <td>${item.guestRoomLevelName}</td>
+		          <td>${item.roomNumber}</td><!-- 房间号 -->
+		          <td>${item.guestRoomLevelName}</td><!-- 房间等级 -->
 		          
-		          <c:if test="${item.roomStateID==1}">
-		            <td style="background:#99FF99;">${item.roomName}</td>
+		          <c:if test="${item.roomStateID!=null}">
+		            <td style="background:#99FF99;">${item.roomStateName}</td><!-- 房态 -->
 		          </c:if>
-		          <c:if test="${item.roomStateID==2}">
-		            <td style="background:#DDDDDD;">${item.roomName}</td>
-		          </c:if>
-		          <c:if test="${item.roomStateID==4}">
-		            <td style="background:#99FFFF;">${item.roomName}</td>
-		          </c:if>
-		          <c:if test="${item.roomStateID==5}">
-		            <td style="background:#BBBB00;">${item.roomName}</td>
-		          </c:if>
-		          <c:if test="${item.roomStateID==6}">
-		            <td style="background:#FF7744;">${item.roomName}</td>
-		          </c:if>
-		          <c:if test="${item.roomStateID==7}">
-		            <td style="background:#FF0088;">${item.roomName}</td>
-		          </c:if>
-		          <c:if test="${item.roomStateID==65}">
-		            <td style="background:#FF00FF;">${item.roomName}</td>
-		          </c:if>
+		          <%--<c:if test="${item.roomStateID==2}">--%>
+		            <%--<td style="background:#DDDDDD;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
+		          <%--<c:if test="${item.roomStateID==4}">--%>
+		            <%--<td style="background:#99FFFF;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
+		          <%--<c:if test="${item.roomStateID==5}">--%>
+		            <%--<td style="background:#BBBB00;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
+		          <%--<c:if test="${item.roomStateID==6}">--%>
+		            <%--<td style="background:#FF7744;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
+		          <%--<c:if test="${item.roomStateID==7}">--%>
+		            <%--<td style="background:#FF0088;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
+		          <%--<c:if test="${item.roomStateID==65}">--%>
+		            <%--<td style="background:#FF00FF;">${item.roomStateID}</td>--%>
+		          <%--</c:if>--%>
 		          
-		          <td>${item.roomAmount}</td>
+		          <td>${item.roomAmount}</td><!-- 床位数 -->
 		          <td>￥${item.standardPriceDay}</td>
 		          <td>￥${item.standardPrice}</td>
 		          <td>${item.maxDuration}</td>
 		          <td>${item.firstDuration}</td>
 		          <td>￥${item.firstPrice}</td>
 		        </tr>
+				</c:if>
 	        </c:forEach>
 	      </tbody>
 	    </table>
@@ -168,7 +170,7 @@
  
  <script type="text/javascript">
    function addfunction(){
-     parent.document.getElementById('Mainid').src='${ctx}/RoomSet/toadd.do';
+     parent.document.getElementById('Mainid').src='${ctx}/Roomset/toadd.do';
    }
    
    function updatefunction(){
@@ -180,7 +182,7 @@
 		if(chk_value.toString().indexOf(",")>0){
 		   alert("修改只能选择一条");
 		}else{
-		   parent.document.getElementById("Mainid").src='${ctx}/RoomSet/toupdate.do?id='+chk_value;
+		   parent.document.getElementById("Mainid").src='${ctx}/Roomset/toupdate.do?id='+chk_value;
 		}
 	}else{
 	  alert("请选择一条数据进行修改");
@@ -195,7 +197,7 @@
   	if(chk_value!=""){
   	var flag=window.confirm("注意：您确定要永久删除该信息吗?");
      if(flag){
-  	  parent.document.getElementById("Mainid").src='${ctx}/RoomSet/delete.do?id='+chk_value;
+  	  parent.document.getElementById("Mainid").src='${ctx}/Roomset/delete.do?id='+chk_value;
   	}
   	}else{
 	  alert("请选择一条或多条数据进行删除");
@@ -205,56 +207,58 @@
   
   
   
-  /* function selectFunction(){
-    var tbody = document.getElementById("tbody");
-    var name=document.getElementById("txtnameid").value;
-    var i=0;
-    
-    $("#tbody").empty();                              //删除所有行
-    $.ajax({                                                      
-          cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
-          type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/RoomSet/fuzzyfind.do',       //地址 type 带参数
-          data:"txtname="+name,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
-//        dataType:"json",                                       // json 数据类型提交 
-          async:false,  
-          success: function (result) {  
-            for (var key in result) { 
-                i++;               
-                var item = result[key];
-                var tr = tbody.insertRow(-1); //FireFox必须使用-1这个参数
-               
-                var tdcheckbox = tr.insertCell(-1);
-                var tdroomNumber = tr.insertCell(-1);
-                var tdguestRoomLevelName = tr.insertCell(-1);
-                var tdroomName = tr.insertCell(-1);
-                var tdroomAmount = tr.insertCell(-1);
-                var tdstandardPriceDay = tr.insertCell(-1);
-                var tdstandardPrice = tr.insertCell(-1);
-                var tdmaxDuration = tr.insertCell(-1);
-                var tdfirstDuration = tr.insertCell(-1);
-                var tdfirstPrice = tr.insertCell(-1);
-                
-                tdcheckbox.innerHTML = "<input type='checkbox' name='id' value='"+item.id+"'>";
-                tdroomNumber.innerHTML = item.roomNumber;
-                tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;
-                tdroomName.innerHTML =item.roomName;
-                tdroomAmount.innerHTML =item.roomAmount;
-                tdstandardPriceDay.innerHTML ="￥"+item.standardPriceDay;
-                tdstandardPrice.innerHTML ="￥"+item.standardPrice;
-                tdmaxDuration.innerHTML =item.maxDuration;
-                tdfirstDuration.innerHTML =item.firstDuration;
-                tdfirstPrice.innerHTML ="￥"+item.firstPrice;
-            }
-            if(i==0){
-              alert("很抱歉！没有查找到你要找的数据");
-            }               
-          },
-          error: function(data) {
-           
-           }
-      });
-   } */
+<%--function selectFunction(){--%>
+    <%--var tbody = document.getElementById("tbody");--%>
+    <%--var name=document.getElementById("txtnameid").value;--%>
+    <%--var i=0;--%>
+	<%--alert("gogogo")--%>
+    <%--$("#tbody").empty();                              //删除所有行--%>
+    <%--$.ajax({--%>
+          <%--cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交--%>
+          <%--type: "POST",                                           //上面3行都是必须要的--%>
+          <%--url: '${ctx}/Roomset/fuzzyfind.do',      				  //地址 type 带参数--%>
+          <%--data:"txtname="+name,                         // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取--%>
+	      <%--dataType:"json",                                       // json 数据类型提交--%>
+          <%--async:false,--%>
+          <%--success: function (result) {--%>
+              <%--alert(result)--%>
+            <%--for (var key in result) {--%>
+                  <%--alert("111")--%>
+                <%--i++;--%>
+                <%--var item = result[key];--%>
+                <%--var tr = tbody.insertRow(-1); //FireFox必须使用-1这个参数--%>
+
+                <%--var tdcheckbox = tr.insertCell(-1);--%>
+                <%--var tdroomNumber = tr.insertCell(-1);--%>
+                <%--var tdguestRoomLevelName = tr.insertCell(-1);--%>
+                <%--var tdroomName = tr.insertCell(-1);--%>
+                <%--var tdroomAmount = tr.insertCell(-1);--%>
+                <%--var tdstandardPriceDay = tr.insertCell(-1);--%>
+                <%--var tdstandardPrice = tr.insertCell(-1);--%>
+                <%--var tdmaxDuration = tr.insertCell(-1);--%>
+                <%--var tdfirstDuration = tr.insertCell(-1);--%>
+                <%--var tdfirstPrice = tr.insertCell(-1);--%>
+
+                <%--tdcheckbox.innerHTML = "<input type='checkbox' name='id' value='"+item.id+"'>";--%>
+                <%--tdroomNumber.innerHTML = item.roomNumber;--%>
+                <%--tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;--%>
+                <%--tdroomName.innerHTML =item.roomName;--%>
+                <%--tdroomAmount.innerHTML =item.roomAmount;--%>
+                <%--tdstandardPriceDay.innerHTML ="￥"+item.standardPriceDay;--%>
+                <%--tdstandardPrice.innerHTML ="￥"+item.standardPrice;--%>
+                <%--tdmaxDuration.innerHTML =item.maxDuration;--%>
+                <%--tdfirstDuration.innerHTML =item.firstDuration;--%>
+                <%--tdfirstPrice.innerHTML ="￥"+item.firstPrice;--%>
+            <%--}--%>
+            <%--if(i==0){--%>
+              <%--alert("很抱歉！没有查找到你要找的数据");--%>
+            <%--}--%>
+          <%--},--%>
+          <%--error: function(data) {--%>
+				<%--alert("error")--%>
+           <%--}--%>
+      <%--});--%>
+   <%--}--%>
    
    
    
@@ -263,8 +267,8 @@
      pageCount:${list.totalPage},
      current:${list.currentPage},
      backFn:function(p){
-     var txtname=document.getElementById("txtnameid").value;
-     location.href="${ctx}/RoomSet/tolist.do?currentPage="+p+"&txtname="+txtname;
+		 var txtname=document.getElementById("txtnameid").value;
+		 location.href="${ctx}/Roomset/tolist.do?currentPage="+p+"&txtname="+txtname;
      }
    });
   
