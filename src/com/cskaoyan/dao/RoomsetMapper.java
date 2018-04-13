@@ -78,7 +78,7 @@ public interface RoomsetMapper {
     Integer insertRoomset(Roomset roomset);
 
     /**
-     * 根据主键查找房间
+     * 根据主键查找 房间
      * @param id
      * @return
      */
