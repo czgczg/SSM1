@@ -69,12 +69,13 @@ public interface RoomsetstatusMapper {
     @Select("SELECT * FROM roomsetstatus")
     List<Roomsetstatus> findAllRoomsetstatus();
 
-
     /**
-     * 查找通过id查找房间状态并返回
+     * 根据主键查找相印的status
+     * @param far_id
      * @return
      */
-    @Select("select attributeDetailsName from roomsetstatus where del_flag=0 and far_id=#{far_id} ")
-    String findRoomsetstatusById(String far_id);
+    @Select("SELECT * FROM roomsetstatus WHERE far_id=#{far_id}")
+    Roomsetstatus findStatusByPrimaryKey(int far_id);
+
 
 }

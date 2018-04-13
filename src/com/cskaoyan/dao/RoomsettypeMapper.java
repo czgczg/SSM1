@@ -37,6 +37,6 @@ public interface RoomsettypeMapper {
      * @param guestRoomLevelID
      * @return
      */
-    //@Select("SELECT * FROM roomsettype WHERE far_id = #{guestRoomLevelID}")
-    Roomsettype selectByPrimaryKey(Integer guestRoomLevelID);
+    @Select("SELECT * FROM roomsettype WHERE far_id = #{guestRoomLevelID}")
+    Roomsettype findByPrimaryKey(Integer guestRoomLevelID);
 }

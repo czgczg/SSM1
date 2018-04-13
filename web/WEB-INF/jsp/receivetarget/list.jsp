@@ -73,7 +73,7 @@
     <div class="span5">
 	    <div class="row-fluid">
 		    <label class="labelroomnumber">团队名称：</label>
-		    <form action="${ctx}/ReceiveTarget/tolist.do" method="post" style="float: left;">
+		    <form action="${ctx}/ReceiveTarget/tolist.do?currentPageNum=1" method="post" style="float: left;">
 			   <input id="txtnameid" name="txtname" class="textone roomnumberwidth" style="border-radius:0px; border-top-left-radius:4px; border-bottom-left-radius:4px;height:26px;" type="text" placeholder="请输入关键字" value="${txtname}">
 			   <div class="input-append">  
 			      <button type="submit" class="btn-success textone" style="margin-left:-4px;height:26px;"><li class="icon-search icon-white"></li>搜索</button>
@@ -109,7 +109,7 @@
 	        </tr>
 	      </thead>
 	      <tbody id="tbody">
-	        <c:forEach items="${list.result}" var="item">
+	        <c:forEach items="${list.records}" var="item">
 		        <tr>
 		          <td><input type="checkbox" name="id" value="${item.id}"></td>
 		          <td>${item.targetTypeName}</td>
@@ -180,11 +180,11 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPageNum},
+     current:${list.currentPageNum},
      backFn:function(p){
      var txtname=document.getElementById("txtnameid").value;
-     location.href="${ctx}/ReceiveTarget/tolist.do?currentPage="+p+"&txtname="+txtname;
+     location.href="${ctx}/ReceiveTarget/tolist.do?currentPageNum="+p+"&txtname="+txtname;
      }
    });
   

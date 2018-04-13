@@ -2,8 +2,7 @@ package com.cskaoyan.dao;
 
 
 
-
-import com.cskaoyan.bean.Listone;
+import com.cskaoyan.vo.Listone;
 
 import java.util.List;
 

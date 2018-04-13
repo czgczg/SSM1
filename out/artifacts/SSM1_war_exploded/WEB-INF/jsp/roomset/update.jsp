@@ -16,7 +16,6 @@
 	<meta http-equiv="description" content="This is my page">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	
 <!--   <link rel="stylesheet" href="${ctx}/css/roomset/roomset.css" type="text/css"></link> -->
   <link rel="stylesheet" href="${ctx}/bootstrap/css/bootstrap.css" type="text/css"></link>
   <link href="${ctx}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">  <!-- start 响应式布局要添加的 -->
@@ -158,7 +157,7 @@
       </fieldset>
     </div>
     
-    <form action="${ctx}/RoomSet/update.do" method="post" onsubmit="return verify()">
+    <form action="${ctx}/Roomset/update.do" method="post" onsubmit="return verify()">
 	   <input type="hidden" name="id" value="${listPo.id}">
 	    <div class="span12 margin-top-two">
 	      <div class="row-fluid">

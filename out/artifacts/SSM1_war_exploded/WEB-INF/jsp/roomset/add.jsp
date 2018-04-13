@@ -16,7 +16,6 @@
 	<meta http-equiv="description" content="This is my page">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	
 <!--   <link rel="stylesheet" href="${ctx}/css/roomset/roomset.css" type="text/css"></link> -->
   <link rel="stylesheet" href="${ctx}/bootstrap/css/bootstrap.css" type="text/css"></link>
   <link href="${ctx}/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">  <!-- start 响应式布局要添加的 -->
