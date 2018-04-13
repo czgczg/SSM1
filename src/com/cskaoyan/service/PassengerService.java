@@ -23,4 +23,7 @@ public interface PassengerService {
 
     void deletePassenger(Passenger passenger);
 
+    Passenger findPassengerById(Integer id);
+
+
 }

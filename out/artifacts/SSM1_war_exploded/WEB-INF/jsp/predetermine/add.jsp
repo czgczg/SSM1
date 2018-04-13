@@ -292,7 +292,7 @@
                 tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
                 tdroomNumber.innerHTML = item.roomNumber;
                 tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;
-                tdroomName.innerHTML =item.roomName;         //中间这个是数据
+                tdroomName.innerHTML =item.roomStateName;         //中间这个是数据
                 tdroomAmount.innerHTML =item.roomAmount;
                 tdstandardPriceDay.innerHTML ='￥'+item.standardPriceDay;
             }

@@ -9,6 +9,7 @@
     <typeAliases>
         <package name="com.cskaoyan.bean"/>
         <package name="com.cskaoyan.dao"/>
+        <package name="com.cskaoyan.vo"/>
     </typeAliases>
    <!-- <mappers>
         &lt;!&ndash;扫描dao包下所有的接口，然后找到对应的接口的xml实现文件&ndash;&gt;

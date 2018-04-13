@@ -2,6 +2,7 @@ package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Passenger;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.HashMap;
@@ -82,6 +83,10 @@ public interface PassengerMapper {
 
 
     void deletePassenger(Passenger passenger);
+
+    @Select("select * from passenger where id=#{id}")
+    Passenger findPassengerById(Integer integer);
+
 
 
     /**

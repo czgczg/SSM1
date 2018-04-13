@@ -167,7 +167,7 @@
     
     <form action="${ctx}/Passenger/update.do" method="post" onsubmit="return verify()">
     <!--  ———————————————————————————————————————————————————————————————————————————————————————— -->
-	    <input type="hidden" name="id" value="${list.result.id}" />
+	    <input type="hidden" name="id" value="${list.id}" />
 	    <div class="span12">
 	      <div class="row-fluid">
 		     <div class="span3">
