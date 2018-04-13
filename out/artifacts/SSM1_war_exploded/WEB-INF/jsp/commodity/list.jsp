@@ -128,8 +128,8 @@
 		          <td><input type="checkbox" name="id" value="${item.id}"></td>
 		          <td>${item.commodityName}</td>
 		          <td>${item.commodityTypeName}</td>
-		          <td>${item.uOMName}</td>
-		          <td>${item.salePrice}</td>
+		          <td>${item.commodityMeasurementName}</td>
+		          <td>${item.commodityPrice}</td>
 		        </tr>
 	        </c:forEach>
 	      </tbody>
@@ -197,7 +197,6 @@
 
  <script type="text/javascript">
    function addfunction(){
-       alert(111);
      parent.document.getElementById('Mainid').src='${ctx}/Commodity/toadd.do';
    }
 

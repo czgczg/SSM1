@@ -441,12 +441,12 @@
    
    function teamArrangefunction(){
      var tuanDuiID=document.getElementById("tuanDuiId").value;
-     if(tuanDuiID!=""){
+     // if(tuanDuiID!=""){
         parent.document.getElementById('Mainid').src='${ctx}/StayRegister/toarrangeroom.do?tuanDuiID='+tuanDuiID+
         '&LvKeLeiXingId='+56;
-     }else{
-        alert("请选择对象再安排房间！");
-     }
+     // }else{
+     //    alert("请选择对象再安排房间！");
+     // }
    }
    
    function changroomfunction(){
@@ -909,8 +909,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPage}10086,
+     current:${list.currentPage}10086,
      backFn:function(p){
       var isBillID=document.getElementById("isBillID").value;
       var txtname=document.getElementById("txtnameid").value;

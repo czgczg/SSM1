@@ -172,9 +172,9 @@
 			  </div> 
 			  <div class="span5 ">
 			   	  <label class="labelroomnumber">商品类别：</label>
-			      <select name="commodityTypeID" class="cboone inputone">
+			      <select name="commodityTypeId" class="cboone inputone">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.commodityTypeID}" >selected="selected"</c:if>>
+			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.commodityTypeId}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -189,7 +189,7 @@
                   <div class="input-prepend" style="float:left;">
 			        <span class="add-on" style="margin-top: 12px; height: 16px;">&yen;</span>
 			      </div>
-			      <input id="salePriceId" name="salePrice" class="textone inputthree radiusone" onchange="onchangeOne()" value="${listPo.salePrice}"
+			      <input id="salePriceId" name="commodityPrice" class="textone inputthree radiusone" onchange="onchangeOne()" value="${listPo.commodityPrice}"
 			      style="float:left;border-radius:0px; border-top-right-radius:4px; border-bottom-right-radius:4px; height:26px;" type="text">
 			      <div id="divTwo" hidden>
 			         <label class="yansered" style="margin-top:18px;">*</label>
@@ -197,9 +197,9 @@
 			  </div> 
 			  <div class="span5">
 			   	  <label class="labelroomnumber">计量单位：</label>
-			      <select name="uOMID" class="cboone inputone">
+			      <select name="commodityMeasurementId" class="cboone inputone">
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.uOMID}">selected="selected"</c:if>>
+			          <option value="${item.far_id}" <c:if test="${item.far_id==listPo.commodityMeasurementId}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 

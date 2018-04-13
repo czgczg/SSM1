@@ -73,7 +73,6 @@ public class RoomsetController {
      */
     @RequestMapping("/toupdate")
     public String toupdate(int id,Model model){
-
         List<Roomsetstatus> listStatus;
         List<Roomsettype> listType;
         Roomset roomset;
