@@ -13,16 +13,15 @@
     SELECT * FROM passenger WHERE del_flag=0;
   </select>
 
-
   <select id="findAllPassengerCount" resultType="int">
     SELECT count(*) FROM passenger
   </select>
 
-
   <insert id="addPassenger" parameterType="passenger" >
-    INSERT INTO passenger VALUES (NULL ,#{name},#{genderID},#{birthDate},#{nationID},#{licenceIssuingAuthorty}
-    ,#{papersValidity},#{profession},#{educationDegreeID},#{passengerLevelID},#{papersID},#{papersNumber},
-    #{unitsOrAddress},#{thingReasonID},#{whereAreFrom},#{whereToGo},#{contactPhoneNumber},#{remarks},#{del_flag})
+    INSERT INTO passenger VALUES (NULL ,#{name},#{genderID},#{genderName},#{birthDate},#{nationID},#{nationName},#{licenceIssuingAuthorty}
+    ,#{papersValidity},#{profession},#{educationDegreeID},#{educationDegreeName},#{passengerLevelID},#{passengerLevelName},#{papersID},
+    #{papersName},#{papersNumber},#{unitsOrAddress},#{thingReasonID},#{thingReasonName},#{whereAreFrom},#{whereToGo},
+    #{contactPhoneNumber},#{remarks},0)
   </insert>
 
 
@@ -32,12 +31,30 @@
   <!--</resultMap>-->
   <!--查出旅客的信息，但是下拉的是id属性，需要转换成对应的具体的属性名称，可以用id去连接查询，但是在哪里去接收？-->
   <select id="findPartPassenger" parameterType="map" resultType="passenger">
-    SELECT * FROM passenger limit #{limit}  offset #{offset}
+    SELECT * FROM passenger  WHERE  `name` LIKE #{name}   limit #{limit}  offset #{offset}
   </select>
 
   <select id="findPassengerAttributeByID"  parameterType="int" resultType="string">
     SELECT  attributeDetailsName FROM listone LEFT JOIN listtwo ON listtwo.id=listone.`attributeID` WHERE listOne.`id`=#{xxx};
   </select>
+
+
+  <!--更新旅客信息-->
+  <update id="updatePassenger" parameterType="passenger" >
+
+    UPDATE passenger SET name=#{name},genderID=#{genderID},genderName=#{genderName},birthDate=#{birthDate},nationID=#{nationID},
+    nationName=#{nationName},licenceIssuingAuthorty=#{licenceIssuingAuthorty},papersValidity=#{papersValidity},profession=#{profession},
+    educationDegreeID=#{educationDegreeID},educationDegreeName=#{educationDegreeName},passengerLevelID=#{passengerLevelID}
+    ,passengerLevelName=#{passengerLevelName},papersID=#{papersID}, papersName=#{papersName},papersNumber=#{papersNumber},
+    unitsOrAddress=#{unitsOrAddress},thingReasonID=#{thingReasonID},thingReasonName=#{thingReasonName},whereAreFrom=#{whereAreFrom},
+    whereToGo=#{whereToGo},  contactPhoneNumber=#{contactPhoneNumber},remarks=#{remarks},del_flag=0 WHERE `name`=#{name}
+  </update>
+
+  <update id="deletePassenger" parameterType="passenger">
+
+    UPDATE passenger SET del_flag=1 WHERE `id`=#{id}
+
+  </update>
   <!--mybaits逆向工程自动生成的-->
   <resultMap id="BaseResultMap" type="com.cskaoyan.bean.Passenger">
     <!--
