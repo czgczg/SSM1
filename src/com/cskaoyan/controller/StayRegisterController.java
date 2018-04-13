@@ -1,11 +1,14 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Listone;
+
+import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.ListoneMapper;
+import com.cskaoyan.dao.OrdermainMapper;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.dao.RoomsetMapper;
+import com.cskaoyan.vo.Listone;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,9 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("/StayRegister")
 @Controller
@@ -27,7 +29,8 @@ public class StayRegisterController {
     @Autowired
     ListoneMapper listoneMapper;
 
-
+    @Autowired
+    OrdermainMapper ordermainMapper;
 
     /*
     * 显示页面
@@ -100,7 +103,8 @@ public class StayRegisterController {
             model.addAttribute("listPassengerType",listPassengerType);//旅客类别
             model.addAttribute("listBillUnit",listBillUnit);//结账单位
             model.addAttribute("listPayWay",listPayWay);//支付方式
-        List<Roomset> result=roomsetMapper.selectAllRoomset();
+        List<Roomset> result=roomsetMapper.findAllRoomset();
+
           model.addAttribute("list",result);
           model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
         return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
@@ -124,7 +128,7 @@ public class StayRegisterController {
     @ResponseBody
         public List<Roomset>guestRoomLevelSelectRoom(@RequestParam Integer guestRoomLevelID) {
             if(guestRoomLevelID==0){
-                List<Roomset> result=roomsetMapper.selectAllRoomset();
+                List<Roomset> result=roomsetMapper.findAllRoomset();
                 return result;
             }
 
@@ -137,10 +141,22 @@ public class StayRegisterController {
 
 
     //保存到数据库并转发
-    @RequestMapping("/arrangeroom")
-    public String arrangeroom(Model model) {
+    @RequestMapping( path = "/arrangeroom" ,method = {RequestMethod.POST,RequestMethod.GET})
+    public String arrangeroom(Model model,  Ordermain ordermain,HttpServletRequest request,Integer roomID ) {
+        Roomset roomset = roomsetMapper.findById(roomID);
+        ordermain.setRoomNumber(roomset.getRoomNumber());
+        ordermain.setRoomAmount(roomset.getRoomAmount());
+        String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,5);
+        ordermain.setOrdID(ordId);
+        int insert = ordermainMapper.insert(ordermain);
+        roomset.setRoomStateName("满");
+        roomset.setRoomStateID(65);
+        int j = roomsetMapper.updateById(roomset);
+        if(insert==1&&j==1){
 
-        return "/WEB-INF/jsp/stayregister/list.jsp";
+            return "/WEB-INF/jsp/stayregister/list.jsp";
+        }
+        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
     }
 
 /*

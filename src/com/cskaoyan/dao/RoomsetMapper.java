@@ -13,7 +13,7 @@ public interface RoomsetMapper {
      * 查找所有的roomset并返回
      * @return
      */
-    @Select("SELECT * FROM roomset")
+    @Select("SELECT * FROM roomset where del_flag = 0")
     List<Roomset> findAllRoomset();
 
     /**

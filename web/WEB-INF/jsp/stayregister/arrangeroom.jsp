@@ -223,7 +223,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>出租方式：</label>
-		        <select name="rentOutTypeID" style="width:100%;height:27px;">
+		        <select name="rentOutTypeId" style="width:100%;height:27px;">
 		            <c:forEach items="${listRentOutType}" var="item">
 			          <option value="${item.far_id}" <c:if test="${item.far_id==26}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
@@ -295,7 +295,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>支付方式：</label>
-		        <select name="depositPayWayID" style="width:100%;height:27px;">
+		        <select name="payWayID" style="width:100%;height:27px;">
 		            <c:forEach items="${listPayWay}" var="item">
 			          <option value="${item.far_id}" <c:if test="${item.far_id==21}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
@@ -559,7 +559,7 @@
 
              for (var key in result) {
                 var item = result[key];
-                if(item.roomStateID==1){
+                if(item.roomStateID==1){  //空
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#99FF99;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
@@ -573,7 +573,7 @@
 			     "</button>")
     			 $("#div1").append(btn);
                 }
-                if(item.roomStateID==2){
+                if(item.roomStateID==2){  //自用房
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#DDDDDD;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
@@ -587,7 +587,7 @@
 			     "</button>")
     			 $("#div1").append(btn);
                 }
-                if(item.roomStateID==4){
+                if(item.roomStateID==3){  //预定
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#99FFFF;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
@@ -601,7 +601,7 @@
 			     "</button>")
     			 $("#div1").append(btn);
                 }
-                if(item.roomStateID==5){
+                if(item.roomStateID==4){ //待清洁
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#BBBB00;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
@@ -615,7 +615,7 @@
 			     "</button>")
     			 $("#div1").append(btn);
                 }
-                if(item.roomStateID==6){
+                if(item.roomStateID==5){ //待维修
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF7744;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
@@ -629,7 +629,7 @@
 			     "</button>")
     			 $("#div1").append(btn);
                 }
-                if(item.roomStateID==7){
+                if(item.roomStateID==6){//满
                 var btn=$("<button onclick='suibian(this)' style='width:95px;;height:93px;border: 3px solid #666666; float:left;margin:2px; background:#FF0088;'>"+
 			      "<input style='display: none;' value="+item.id+" />"+
 			      "<input style='display: none;' value="+item.roomStateID+" />"+
