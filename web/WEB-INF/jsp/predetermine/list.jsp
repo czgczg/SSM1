@@ -210,6 +210,7 @@
 	        <c:forEach items="${list.result}" var="item">
 		        <c:if test="${item.remind==0}" >
 		           <tr>
+					   <%--选择对象之后的列表--%>
 			          <c:if test="${item.passengerID!=0}">
 				          <td><input type="checkbox" name="id" value="${item.id}"></td>
 				          <td>${item.roomNumber}</td>
@@ -222,6 +223,7 @@
 				          <td>${item.passengerContactPhoneNumber}</td>
 				          <td>${item.predetermineStateName}</td>
 			          </c:if>
+						<%--全部列表--%>
 			          <c:if test="${item.passengerID==0}">
 				          <td><input type="checkbox" name="id" value="${item.id}"></td>
 				          <td>${item.roomNumber}</td>

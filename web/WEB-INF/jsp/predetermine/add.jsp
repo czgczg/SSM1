@@ -259,6 +259,7 @@
    var shijian="";
    function pickedFunc() {
             shijian = $dp.cal.getNewDateStr();
+            //alert(shijian);
         }
         
         
