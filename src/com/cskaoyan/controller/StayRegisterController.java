@@ -142,9 +142,7 @@ public class StayRegisterController {
         return "/WEB-INF/jsp/stayregister/changroom.jsp";
     }
 
-
-
-
+    //选择房间
     @RequestMapping("/changeRoomSelectPassenger")
     @ResponseBody
     public  List<Roomset> changeRoomSelectPassenger(){
@@ -156,7 +154,6 @@ public class StayRegisterController {
 
 
     }
-
 
 
     /*
