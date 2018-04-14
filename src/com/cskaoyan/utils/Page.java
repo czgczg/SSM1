@@ -8,7 +8,7 @@ public class Page<T>
 {
 
 
-    public static final int PASSENGER__NUM_PER_PAGE =3;
+    public static final int PASSENGER__NUM_PER_PAGE =5;
 
     private  int totalCount;  //总记录数
 
@@ -82,6 +82,15 @@ public class Page<T>
         this.setNextPageNum(num_int-1==0?num_int:num_int-1);
         this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
 
+    }
+
+    public void init2(int totalCount,int num_int){
+        this.setCurrentPage(num_int);
+        this.setTotalCount(totalCount);
+        int totalPageNum = totalCount % PASSENGER__NUM_PER_PAGE == 0 ? totalCount / PASSENGER__NUM_PER_PAGE : totalCount / PASSENGER__NUM_PER_PAGE + 1;
+        this.setTotalPage(totalPageNum);
+        this.setNextPageNum(num_int-1==0?num_int:num_int-1);
+        this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
     }
 
 

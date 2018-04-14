@@ -9,6 +9,8 @@ import com.cskaoyan.dao.OrderpaymentMapper;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.PredetermineService;
+import com.cskaoyan.utils.Page;
+import com.cskaoyan.vo.Listone;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,14 +29,26 @@ public class PredetermineController {
     PredetermineService predetermineService;
 
 
-
     @RequestMapping("/tolist")
-    public String roomsetToList(HttpServletRequest request){
-        ArrayList<Ordermain> allOrderIsOnBooking = predetermineService.getAllOrderIsOnBooking();
+    public String roomsetToList(HttpServletRequest request,Integer currentPage, String txtname,String state){
 
-        request.setAttribute("",allOrderIsOnBooking);
+        //下拉框 已安排未安排
+        ArrayList<Listone> allStats = predetermineService.getAllStats();
+
+        if(null == state){
+            state = "55,56";
+        }
+        //
+        Page<Ordermain> page = predetermineService.getPageOfOrdermains(currentPage, txtname, state);
+
+        System.out.println(page.getResult());
+
+        request.setAttribute("list",page);
+
+        request.setAttribute("listOne",allStats);
         return "/WEB-INF/jsp/predetermine/list.jsp";
     }
+
 
 
 
@@ -75,7 +89,14 @@ public class PredetermineController {
         List<Passenger> allPassenger = predetermineService.getAllPassenger();
         return allPassenger;
     }
-
+    //选取某个下单人后返回
+    @RequestMapping("/confirmPassenger")
+    @ResponseBody
+    public Passenger confirmPassenger(HttpServletRequest request){
+        Passenger passenger = predetermineService.findPassengerById(Integer.valueOf(request.getParameter("id")));
+        System.out.println(passenger.getContactPhoneNumber());
+        return passenger;
+    }
 
 
     //新增订单

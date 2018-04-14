@@ -97,15 +97,15 @@
 			   </div>
 	    </div>
     </div>
-    <div class="span2">
-      <select id="stateId" style="width:80%;height:26px; float:left;margin-top:12px;" onchange="selectTwo()">
-        <c:forEach items="${listOne}" var="item">
-          <option value="${item.far_id}" <c:if test="${item.far_id==state}">selected="selected"</c:if>>
-            ${item.attributeDetailsName}
-          </option>
-        </c:forEach> 
-	  </select>
-    </div>
+	  <div class="span2">
+		  <select id="stateId" style="width:80%;height:26px; float:left;margin-top:12px;" onchange="selectTwo()">
+			  <c:forEach items="${listOne}" var="item">
+				  <option value="${item.id}" <c:if test="${item.id==state}">selected="selected"</c:if>>
+						  ${item.attributeDetailsName}
+				  </option>
+			  </c:forEach>
+		  </select>
+	  </div>
     <div class="span6">
       <div class="row-fluid">
        <div class="span3">
@@ -198,7 +198,7 @@
 	          <th >房间号</th>
 	          <th >客房等级</th>
 	          <th >接待对象</th>
-	          <th >旅客姓名</th>
+	          <th >预定人姓名</th>
 	          <th >抵达时间</th>
 	          <th >押金</th>
 	          <th >预定天数</th>
@@ -208,62 +208,79 @@
 	      </thead>
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
-		        <c:if test="${item.remind==0}" >
+		        <c:if test="${item.receiveTargetID==55}" >
 		           <tr>
 					   <%--选择对象之后的列表--%>
-			          <c:if test="${item.passengerID!=0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+			          <c:if test="${item.passengerOrReceiveID!=0}">
+				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTargeTypeName}</td>
-				          <td>${item.passengerName}</td>
+				          <td>${item.guestRoomLevelName}</td>
+				          <td>散客</td>
+				          <td>${item.name}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
-				          <td>${item.passengerContactPhoneNumber}</td>
-				          <td>${item.predetermineStateName}</td>
+				          <td>${item.commodityPhone}</td>
+						  <c:if test="${item.state != 67}">
+							  <td>未安排</td>
+						  </c:if>
+						  <c:if test="${item.state == 67}">
+							  <td>已安排</td>
+						  </c:if>
 			          </c:if>
 						<%--全部列表--%>
-			          <c:if test="${item.passengerID==0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+			          <c:if test="${item.passengerOrReceiveID==0}">
+				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTeamName}</td>
-				          <td>${item.receivePrincipal}</td>
+				          <td>${item.guestRoomLevelName}</td>
+				          <td>散客</td>
+				          <td>${item.name}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
-				          <td>${item.receiveContactPhoneNUmber}</td>
-				          <td>${item.predetermineStateName}</td>
-			          </c:if>
+				          <td>${item.commodityPhone}</td>
+						  <c:if test="${item.state != 67}">
+							  <td>未安排</td>
+						  </c:if>
+						  <c:if test="${item.state == 67}">
+							  <td>已安排</td>
+						  </c:if>			          </c:if>
 		           </tr>
 		        </c:if>
-		        <c:if test="${item.remind==1}" >
+		        <c:if test="${item.receiveTargetID==56}" >
 		           <tr style="color:red;">
-			          <c:if test="${item.passengerID!=0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+			          <c:if test="${item.passengerOrReceiveID!=0}">
+				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTargeTypeName}</td>
-				          <td>${item.passengerName}</td>
+				          <td>${item.guestRoomLevelName}</td>
+				          <td>团队</td>
+				          <td>${item.teamName}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
-				          <td>${item.passengerContactPhoneNumber}</td>
-				          <td>${item.predetermineStateName}</td>
-			          </c:if>
-			          <c:if test="${item.passengerID==0}">
-				          <td><input type="checkbox" name="id" value="${item.id}"></td>
+				          <td>${item.commodityPhone}</td>
+						  <c:if test="${item.state != 67}">
+							  <td>未安排</td>
+						  </c:if>
+						  <c:if test="${item.state == 67}">
+							  <td>已安排</td>
+						  </c:if>			          </c:if>
+			          <c:if test="${item.passengerOrReceiveID==0}">
+				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 				          <td>${item.roomNumber}</td>
-				          <td>${item.roomGuestRoomLevelName}</td>
-				          <td>${item.receiveTeamName}</td>
-				          <td>${item.receivePrincipal}</td>
+				          <td>${item.guestRoomLevelName}</td>
+				          <td>团队</td>
+				          <td>${item.teamName}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
-				          <td>${item.receiveContactPhoneNUmber}</td>
-				          <td>${item.predetermineStateName}</td>
-			          </c:if>
+				          <td>${item.commodityPhone}</td>
+						  <c:if test="${item.state != 67}">
+							  <td>未安排</td>
+						  </c:if>
+						  <c:if test="${item.state == 67}">
+							  <td>已安排</td>
+						  </c:if>			          </c:if>
 		           </tr>
 		        </c:if>
 	        </c:forEach>
@@ -499,11 +516,12 @@
          data:"id="+chk_value,
          async:false,
          success: function (result) {
-             document.getElementById("twoId").value=chk_value;
-             document.getElementById("contactPhoneNumberId").value=result;
-             document.getElementById("nameId").value=name;
-             document.getElementById("papersTypeId").value=papersType;
-             document.getElementById("papersNumberId").value=papersNumber;
+             alert(result.id);
+             document.getElementById("twoId").value=result.id;
+             document.getElementById("contactPhoneNumberId").value=result.contactPhoneNumber;
+             document.getElementById("nameId").value=result.name;
+             document.getElementById("papersTypeId").value=result.papersName;
+             document.getElementById("papersNumberId").value=result.passengerLevelID;
           },
           error: function(data) {
            }
@@ -615,8 +633,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage}22,
-     current:${list.currentPage}22,
+     pageCount:${list.totalPage},
+     current:${list.currentPage},
      backFn:function(p){
      var txtname=document.getElementById("txtnameid").value;
      var state=document.getElementById("stateId").value;
