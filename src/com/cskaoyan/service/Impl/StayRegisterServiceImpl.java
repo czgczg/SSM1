@@ -73,6 +73,16 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         return listRentOutType;
     }
 
+    @Override
+    public List<Roomset> findRoomsetAsEmpty() {
+        return roomsetMapper.findRoomsetAsEmpty();
+    }
+
+    @Override
+    public Ordermain findOrderById(String id) {
+        return ordermainMapper.selectByPrimaryKey(id);
+    }
+
     private int findAllOrderMainCount() {
 
        return ordermainMapper.findAllOrderCount();

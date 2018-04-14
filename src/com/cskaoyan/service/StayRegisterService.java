@@ -21,4 +21,8 @@ public interface StayRegisterService {
      List<Roomset> guestRoomLevelSelectRoom(Integer guestRoomLevelID);
 
     ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType);
+
+    List<Roomset> findRoomsetAsEmpty();
+
+    Ordermain findOrderById(String id);
 }

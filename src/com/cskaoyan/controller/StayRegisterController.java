@@ -1,5 +1,6 @@
 package com.cskaoyan.controller;
 
+import com.cskaoyan.bean.Changeroom;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
@@ -142,7 +143,9 @@ public class StayRegisterController {
         return "/WEB-INF/jsp/stayregister/changroom.jsp";
     }
 
-    //选择房间
+
+
+
     @RequestMapping("/changeRoomSelectPassenger")
     @ResponseBody
     public  List<Roomset> changeRoomSelectPassenger(){
@@ -152,6 +155,21 @@ public class StayRegisterController {
         //返回数据
         return roomsetAsEmpty;
 
+
+    }
+
+
+    /**
+     * 确认换房
+     */
+    @RequestMapping("/confirmChangRoom")
+    public void confirmChangRoom(HttpServletRequest request){
+        String id = request.getParameter("id");
+        String roomId = request.getParameter("roomId");
+
+        Changeroom changeroom = new Changeroom();
+        changeroom.setOldroomset(id);
+        changeroom.setNewroomset(roomId);
 
     }
 
