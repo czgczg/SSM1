@@ -105,4 +105,12 @@ public interface RoomsetMapper {
      */
     @Select("SELECT * FROM roomset WHERE  del_flag=0 AND guestRoomLevelID=#{guestRoomLevelID}")
     List<Roomset> findRoomsetByLevelID(Integer guestRoomLevelID);
+
+    /**
+     * 根据房间号查询Rommset
+     * @param roomNumber
+     * @return
+     */
+    @Select("SELECT * FROM roomset WHERE  del_flag=0 AND roomNumber=#{roomNumber}")
+    List<Roomset> findRoomsetByRoomNumber(String roomNumber);
 }

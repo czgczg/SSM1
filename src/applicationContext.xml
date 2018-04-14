@@ -52,6 +52,7 @@
         <property name="jdbcUrl" value="jdbc:mysql://192.168.3.36:3306/ssm01"/>
     </bean>
 
+
     <!-- 产生sqlsessionfactory -->
     <bean id="SqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="myDataSource" />
