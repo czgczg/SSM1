@@ -1,6 +1,7 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Ordermain;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -56,9 +57,28 @@ public interface OrdermainMapper {
     @Update("update ordermain set state=68")
     int modifyOrderStatus();
 
+    /**
+     * 查找所有订单记录
+     * @return
+     */
     @Select("select count(*) from ordermain WHERE del_flag=0")
     int findAllOrderCount();
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
+    /**
+     * 根据用户下单修改总价
+     * @param hashMap
+     * @return
+     */
+    @Update("UPDATE ordermain SET sumConst=sumConst+#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
+    Integer updateSumConstByOrdID(HashMap<String, Object> hashMap);
+
+    /**
+     * 从ordermain中删除总价
+     * @param hashMap
+     * @return
+     */
+    @Update("UPDATE ordermain SET sumConst=sumConst-#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
+    Integer deleteSumConstByOrdID(HashMap<String, Object> hashMap);
 }

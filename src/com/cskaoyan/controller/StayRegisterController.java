@@ -1,16 +1,16 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Commodity;
-import com.cskaoyan.bean.Commoditytype;
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.*;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.service.CommodityService;
+import com.cskaoyan.service.OrdermainService;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.utils.PassengerTransfer;
+import com.cskaoyan.vo.ConsumptionVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,10 +31,15 @@ public class StayRegisterController {
 
     @Autowired
     StayRegisterService stayRegisterService;
+
     @Autowired
     PassengerService passengerService;
+
     @Autowired
     PassengerMapper passengerMapper;
+
+    @Autowired
+    OrdermainService ordermainService;
 
     /**
      * 显示页面和分页
@@ -152,55 +157,99 @@ public class StayRegisterController {
     }
 
 
-    /*
-    * 旅客消费
-    * */
+
+
+    /**
+     * 旅客消费
+     * @param LvKeLeiXingId 旅客类型
+     * @param lvKeName 旅客姓名
+     * @param id 订单id
+     * @param roomNumber 房间名
+     * @param isBillID
+     * @param Number
+     * @param consumptionStayRegisterID
+     * @param currentPage
+     * @param model
+     * @return
+     */
     @RequestMapping("/toconsumption")
-    public String toconsumption(HttpServletRequest request, Model model){
-        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
-        String lvKeName = request.getParameter("lvKeName");
-        String id = request.getParameter("id");
-        String roomNumber = request.getParameter("roomNumber");
-        String isBillID = request.getParameter("isBillID");//68未结账，69已结账
-        String number = request.getParameter("Number");
+    public String toconsumption(
+            String LvKeLeiXingId,String lvKeName,
+            String id,String roomNumber,
+            String isBillID,String Number,
+            String consumptionStayRegisterID, Integer currentPage,
+            Model model){
         List<Commoditytype> commoditytype = commodityService.findAllCommoditytype();
+        Page<ConsumptionVo> page = ordermainService.findPage(currentPage, id);
+
+        model.addAttribute("list", page);
         model.addAttribute("listOne", commoditytype);
-        request.getParameter("consumptionStayRegisterID");
-        model.addAttribute("LvKeLeiXingId", lvKeLeiXingId);
+        model.addAttribute("LvKeLeiXingId", LvKeLeiXingId);
         model.addAttribute("lvKeName",lvKeName);
+        System.out.println(id);
         model.addAttribute("id", id);
         model.addAttribute("roomNumber", roomNumber);
         model.addAttribute("isBillID", isBillID);
-        model.addAttribute("Number", number);
+        model.addAttribute("Number", Number);
         return "/WEB-INF/jsp/stayregister/consumption.jsp";
 
     }
-    //发现所有商品
+
+    /**
+     * 发现所有商品
+     * @param name
+     * @param cboid
+     * @return
+     */
     @RequestMapping("/findAllCommodity")
     @ResponseBody
     public List<Commodity> findAllCommodity(String name, String cboid){
         return commodityService.findPartCommodity(name, cboid);
-
     }
 
-    //添加消费
+    /**
+     * 插入消费订单信息，更新总消费，并且回显
+     * @param id 商品id
+     * @param LvKeLeiXingId 旅客类型
+     * @param Number 商品数量
+     * @param consumptionStayRegisterID  未知
+     * @param ord_id 订单号
+     */
     @RequestMapping("/consumption")
-    public void consumption(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
-        String number = request.getParameter("Number");
-        String consumptionStayRegisterID = request.getParameter("consumptionStayRegisterID");
+    public String consumption(String id, String LvKeLeiXingId,
+                              String Number, String consumptionStayRegisterID,
+                              String ord_id, Model model, HttpServletRequest request) {
 
+        ordermainService.insertOrdextconsum(id, Number, ord_id);
+        Ordermain orderByOrdId = ordermainService.findOrderByOrdId(ord_id);
+
+        return toconsumption(
+                orderByOrdId.getPassengerTypeID()+"",orderByOrdId.getName(),ord_id,orderByOrdId.getRoomNumber(),
+        orderByOrdId.getBillUnitID()+"","6","7",1,model);
 
         // 写入数据库并且回显
 
     }
 
-    //删除商品
+    /**
+     * 删除商品
+     * @param id 需要删除的商品id(主键)
+     * @param consumptionStayRegisterID
+     */
     @RequestMapping("/consumptionDelete")
-    public void consumptionDelete(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String consumptionStayRegisterID = request.getParameter("consumptionStayRegisterID");
+    public String consumptionDelete(String[] id, String consumptionStayRegisterID,Model model) {
+
+        Ordextconsum ordextconsum = ordermainService.findOrdextConsumById(id[0]);
+        Ordermain orderByOrdId = ordermainService.findOrderByOrdId(ordextconsum.getOrd_id());
+        for(String i : id) {
+            ordermainService.deleteConsumptionByCommodityOrderId(i);
+        }
+
+        return toconsumption(
+                orderByOrdId.getPassengerTypeID()+"",orderByOrdId.getName(),orderByOrdId.getOrdID(),orderByOrdId.getRoomNumber(),
+                orderByOrdId.getBillUnitID()+"","6","7",1,model);
+
+
     }
 
     /*

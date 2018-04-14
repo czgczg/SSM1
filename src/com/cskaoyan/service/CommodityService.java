@@ -78,4 +78,15 @@ public interface CommodityService {
      * @return
      */
     boolean deleteCommoditytypeById(int id);
+
+    /**
+     * 根据条件发现部分商品
+     * @param txtname
+     * @param commodityTypeID
+     * @return
+     */
+    List<Commodity> findPartCommodity(String txtname, String commodityTypeID);
+
+
+
 }

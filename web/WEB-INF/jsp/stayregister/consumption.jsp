@@ -169,7 +169,7 @@
       <div class="row-fluid">
         <div class="span3">
           <label style="float:left;">房间号：</label>
-          <label>${list.result[0].roomNumber}</label>
+          <label>${roomNumber}</label>
         </div>
         <div class="span3">
           <label style="float:left;">旅客姓名：</label>
@@ -307,11 +307,11 @@
    }
    
    function deletefunction(){
-      var isBillID=document.getElementById("isBillID").value;
-      if(isBillID==69){
-       alert("很抱歉！该数据已经结账没法进行此操作！");
-       return;
-     }
+     //  var isBillID=document.getElementById("isBillID").value;
+     //  if(isBillID==69){
+     //   alert("很抱歉！该数据已经结账没法进行此操作！");
+     //   return;
+     // }
 	  var chk_value=[];                                                      // 设置数组变量
 	  var consumptionStayRegisterID=document.getElementById("consumptionStayRegisterID").value;
 	  $('input[name="id"]:checked').each(function(){             // 遍历获取input被checked的
@@ -359,8 +359,8 @@
                 tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
                 tdCommodityName.innerHTML = item.commodityName;
                 tdCommodityTypeName.innerHTML = item.commodityTypeName;
-                tdUOMName.innerHTML =item.commodityTypeName;         //中间这个是数据
-                tdSalePrice.innerHTML =item.commodityMeasurementName;
+                tdUOMName.innerHTML =item.commodityMeasurementName;         //中间这个是数据
+                tdSalePrice.innerHTML =item.commodityPrice;
                 tdNumber.innerHTML ="<input style='width:100%;border-color:green'>";
             }
             if(i==0){
@@ -407,15 +407,15 @@
 	}
   	if(chk_value!=""){
 	   parent.document.getElementById("Mainid").src='${ctx}/StayRegister/consumption.do?id='+chk_value
-	   +'&Number='+Number+'&consumptionStayRegisterID='+consumptionStayRegisterID+'&LvKeLeiXingId='+LvKeLeiXingId + '&or';
+	   +'&Number='+Number+'&consumptionStayRegisterID='+consumptionStayRegisterID+'&LvKeLeiXingId='+LvKeLeiXingId + '&ord_id=' + ${id};
 	}else{
 	}
    }
    
     /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage}10086,
-     current:${list.currentPage}10086,
+     pageCount:${list.totalPage},
+     current:${list.currentPage},
      backFn:function(p){
      location.href="${ctx}/StayRegister/toconsumption.do?currentPage="+p;
      }
