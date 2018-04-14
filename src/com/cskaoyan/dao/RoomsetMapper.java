@@ -61,7 +61,7 @@ public interface RoomsetMapper {
     @Update("UPDATE roomset SET roomStateID = #{roomStateID}, roomStateName = #{roomStateName} WHERE id = #{id}")
     Integer updateRoomStateById(HashMap hashMap);
 
-    @Update("update roomset set roomStateID= 2 where roomNumber=#{roomNumber}")
+    @Update("update roomset set roomStateID= 3 where roomNumber=#{roomNumber}")
     int modifyRoomStatus(String roomNumber);
     /**
      * 插入房间
