@@ -11,8 +11,8 @@
         <package name="com.cskaoyan.dao"/>
         <package name="com.cskaoyan.vo"/>
     </typeAliases>
-   <!-- <mappers>
-        &lt;!&ndash;扫描dao包下所有的接口，然后找到对应的接口的xml实现文件&ndash;&gt;
+    <mappers>
+        <!--扫描dao包下所有的接口，然后找到对应的接口的xml实现文件-->
         <package name="com.cskaoyan.dao"/>
-    </mappers>-->
+    </mappers>
 </configuration>
