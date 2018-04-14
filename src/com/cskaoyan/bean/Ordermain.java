@@ -195,7 +195,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    private Date registerTime;
+    private String registerTime;
 
     /**
      *
@@ -204,7 +204,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    private Date payTime;
+    private String payTime;
 
     /**
      *
@@ -258,7 +258,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    private Date timestamp;
+    private String  timestamp;
 
     /**
      *
@@ -740,7 +740,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(Date  orderTime) {
         this.orderTime = orderTime;
     }
 
@@ -752,7 +752,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    public Date getRegisterTime() {
+    public String getRegisterTime() {
         return registerTime;
     }
 
@@ -764,7 +764,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    public void setRegisterTime(Date registerTime) {
+    public void setRegisterTime(String registerTime) {
         this.registerTime = registerTime;
     }
 
@@ -776,7 +776,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    public Date getPayTime() {
+    public String getPayTime() {
         return payTime;
     }
 
@@ -788,7 +788,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    public void setPayTime(Date payTime) {
+    public void setPayTime(String  payTime) {
         this.payTime = payTime;
     }
 
@@ -920,7 +920,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -932,7 +932,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
