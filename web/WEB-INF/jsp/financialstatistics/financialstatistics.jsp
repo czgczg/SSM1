@@ -131,7 +131,7 @@
 	      <tbody id="tbody">
 	        <c:forEach items="${list.result}" var="item">
 		        <tr >
-		          <td><input type="radio" name="id" value="${item.id}"></td>
+		          <td><input type="radio" name="id" value="${item.financialstatisticsid}"></td>
 		          <td>${item.roomNumber}</td>
 		          <c:if test="${item.receiveTargetID==2}">
 		              <td>${item.predetermineReceiveTargeTypeName}</td>

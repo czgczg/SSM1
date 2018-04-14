@@ -16,9 +16,15 @@ public interface StayRegisterService {
 
     void modifyRoomStatus(String roomNumber);
 
+
     Page<Ordermain> findPage(Integer currentPage, String roomNumber);
 
      List<Roomset> guestRoomLevelSelectRoom(Integer guestRoomLevelID);
 
     ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType);
+
+
+    int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID);
+
+
 }

@@ -79,12 +79,22 @@ public class Page<T>
     }
 
     public void init(int num_int){
+
         int totalPageNum = totalCount % PASSENGER__NUM_PER_PAGE == 0 ? totalCount / PASSENGER__NUM_PER_PAGE : totalCount / PASSENGER__NUM_PER_PAGE + 1;
         this.setTotalPage(totalPageNum);
         this.setNextPageNum(num_int-1==0?num_int:num_int-1);
         this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
 
     }
+    public void init2(int num_int){
+
+        int totalPageNum = totalCount % ORDERMAIN__NUM_PER_PAGE == 0 ? totalCount / ORDERMAIN__NUM_PER_PAGE : totalCount / ORDERMAIN__NUM_PER_PAGE + 1;
+        this.setTotalPage(totalPageNum);
+        this.setNextPageNum(num_int-1==0?num_int:num_int-1);
+        this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
+
+    }
+
 
 
     public void init2(int totalCount,int num_int){

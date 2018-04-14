@@ -4,6 +4,7 @@ import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.OrdermainMapper;
+import com.cskaoyan.dao.RegistrationMapper;
 import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +28,33 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     RoomsetMapper roomsetMapper;
 
 
+    @Autowired
+    RegistrationMapper registrationMapper;
+
+
+    /**
+     * author:czg
+     *登记旅客信息到登记表，因为一个房间可能登记多人，限制，房间床位数
+     * @param id
+     * @param passenger
+     * @param lvKeLeiXingId
+     * @param passengerID
+     * @return
+     */
+    @Override
+    public int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID) {
+
+        Date date = new Date();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("passenger", passenger);
+        map.put("passengerType", lvKeLeiXingId);
+        map.put("registerTime", date);
+        map.put("passengerID", passengerID);
+        registrationMapper.insertToRistration(map);
+
+        return 0;
+    }
     /**
      * ordermain的分页处理和显示
      * @param currentPage
@@ -39,7 +68,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         page.setTotalCount(totalNumber);
         int num = currentPage;
 
-        page.init(totalNumber);
+        page.init2(totalNumber);
         page.setCurrentPage(num);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -48,6 +77,10 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
+
+
+
+
         return page;
     }
 

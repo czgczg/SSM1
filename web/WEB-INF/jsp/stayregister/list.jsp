@@ -110,7 +110,7 @@
 		    </form>
 		    <select id="isBillID" style="width:10%;height:27px; float:left;" onchange="selectChange()">
 	            <c:forEach items="${listOne}" var="item">
-		          <option value="${item.far_id}" <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
+		          <option value="${item.id}" <c:if test="${item.id==isBillID}">selected="selected"</c:if>>
 		            ${item.attributeDetailsName}
 		          </option>
 		        </c:forEach> 
@@ -166,7 +166,7 @@
 		    </form>
 		    <select id="teamIsBillId" style="width:8%;height:27px; float:left; margin-right:5px;" onchange="teamSelect()">
 	            <c:forEach items="${listOne}" var="item">
-		          <option value="${item.far_id}" <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
+		          <option value="${item.id}" <c:if test="${item.id==isBillID}">selected="selected"</c:if>>
 		            ${item.attributeDetailsName}
 		          </option>
 		        </c:forEach> 
@@ -214,7 +214,7 @@
 			        <tr style="color: red;">
 			          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 			          <td>${item.roomNumber}</td>
-			          <td>${item.roomGuestRoomLevelName}</td>
+			          <td>${item.guestRoomLevelName}</td>
 			          <td>${item.roomAmount}</td>
 			          <c:if test="${item.receiveTargetID==56}">
 			              <td>${item.teamname}</td>
@@ -222,7 +222,7 @@
 			          <c:if test="${item.receiveTargetID!=56}">
 			              <td style="width:12%;">${item.receiveTeamName}</td>
 			          </c:if>
-			          <td>${item.passengerName}</td>
+			          <td>${item.commodityName}</td>
 			          <td>${item.passengerTypeName}</td>
 			          <td>${item.changingRoomNumber}</td>
 			          <td>${item.changRoomMoney}</td>
@@ -355,9 +355,9 @@
     </div>
     </div>
     
-    
-    
-    
+
+
+
     <div class="span11">
       <div class="row-fluid">
         <div class="tcdPageCode" style="text-align:center;"></div>
@@ -909,8 +909,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage}10086,
-     current:${list.currentPage}10086,
+     pageCount:${list.totalPage},
+     current:${list.currentPage},
      backFn:function(p){
       var isBillID=document.getElementById("isBillID").value;
       var txtname=document.getElementById("txtnameid").value;
