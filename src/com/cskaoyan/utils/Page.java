@@ -85,6 +85,7 @@ public class Page<T>
 
     }
 
+
     public void init2(int totalCount,int num_int){
         this.setCurrentPage(num_int);
         this.setTotalCount(totalCount);
