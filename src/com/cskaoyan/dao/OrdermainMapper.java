@@ -56,9 +56,9 @@ public interface OrdermainMapper {
     @Update("update ordermain set state=68")
     int modifyOrderStatus();
 
-    @Select("select count(*) from ordermain ")
+    @Select("select count(*) from ordermain WHERE del_flag=0")
     int findAllOrderCount();
 
-     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
+    List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
 }
