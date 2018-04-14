@@ -89,4 +89,19 @@ public interface OrdermainMapper {
     //根据ID将订单状态修改为已安排
     @Update("update ordermain set state=67 where ordID = #{id}")
     int updateStateByOrdId(String id);
+
+    //根据订单号获取房间id
+    @Select("select roomId from ordermain where ordID = #{ordID} and del_flag=0")
+    int getRoomIdByOrdId(String ordID);
+    //根据订单号获取总价
+    @Select("select sumConst from ordermain where ordID = #{ordID} and del_flag=0")
+    float getSumPriceCount(String ordID);
+    //根据订单号获取预定天数
+    @Select("select predetermineDay from ordermain where ordID = #{ordID} and del_flag=0")
+    int getDuringDay(String ordID);
+
+
+    //根据ID将订单状态修改已删除
+    @Update("update ordermain set del_flag=1 where ordID = #{id}")
+    void removeOrderMain(String oid);
 }

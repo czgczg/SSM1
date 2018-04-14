@@ -194,16 +194,17 @@
        <table class="table table-condensed table-bordered table-striped" id="tableid">
 	      <thead class="theadone">
 	        <tr>
-	          <th >选择</th>
-	          <th >房间号</th>
-	          <th >客房等级</th>
-	          <th >接待对象</th>
-	          <th >预定人姓名</th>
-	          <th >抵达时间</th>
-	          <th >押金</th>
-	          <th >预定天数</th>
-	          <th >联系电话</th>
-	          <th >预定状态</th>
+	            <th >选择</th>
+				<th >订单号</th>
+	            <th >房间号</th>
+	            <th >客房等级</th>
+	            <th >接待对象</th>
+	            <th >预定人姓名</th>
+	            <th >抵达时间</th>
+	            <th >押金</th>
+	            <th >预定天数</th>
+	            <th >联系电话</th>
+	            <th >预定状态</th>
 	        </tr>
 	      </thead>
 	      <tbody id="tbody">
@@ -213,7 +214,8 @@
 					   <%--选择对象之后的列表--%>
 			          <c:if test="${item.passengerOrReceiveID!=0}">
 				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
-				          <td>${item.roomNumber}<input type="hidden"></td>
+						  <td>${item.ordID}</td>
+						  <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>散客</td>
 				          <td>${item.name}</td>
@@ -231,6 +233,7 @@
 						<%--全部列表--%>
 			          <c:if test="${item.passengerOrReceiveID==0}">
 				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
+						  <td>${item.ordID}</td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>散客</td>
@@ -251,6 +254,7 @@
 		           <tr style="color:red;">
 			          <c:if test="${item.passengerOrReceiveID!=0}">
 				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
+						  <td>${item.ordID}</td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>团队</td>
@@ -267,6 +271,7 @@
 						  </c:if>			          </c:if>
 			          <c:if test="${item.passengerOrReceiveID==0}">
 				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
+						  <td>${item.ordID}</td>
 				          <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>团队</td>
@@ -428,15 +433,20 @@
   	$('input[name="id"]:checked').each(function(){
   		chk_value.push($(this).val());
   	});
-  	if(chk_value!=""){
-		if(chk_value.toString().indexOf(",")>0){
-		   alert("修改只能选择一条");
-		}else{
-		   parent.document.getElementById("Mainid").src='${ctx}/Predetermine/toupdate.do?id='+chk_value;
-		}
-	}else{
-	  alert("请选择一条数据进行修改");
-	}
+  	var state=document.getElementById("stateId").value;
+  	if(state==66){
+        if(chk_value!=""){
+            if(chk_value.toString().indexOf(",")>0){
+                alert("修改只能选择一条");
+            }else{
+                parent.document.getElementById("Mainid").src='${ctx}/Predetermine/toupdate.do?id='+chk_value;
+            }
+        }else{
+            alert("请选择一条数据进行修改");
+        }
+    }else{
+        alert("已安排房间，不能修改");
+    }
   }
   
    function deletefunction(){
@@ -616,7 +626,6 @@
   	$('input[name="id"]:checked').each(function(){
   		chk_value.push($(this).val());
   	});
-
   	if(chk_value!=""){
   	var flag=window.confirm("注意：房间已安排成功，是否转到，住宿登记界面，便于登记旅客信息");
 	     if(flag){

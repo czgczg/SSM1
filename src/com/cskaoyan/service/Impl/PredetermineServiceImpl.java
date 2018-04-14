@@ -67,7 +67,7 @@ public class PredetermineServiceImpl implements PredetermineService{
 
         for (String s : roomsets) {
             //订单号201804120001
-            String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,5);
+            String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,2);
             ordermain.setOrdID(ordId);
             Roomset roomset = roomsetMapper.findById(Integer.parseInt(s));
             //改房间真实状态
@@ -200,6 +200,70 @@ public class PredetermineServiceImpl implements PredetermineService{
 
         }
 
+    }
+
+    @Override
+    public Ordermain findOrderminByOrdID(String id) {
+        return ordermainMapper.findOrderById(id).get(0);
+    }
+
+    @Override
+    public List<Roomset> getRoomsetByOrdID(String id) {
+        ArrayList<Roomset> roomsets = new ArrayList<>();
+        List<Ordermain> orderById = ordermainMapper.findOrderById(id);
+        for (Ordermain ordermain : orderById) {
+            System.out.println(ordermain.getRoomId());
+            Roomset roomset = roomsetMapper.findById(ordermain.getRoomId());
+            roomsets.add(roomset);
+        }
+        return roomsets;
+    }
+
+    @Override
+    public void updateOrder(Ordermain ordermain) {
+        //获取原本的房间号
+        int roomIdOld = ordermainMapper.getRoomIdByOrdId(ordermain.getOrdID());
+        int roomIdNew = ordermain.getRoomId();
+        Roomset roomsetNew = roomsetMapper.findById(roomIdNew);
+        //改变订单房间状态
+        ordermain.setRoomId(roomsetNew.getId());
+        ordermain.setRoomNumber(roomsetNew.getRoomNumber());
+        ordermain.setGuestRoomLevelName(roomsetNew.getGuestRoomLevelName());
+
+        //因为在预定中状态，不会出现商品消费或者换房消费，所以只需要重新计算房价以及押金
+        ordermain.setSumConst(roomsetNew.getStandardPriceDay()*Integer.valueOf(ordermain.getPredetermineDay()));
+        ordermainMapper.updateByPrimaryKeySelective(ordermain);
+        //将新房间置为预定中，将老房间置为空
+        Roomsetstatus roomsetstatus = roomsetstatusMapper.findStatusByPrimaryKey(3);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("roomStateID",roomsetstatus.getFar_id());;
+        map.put("roomStateName",roomsetstatus.getAttributeDetailsName());
+        map.put("id",roomIdNew);
+        roomsetMapper.updateRoomStateById(map);
+        HashMap<String, Object> map2 = new HashMap<>();
+        Roomsetstatus roomsetstatus2 = roomsetstatusMapper.findStatusByPrimaryKey(1);
+        map2.put("roomStateID",roomsetstatus2.getFar_id());;
+        map2.put("roomStateName",roomsetstatus2.getAttributeDetailsName());
+        map2.put("id",roomIdOld);
+        roomsetMapper.updateRoomStateById(map2);
+
+    }
+
+    @Override
+    public void deleteOrdermaim(String oid) {
+        //根据订单类型做处理
+        Ordermain ordermin = findOrderminByOrdID(oid);
+
+        ordermainMapper.removeOrderMain(oid);
+
+        //所有订单都要改变房间状态
+        Roomsetstatus roomsetstatus = roomsetstatusMapper.findStatusByPrimaryKey(1);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("roomStateID",roomsetstatus.getFar_id());;
+        map.put("roomStateName",roomsetstatus.getAttributeDetailsName());
+        map.put("id",ordermin.getRoomId());
+        roomsetMapper.updateRoomStateById(map);
+        //已安排的订单需要同步通知删除相关的换房以及商品,待做
     }
 
 

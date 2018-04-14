@@ -55,5 +55,13 @@ public interface PredetermineService {
     void arrangeRoom(String id);
 
 
+    Ordermain findOrderminByOrdID(String id);
 
+    //根据oid获取房间列表，由于订单拆分，事实上每次只有一个房间
+    List<Roomset> getRoomsetByOrdID(String id);
+
+    //修改订单
+    void updateOrder(Ordermain ordermain);
+
+    void deleteOrdermaim(String Oid);
 }

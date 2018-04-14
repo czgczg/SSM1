@@ -92,7 +92,7 @@
   <body>
   <div class="container" style="height:630px;overflow-x:auto;border: solid; border-color: #DDDDDD;">
     
-    <input id="lvkeorteamId" type="hidden" value="${id}" >  <!-- 是团队还是旅客的ID -->
+    <input id="lvkeorteamId" type="hidden" value="${ordermin.ordID}" >  <!-- 是团队还是旅客的ID -->
     <input id="teamId" type="hidden" value="${type}" >  <!-- 是团队还是旅客 -->
     <input id="pangduan" type="hidden" value="${pangduan}" >  <!-- 是团队还是旅客 -->
     
@@ -108,9 +108,9 @@
         <div class="span1">
             <button class="btn btn-info btn-small" type="button" onclick="addfunction()"><li class="icon-plus icon-white"></li>修改</button>
         </div>
-        <div class="span1">
+        <%--<div class="span1">
            <button class="btn btn-danger btn-small" type="button" onclick="deletefunction()"><li class="icon-remove icon-white"></li>删除</button>
-        </div>
+        </div>--%>
          <div class="span1">
             <button class="btn btn-warning btn-small" type="button" onclick="lastStep()"><li class="icon-remove icon-white"></li>取消</button>
         </div>
@@ -125,12 +125,17 @@
       <div class="row-fluid">
         <div class="span2">
           <label>预订对象/旅客：</label>
-          <input name="commodityName" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${name}">
+            <c:if test="${ordermin.receiveTargetID ==55}">
+                <input name="name" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${ordermin.name}">
+            </c:if>
+            <c:if test="${ordermin.receiveTargetID ==56}">
+                <input name="teamname" class="widthone" style="height: 26px;"  type="text" readonly="readonly" value="${ordermin.teamname}">
+            </c:if>
         </div>
         <div class="span2">
            <label>预订天数：</label>
-           <input id="predetermineDayId" name="predetermineDay" class="widthone" 
-           style="height: 26px;"  type="text" onchange="onchangeOne()" value="${listList[0].predetermineDay}">
+           <input id="predetermineDayId" name="predetermineDay" class="widthone"
+           style="height: 26px;"  type="text" onchange="onchangeOne()" value="${ordermin.predetermineDay}">
            <div id="divOne" hidden>
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	       </div>
@@ -140,7 +145,7 @@
            <div class="input-prepend">
 			  <span class="add-on" style="float:left;height: 15px;">&yen;</span>
 		      <input id="depositId" name="deposit" onchange="onchangeOne()"
-		      style="width:78%;height: 25px; float:left;" type="text" value="${zhengShu}">
+		      style="width:78%;height: 25px; float:left;" type="text" value="${ordermin.deposit}">
 		      <div id="divTwo" hidden>
 	             <label class="yansered" style="margin-top:7px;">*</label>
 	          </div>
@@ -150,7 +155,7 @@
            <label>支付方式</label>
            <select name="payWayID" style="height:26px;width:100%;"> 
 		            <c:forEach items="${listOne}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==listList[0].payWayID}" >selected="selected"</c:if>>
+			          <option value="${item.far_id}" <c:if test="${item.far_id==ordermin.payWayID}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -159,7 +164,7 @@
          <div class="span3">
            <label>抵达时间：</label>
           <input id="arriveTimeId" name="arriveTime" style="height:26px;float:left;" id="date" class="Wdate" type="text" onchange="onchangeOne()"
-		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" value="${listList[0].arriveTime}"/>
+		       onFocus="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd HH:mm:ss',minDate:'#F{\'%y-%M-%d\'}',onpicked:pickedFunc})" value="${ordermin.arriveTime}"/>
           <div id="divThree" hidden>
 	          <label class="yansered" style="margin-top:12px;">*</label>
 	      </div>
@@ -298,7 +303,7 @@
                 var tdroomAmount = tr.insertCell(-1);
                 var tdstandardPriceDay = tr.insertCell(-1);
                 
-                tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
+                tdcheckbox.innerHTML = "<input type='radio' name='idTwo' value='"+item.id+"'>";
                 tdroomNumber.innerHTML = item.roomNumber;
                 tdguestRoomLevelName.innerHTML = item.guestRoomLevelName;
                 tdroomName.innerHTML =item.roomName;         //中间这个是数据
@@ -391,12 +396,12 @@
 	    });
      } 
      var id= document.getElementById("lvkeorteamId").value;
-     var teamId= document.getElementById("teamId").value;
+     var receiveTargetID= document.getElementById("teamId").value;
      var pangduan=document.getElementById("pangduan").value;
-     form1.action="${ctx}/Predetermine/add.do?id="+id+"&type="+teamId+"&roomIdShuZu="
-     +roomIdShuZu+"&pangduan="+pangduan;
+     form1.action="${ctx}/Predetermine/update.do?ordID="+"${ordermin.ordID}" + "&roomId=" + roomIdShuZu;
      
-     form1.submit(); 
+
+     form1.submit();
    }
    
    function lastStep(){

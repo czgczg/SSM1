@@ -11,6 +11,7 @@ import com.cskaoyan.vo.Listone;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -138,6 +139,26 @@ public class PredetermineController {
         return "redirect:/Predetermine/tolist.do";
     }
 
+    //修改订单
+    //ordID:id=
+    //type=&roomIdShuZu=3&pangduan=
+    //roomId
+    /*
+    commodityName: 北京青年旅行社  --
+predetermineDay: 12
+deposit: 100
+payWayID: 21
+arriveTime: 2018-04-25 17:58:14
+     */
+    @PostMapping("/update")
+    public String updateOrder(Ordermain ordermain, String ordID,String roomId){
+
+        predetermineService.updateOrder(ordermain);
+
+        return "redirect:/Predetermine/tolist.do";
+    }
+
+
 
     //
     @RequestMapping("/arrangeRoom")
@@ -151,13 +172,27 @@ public class PredetermineController {
     }
 
     //toupdate
-    public String toUpDateOrdermain(String id){
+    @RequestMapping("/toupdate")
+    public String toUpDateOrdermain(String id, Model model){
+        Ordermain orderminByOrdID = predetermineService.findOrderminByOrdID(id);
 
+        //下拉框 支付方式
+        ArrayList<Orderpayment> payWay = predetermineService.getAllOrderPayment();
 
+        List<Roomset> roomsets = predetermineService.getRoomsetByOrdID(id);
 
-
+        model.addAttribute("roomSetPolist",roomsets);
+        model.addAttribute("ordermin",orderminByOrdID);
+        model.addAttribute("listOne",payWay);
         return "/WEB-INF/jsp/predetermine/update.jsp";
     }
 
+    //delete
+    @RequestMapping("/delete")
+    public String deleteOrdermain(String id){
+        predetermineService.deleteOrdermaim(id);
+
+        return "redirect:/Predetermine/tolist.do";
+    }
 
 }
