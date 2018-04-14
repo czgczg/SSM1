@@ -71,13 +71,13 @@
 	            type:'line',
 	            stack: '总量',
 	            areaStyle: {normal: {}},
-	            data:[${sZongFeiYong12}, ${sZongFeiYong11}, ${sZongFeiYong10}, ${sZongFeiYong9}, 
+	            data:[${sZongFeiYong12}, ${sZongFeiYong11}, ${sZongFeiYong10}, ${sZongFeiYong9},
 	                  ${sZongFeiYong8}, ${sZongFeiYong7}, ${sZongFeiYong6}, ${sZongFeiYong5},
 	                  ${sZongFeiYong4}, ${sZongFeiYong3}, ${sZongFeiYong2}, ${sZongFeiYong1}]
 	        },
 	        {
 	            name:'团队',
-	            type:'line',
+	            type:'pictorialBar',
 	            stack: '总量',
 	            label: {
                 normal: {
@@ -86,7 +86,7 @@
 	                }
 	            },
 	            areaStyle: {normal: {}},
-	            data:[ ${tZongFeiYong12}, ${tZongFeiYong11}, ${tZongFeiYong10}, ${tZongFeiYong9}, 
+	            data:[ ${tZongFeiYong12}, ${tZongFeiYong11}, ${tZongFeiYong10}, ${tZongFeiYong9},
 	                   ${tZongFeiYong8}, ${tZongFeiYong7}, ${tZongFeiYong6}, ${tZongFeiYong5},
 	                   ${tZongFeiYong4}, ${tZongFeiYong3}, ${tZongFeiYong2}, ${tZongFeiYong1}]
 	        }

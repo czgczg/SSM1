@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -106,5 +107,24 @@ public class CommodityServiceImpl implements CommodityService {
     public boolean deleteCommoditytypeById(int id) {
         Integer i = commoditytypeMapper.deleteCommoditytypeById(id);
         return i==1;
+    }
+
+    @Override
+    public List<Commodity> findPartCommodity(String txtname, String commodityTypeID) {
+        if("".equals(txtname) || txtname == null){
+            txtname = "%";
+        } else {
+            txtname = "%" + txtname + "%";
+        }
+        if("".equals(commodityTypeID) || commodityTypeID == null){
+            commodityTypeID = "%";
+        } else {
+            commodityTypeID = "%" + commodityTypeID + "%";
+        }
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("txtname", txtname);
+        hashMap.put("commodityTypeID", commodityTypeID);
+        LinkedList<Commodity> list = commodityMapper.findPartCommodityNotLimit(hashMap);
+        return list;
     }
 }
