@@ -26,6 +26,13 @@ import java.util.UUID;
 @RequestMapping("/Predetermine")
 @Controller
 public class PredetermineController {
+    @Autowired
+    RoomsetMapper roomsetMapper;
+    @Autowired
+    PassengerMapper passengerMapper;
+    @Autowired
+    OrderpaymentMapper orderpaymentMapper;
+
 
     @GetMapping("/tolist")
     public String roomsetToList(){
@@ -34,10 +41,7 @@ public class PredetermineController {
         return "/WEB-INF/jsp/predetermine/list.jsp";
     }
     
-    @Autowired
-    PassengerMapper passengerMapper;
-    @Autowired
-    OrderpaymentMapper orderpaymentMapper;
+
 
 
     @GetMapping("/toadd")
@@ -59,8 +63,6 @@ public class PredetermineController {
         return "/WEB-INF/jsp/predetermine/add.jsp";
     }
 
-    @Autowired
-    RoomsetMapper roomsetMapper;
 
 
     //根据room num查询
@@ -68,7 +70,7 @@ public class PredetermineController {
     @ResponseBody
     public List<Roomset> predetermineSelectRoom(Roomset roomset){
         //System.out.println(roomset.getRoomNumber());
-        List<Roomset> roomsets = roomsetMapper.selectAllRoomset();
+        List<Roomset> roomsets = roomsetMapper.findAllRoomset();
         //System.out.println(roomsets);
         return roomsets;
     }

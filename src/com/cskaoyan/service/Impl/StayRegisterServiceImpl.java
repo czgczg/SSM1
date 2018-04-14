@@ -80,7 +80,12 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     @Override
     public Ordermain findOrderById(String id) {
-        return ordermainMapper.selectByPrimaryKey(id);
+        return ordermainMapper.findOrderById(id);
+    }
+
+    @Override
+    public  List<Ordermain> findOrderByRoomNum(String roomNumber) {
+        return ordermainMapper.findOrderByRoomNum(roomNumber);
     }
 
     private int findAllOrderMainCount() {

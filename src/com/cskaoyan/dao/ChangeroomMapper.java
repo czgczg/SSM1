@@ -1,6 +1,7 @@
 package com.cskaoyan.dao;
 
 import com.cskaoyan.bean.Changeroom;
+import org.apache.ibatis.annotations.Insert;
 
 public interface ChangeroomMapper {
     /**
@@ -50,4 +51,17 @@ public interface ChangeroomMapper {
      * @mbg.generated Wed Apr 11 11:16:49 CST 2018
      */
     int updateByPrimaryKey(Changeroom record);
+
+    /**
+     * 插入一个换房信息
+     * private int changingRoomNumber;
+     private String ordId;
+     private String oldRoomset;
+     private String newRoomset;
+     private float affterPay;
+     private String changRoomTime;
+     private int delFlag;
+     */
+    @Insert("insert into changeroom values (null,#{ordId},#{oldRoomset},#{newRoomset},#{affterPay},#{changRoomTime},0);")
+    int insertChangeRoom(Changeroom changeroom);
 }

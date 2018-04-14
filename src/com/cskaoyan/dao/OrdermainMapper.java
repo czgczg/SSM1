@@ -61,4 +61,18 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
+    /**
+     * 根据订单号找到订单
+     */
+    @Select("select * from ordermain where ordID = #{id}")
+    Ordermain findOrderById(String id);
+
+    /**
+     * 根据房间号找到订单
+     * @param roomNumber
+     * @return
+     * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
+     */
+    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
 }

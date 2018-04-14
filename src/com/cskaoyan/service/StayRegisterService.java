@@ -25,4 +25,6 @@ public interface StayRegisterService {
     List<Roomset> findRoomsetAsEmpty(String roomNumber);
 
     Ordermain findOrderById(String id);
+
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
 }

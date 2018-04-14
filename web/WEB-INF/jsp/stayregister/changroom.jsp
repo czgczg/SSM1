@@ -203,7 +203,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>新房间号：</label>
-		        <input id="newRoomNumberId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
+		        <input id="newRoomNumberId"  type="text" style="width:100%;height:27px;" readonly="readonly">
 		      </div>
 		     <div class="span3">
 		        <label>新房价/天：</label>
@@ -261,7 +261,8 @@
 		      </div>
 		     <div class="span3">
 		        <label>天数：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuDianTianShu}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].predetermineDay}">
+                                                                        <%--修改为预定天数--%>
 		     </div>
 		     <div class="span3">
                <label>住宿费：</label>
@@ -279,11 +280,11 @@
 		     </div>
 		     <div class="span3">
 		        <label>押金：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${yaJin}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].deposit}">
 		     </div>
 		     <div class="span3">
 		        <label>本次需交换房费：</label>
-		        <input id="changRoomMoneyId" type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuSuFei}">
+		        <input id="changRoomMoneyId" type="text" style="width:100%;height:27px;" readonly="readonly" value="${list[0].changRoomMoney}">
 		      </div>
 		       
 		  </div>
@@ -417,7 +418,7 @@
        return false;
      }
      var id=document.getElementById("stayId").value;
-     var roomId=document.getElementById("roomId").value;
+     var roomId=document.getElementById("newRoomNumberId").value;
      var changRoomMoney=document.getElementById("changRoomMoneyId").value;
      var changRoomTime=document.getElementById("changRoomTimeId").value;
      var LvKeLeiXingId=document.getElementById("LvKeLeiXingId").value;

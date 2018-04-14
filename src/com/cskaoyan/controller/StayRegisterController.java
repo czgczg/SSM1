@@ -4,6 +4,7 @@ import com.cskaoyan.bean.Changeroom;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.dao.ChangeroomMapper;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.PassengerService;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RequestMapping("/StayRegister")
@@ -35,6 +38,8 @@ public class StayRegisterController {
     PassengerMapper passengerMapper;
     @Autowired
     RoomsetMapper roomsetMapper;
+    @Autowired
+    ChangeroomMapper changeroomMapper;
 
     /**
      * 显示页面和分页
@@ -130,7 +135,8 @@ public class StayRegisterController {
     @RequestMapping("/tochangroom")
     public String tochangeroom(HttpServletRequest request, HttpSession session){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
-        String id = request.getParameter("id"); //订单id
+        //订单id,将之作为stayId 传递。可以从订单id中找到房间id
+        String id = request.getParameter("id");
         String lvKeName = request.getParameter("lvKeName"); //旅客名字
 
 
@@ -138,6 +144,10 @@ public class StayRegisterController {
         Ordermain orderById = stayRegisterService.findOrderById(id);
         //根据ordermain中的roomnum 查询standardPriceDay
         double standardPriceDay = roomsetMapper.findPriceDayByNum(orderById);
+        //将之作为stayId 传递。从订单id中找到房间id
+        String roomNumber = orderById.getRoomNumber();
+        session.setAttribute("stayId",roomNumber);
+
         orderById.setRoomStandardPriceDay(standardPriceDay);
         //新建一个list，将order放入list中，再将list作为元素放入request
         List<Ordermain> list = new ArrayList<>();
@@ -168,20 +178,35 @@ public class StayRegisterController {
 
 
     /**
+     * http://192.168.2.100:8080/hotelms/StayRegister/confirmChangRoom.do?
+     * id=398&roomId=&changRoomMoney=0.0&changRoomTime=2018-04-14%2022:34:12.0&LvKeLeiXingId=55
      * 确认换房
      */
     @RequestMapping("/confirmChangRoom")
     public String confirmChangRoom(HttpServletRequest request){
-        String id = request.getParameter("id"); //订单id
+        String id = request.getParameter("id"); //旧房间id
         String roomId = request.getParameter("roomId");
 
-        //根据订单id查询数据库得到该订单实例,将新房间号赋值
-        Ordermain orderById = stayRegisterService.findOrderById(id);
-        //记录换房
+        //根据房间号查找对应的订单,数据问题，有多个重复房间数据，只取第一个
+        List<Ordermain> orderById = stayRegisterService.findOrderByRoomNum(id);
+        Ordermain ordermain = orderById.get(0);
+        //订单id
+        String ordID = ordermain.getOrdID();
+        //需要将订单房间号更改
+        ordermain.setRoomNumber(roomId);
+
+        //新建一个changeroom实例，并保存进数据库
         Changeroom changeroom = new Changeroom();
-        changeroom.setOldroomset(orderById.getOrdID());
-        changeroom.setNewroomset(roomId);
-        orderById.setRoomNumber(roomId);
+        changeroom.setOrdId(ordID);
+        changeroom.setOldRoomset(id);
+        changeroom.setNewRoomset(roomId);
+        changeroom.setAffterPay(200);//换房费
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String format = df.format(new Date());
+        changeroom.setChangRoomTime(format);//当前时间
+        //还需要一个换房时间。
+
+        changeroomMapper.insertChangeRoom(changeroom);
 
         return "/StayRegister/tolist.do";
 
