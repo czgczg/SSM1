@@ -1,9 +1,6 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Orderpayment;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.bean.*;
 import com.cskaoyan.dao.OrdermainMapper;
 import com.cskaoyan.dao.OrderpaymentMapper;
 import com.cskaoyan.dao.PassengerMapper;
@@ -36,15 +33,15 @@ public class PredetermineController {
         ArrayList<Listone> allStats = predetermineService.getAllStats();
 
         if(null == state){
-            state = "55,56";
+            state = "66";
         }
         //
         Page<Ordermain> page = predetermineService.getPageOfOrdermains(currentPage, txtname, state);
 
         System.out.println(page.getResult());
 
+        request.setAttribute("state",state);
         request.setAttribute("list",page);
-
         request.setAttribute("listOne",allStats);
         return "/WEB-INF/jsp/predetermine/list.jsp";
     }
@@ -81,15 +78,16 @@ public class PredetermineController {
         return roomsets;
     }
 
-    //selectTarget
     //查询所有的可下单人
     @PostMapping("/selectPassenger")
     @ResponseBody
-    public List<Passenger> predetermineSelectTarget(Roomset roomset){
+    public List<Passenger> predetermineelectPassenger(Roomset roomset){
 
         List<Passenger> allPassenger = predetermineService.getAllPassenger();
         return allPassenger;
     }
+
+
     //选取某个下单人后返回
     @RequestMapping("/confirmPassenger")
     @ResponseBody
@@ -100,9 +98,27 @@ public class PredetermineController {
     }
 
 
+    //查询所有可下单对象
+    @PostMapping("/selectTarget")
+    @ResponseBody
+    public List<Recepobject> predetermineSelectTarget(Roomset roomset){
+
+        List<Recepobject> allRecepobject = predetermineService.getAllRecepobject();
+        return allRecepobject;
+    }
+
+    //选取某个下单对象之后返回
+    @RequestMapping("/confirmTarget")
+    @ResponseBody
+    public Recepobject confirmTarget(HttpServletRequest request){
+        Recepobject recepobject = predetermineService.findRecepobjectById(Integer.valueOf(request.getParameter("id")));
+        return recepobject;
+    }
+
+
     //新增订单
     @PostMapping("/add")
-    public String addOrder( Ordermain ordermain, HttpServletRequest request/*,@RequestParam Date arriveTime*/ ){
+    public String addOrder(Ordermain ordermain, HttpServletRequest request/*,@RequestParam Date arriveTime*/ ){
         String id = request.getParameter("id");
         ordermain.setPassengerOrReceiveID(Integer.valueOf(id));
         String type = request.getParameter("type");//1是团队2是散客
@@ -122,6 +138,26 @@ public class PredetermineController {
         return "redirect:/Predetermine/tolist.do";
     }
 
+
+    //
+    @RequestMapping("/arrangeRoom")
+    public String arrangeRoom(String id,String tiaoZhuang){
+        if("1".equals(tiaoZhuang)){
+            predetermineService.arrangeRoom(id);
+            return "/StayRegister/tolist.do";
+        }else {
+            return "Predetermine/tolist.do";
+        }
+    }
+
+    //toupdate
+    public String toUpDateOrdermain(String id){
+
+
+
+
+        return "/WEB-INF/jsp/predetermine/update.jsp";
+    }
 
 
 }

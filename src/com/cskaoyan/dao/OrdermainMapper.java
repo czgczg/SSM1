@@ -59,11 +59,11 @@ public interface OrdermainMapper {
     ArrayList<Ordermain> getAllOrderAlreadyBooking();
 
     //根据状态查询总数
-    @Select("select count(1) from ordermain where receiveTargetID in (#{receiveTargetID}) and del_flag=0")
+    @Select("select count(1) from ordermain where state in (#{state}) and del_flag=0")
     Integer getPageOfOrdermains(String receiveTargetID);
 
     //查询部分订单
-    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND receiveTargetID in(#{receiveTargetID}) AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} ) ORDER BY ordID  LIMIT #{offset},#{limit}")
+    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND state in(#{state}) AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} ) ORDER BY ordID  LIMIT #{offset},#{limit}")
     List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
     List<Ordermain> selectAllOrderIsBeBooking();
 
@@ -79,7 +79,14 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
-    @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID}")
-    List<Ordermain>findOrderById(String ordID);
+    @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
+    List<Ordermain> findOrderById(String ordID);
 
+    //根据ID将订单状态修改为未结账
+    @Update("update ordermain set orderFrom=68 where ordID = #{id}")
+    int updateOrderFormByOrdId(String id);
+
+    //根据ID将订单状态修改为已安排
+    @Update("update ordermain set state=67 where ordID = #{id}")
+    int updateStateByOrdId(String id);
 }

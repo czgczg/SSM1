@@ -1,10 +1,6 @@
 package com.cskaoyan.service;
 
-import com.cskaoyan.bean
-        .Ordermain;
-import com.cskaoyan.bean.Orderpayment;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.bean.*;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.vo.Listone;
 
@@ -26,7 +22,18 @@ public interface PredetermineService {
 
     List<Roomset> getAllRoomset();
 
+    //获取所有旅客
     List<Passenger> getAllPassenger();
+
+
+    //根据id获取旅客信息
+    Passenger findPassengerById(Integer integer);
+
+    //获取所有对象
+    List<Recepobject> getAllRecepobject();
+
+    //根据id获取对象信息
+    Recepobject findRecepobjectById(Integer id);
 
     //安排房间
     Boolean pushRoomset(String ordId);
@@ -40,9 +47,13 @@ public interface PredetermineService {
     //获取下拉框已安排未安排
     ArrayList<Listone> getAllStats();
 
-    //根据id获取旅客信息
-    Passenger findPassengerById(Integer integer);
 
 
     Page<Ordermain> getPageOfOrdermains(Integer currentPage, String txtname, String state);
+
+    //安排房间
+    void arrangeRoom(String id);
+
+
+
 }

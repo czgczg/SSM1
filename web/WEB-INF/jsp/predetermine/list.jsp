@@ -213,7 +213,7 @@
 					   <%--选择对象之后的列表--%>
 			          <c:if test="${item.passengerOrReceiveID!=0}">
 				          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
-				          <td>${item.roomNumber}</td>
+				          <td>${item.roomNumber}<input type="hidden"></td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>散客</td>
 				          <td>${item.name}</td>
@@ -254,7 +254,7 @@
 				          <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>团队</td>
-				          <td>${item.teamName}</td>
+				          <td>${item.teamname}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
@@ -270,7 +270,7 @@
 				          <td>${item.roomNumber}</td>
 				          <td>${item.guestRoomLevelName}</td>
 				          <td>团队</td>
-				          <td>${item.teamName}</td>
+				          <td>${item.teamname}</td>
 				          <td>${item.arriveTime}</td>
 				          <td>${item.deposit}</td>
 				          <td>${item.predetermineDay}</td>
@@ -616,6 +616,7 @@
   	$('input[name="id"]:checked').each(function(){
   		chk_value.push($(this).val());
   	});
+
   	if(chk_value!=""){
   	var flag=window.confirm("注意：房间已安排成功，是否转到，住宿登记界面，便于登记旅客信息");
 	     if(flag){
