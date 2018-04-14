@@ -2,6 +2,7 @@ package com.cskaoyan.controller;
 
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.service.StayRegisterService;
@@ -13,8 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("/StayRegister")
 @Controller
@@ -112,23 +117,46 @@ public class StayRegisterController {
 
     }
 
-    /*
-    * 换房
-    * */
+    /**
+     * 换房
+     * jsp 中返回的是list集合，单个换房用list[0]表示。
+     * @param request
+     * @param ordermain
+     */
     @RequestMapping("/tochangeroom")
-    public void tochangeroom(HttpServletRequest request) {
+    public String tochangeroom(HttpServletRequest request, Ordermain ordermain, HttpSession session){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
-        String id = request.getParameter("id");
-        String lvKeName = request.getParameter("lvKeName");
+        String id = request.getParameter("id"); //订单id
+        String lvKeName = request.getParameter("lvKeName"); //旅客名字
 
+
+        //根据订单id查询数据库得到该订单实例
+        Ordermain orderById = stayRegisterService.findOrderById(id);
+        //新建一个list，将order放入list中，再将list作为元素放入request
+        List<Ordermain> list = new ArrayList<>();
+        list.add(orderById);
+        request.setAttribute("list",list);
+
+
+
+        return "/WEB-INF/jsp/stayregister/changroom.jsp";
     }
 
-    //选择房间
+
+
+
     @RequestMapping("/changeRoomSelectPassenger")
-    public void changeRoomSelectPassenger() {
+    @ResponseBody
+    public  List<Roomset> changeRoomSelectPassenger(){
+
+        //搜索room状态为空的房间
+        List<Roomset> roomsetAsEmpty = stayRegisterService.findRoomsetAsEmpty();
+        //返回数据
+        return roomsetAsEmpty;
 
 
     }
+
 
 
     /*
