@@ -1,5 +1,6 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Roomset;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -109,7 +110,11 @@ public interface RoomsetMapper {
     /**
      * 通过查询roomStateID为1来找出房间状态为空的房间
      * @return
+     * SELECT * FROM roomset WHERE roomStateID = 1;
      */
-    @Select("select * from roomset where roomStateID = 1")
-    List<Roomset> findRoomsetAsEmpty();
+    @Select("SELECT * FROM roomset WHERE roomStateID = 1 and roomNumber like #{roomNumber};")
+    List<Roomset> findRoomsetAsEmpty(String roomNumber);
+
+    @Select("select standardPriceDay from roomset where roomNumber = #{roomNumber}")
+    double findPriceDayByNum(Ordermain orderById);
 }

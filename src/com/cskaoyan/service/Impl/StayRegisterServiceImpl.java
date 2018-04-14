@@ -74,8 +74,8 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     }
 
     @Override
-    public List<Roomset> findRoomsetAsEmpty() {
-        return roomsetMapper.findRoomsetAsEmpty();
+    public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
+        return roomsetMapper.findRoomsetAsEmpty("%" + roomNumber+ "%");
     }
 
     @Override

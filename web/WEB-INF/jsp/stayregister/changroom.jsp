@@ -237,7 +237,9 @@
 		     <div class="span3">
 		        <label>接待对象：</label>
 		        <input type="text" style="width:100%;height:27px;" readonly="readonly" 
-		        value="${list[0].receiveTargetID==2?'散客':list[0].receiveTeamName}"> 
+		        <%--value="${list[0].receiveTargetID==2?'散客':list[0].receiveTeamName}"> --%>
+				value="${list[0].receiveTargetID==2?'散客':list[0].teamname}">
+
 		     </div>
 		     <div class="span3">
                <label>出租方式：</label>

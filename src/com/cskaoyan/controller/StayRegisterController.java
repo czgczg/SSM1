@@ -5,6 +5,7 @@ import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.PassengerMapper;
+import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
@@ -32,6 +33,8 @@ public class StayRegisterController {
     PassengerService passengerService;
     @Autowired
     PassengerMapper passengerMapper;
+    @Autowired
+    RoomsetMapper roomsetMapper;
 
     /**
      * 显示页面和分页
@@ -124,8 +127,8 @@ public class StayRegisterController {
      * @param request
      * @param ordermain
      */
-    @RequestMapping("/tochangeroom")
-    public String tochangeroom(HttpServletRequest request, Ordermain ordermain, HttpSession session){
+    @RequestMapping("/tochangroom")
+    public String tochangeroom(HttpServletRequest request, HttpSession session){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
         String id = request.getParameter("id"); //订单id
         String lvKeName = request.getParameter("lvKeName"); //旅客名字
@@ -133,6 +136,9 @@ public class StayRegisterController {
 
         //根据订单id查询数据库得到该订单实例
         Ordermain orderById = stayRegisterService.findOrderById(id);
+        //根据ordermain中的roomnum 查询standardPriceDay
+        double standardPriceDay = roomsetMapper.findPriceDayByNum(orderById);
+        orderById.setRoomStandardPriceDay(standardPriceDay);
         //新建一个list，将order放入list中，再将list作为元素放入request
         List<Ordermain> list = new ArrayList<>();
         list.add(orderById);
@@ -145,13 +151,15 @@ public class StayRegisterController {
 
 
 
-
-    @RequestMapping("/changeRoomSelectPassenger")
+    @RequestMapping("/changRoomSelectPassenger")
     @ResponseBody
-    public  List<Roomset> changeRoomSelectPassenger(){
+    public  List<Roomset> changeRoomSelectPassenger(HttpServletRequest request){
+
+        String roomNumber = request.getParameter("roomNumber");
+        //模糊查询房间号
 
         //搜索room状态为空的房间
-        List<Roomset> roomsetAsEmpty = stayRegisterService.findRoomsetAsEmpty();
+        List<Roomset> roomsetAsEmpty = stayRegisterService.findRoomsetAsEmpty(roomNumber);
         //返回数据
         return roomsetAsEmpty;
 
@@ -163,13 +171,19 @@ public class StayRegisterController {
      * 确认换房
      */
     @RequestMapping("/confirmChangRoom")
-    public void confirmChangRoom(HttpServletRequest request){
-        String id = request.getParameter("id");
+    public String confirmChangRoom(HttpServletRequest request){
+        String id = request.getParameter("id"); //订单id
         String roomId = request.getParameter("roomId");
 
+        //根据订单id查询数据库得到该订单实例,将新房间号赋值
+        Ordermain orderById = stayRegisterService.findOrderById(id);
+        //记录换房
         Changeroom changeroom = new Changeroom();
-        changeroom.setOldroomset(id);
+        changeroom.setOldroomset(orderById.getOrdID());
         changeroom.setNewroomset(roomId);
+        orderById.setRoomNumber(roomId);
+
+        return "/StayRegister/tolist.do";
 
     }
 
