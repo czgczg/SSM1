@@ -10,7 +10,7 @@
     <id column="ordID" jdbcType="VARCHAR" property="ordID" />
     <result column="passengerOrReceiveID" jdbcType="INTEGER" property="passengerOrReceiveID" />
     <result column="commodityName" jdbcType="VARCHAR" property="commodityName" />
-    <result column="commodityPhone" jdbcType="INTEGER" property="commodityPhone" />
+    <result column="commodityPhone" jdbcType="VARCHAR" property="commodityPhone" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="teamname" jdbcType="VARCHAR" property="teamname" />
     <result column="receiveTargetID" jdbcType="INTEGER" property="receiveTargetID" />
@@ -84,7 +84,7 @@
       changingRoomNumber, changRoomMoney, del_flag
       )
     values (#{ordID,jdbcType=VARCHAR}, #{passengerOrReceiveID,jdbcType=INTEGER}, #{commodityName,jdbcType=VARCHAR}, 
-      #{commodityPhone,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{teamname,jdbcType=VARCHAR},
+      #{commodityPhone,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{teamname,jdbcType=VARCHAR},
       #{receiveTargetID,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{orderFrom,jdbcType=INTEGER},
       #{rentOutTypeId,jdbcType=INTEGER}, #{rentOutTypeName,jdbcType=VARCHAR}, #{loginFlag,jdbcType=INTEGER},
       #{stayNumber,jdbcType=INTEGER}, #{predetermineDay,jdbcType=INTEGER}, #{deposit,jdbcType=REAL},
@@ -218,7 +218,7 @@
         #{commodityName,jdbcType=VARCHAR},
       </if>
       <if test="commodityPhone != null">
-        #{commodityPhone,jdbcType=INTEGER},
+        #{commodityPhone,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
@@ -327,7 +327,7 @@
         commodityName = #{commodityName,jdbcType=VARCHAR},
       </if>
       <if test="commodityPhone != null">
-        commodityPhone = #{commodityPhone,jdbcType=INTEGER},
+        commodityPhone = #{commodityPhone,jdbcType=VARCHAR},
       </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
@@ -431,7 +431,7 @@
     update ordermain
     set passengerOrReceiveID = #{passengerOrReceiveID,jdbcType=INTEGER},
       commodityName = #{commodityName,jdbcType=VARCHAR},
-      commodityPhone = #{commodityPhone,jdbcType=INTEGER},
+      commodityPhone = #{commodityPhone,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       teamname = #{teamname,jdbcType=VARCHAR},
       receiveTargetID = #{receiveTargetID,jdbcType=INTEGER},

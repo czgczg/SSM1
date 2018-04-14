@@ -40,7 +40,7 @@ public class Ordermain {
      *
      * @mbg.generated Sat Apr 14 00:26:17 CST 2018
      */
-    private Integer commodityPhone;
+    private String commodityPhone;
 
     /**
      *
@@ -166,6 +166,7 @@ public class Ordermain {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date arriveTime;
 
     /**
@@ -382,9 +383,9 @@ public class Ordermain {
      *
      * @return the value of ordermain.commodityPhone
      *
-     * @mbg.generated Sat Apr 14 00:26:17 CST 2018
+     * @mbg.generated Sat Apr 14 13:18:44 CST 2018
      */
-    public Integer getCommodityPhone() {
+    public String getCommodityPhone() {
         return commodityPhone;
     }
 
@@ -394,10 +395,10 @@ public class Ordermain {
      *
      * @param commodityPhone the value for ordermain.commodityPhone
      *
-     * @mbg.generated Sat Apr 14 00:26:17 CST 2018
+     * @mbg.generated Sat Apr 14 13:18:44 CST 2018
      */
-    public void setCommodityPhone(Integer commodityPhone) {
-        this.commodityPhone = commodityPhone;
+    public void setCommodityPhone(String commodityPhone) {
+        this.commodityPhone = commodityPhone == null ? null : commodityPhone.trim();
     }
 
     /**

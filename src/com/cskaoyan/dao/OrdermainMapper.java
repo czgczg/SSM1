@@ -63,7 +63,7 @@ public interface OrdermainMapper {
     Integer getPageOfOrdermains(String receiveTargetID);
 
     //查询部分订单
-    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND receiveTargetID=#{receiveTargetID} AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} )  LIMIT #{offset},#{limit}")
+    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND receiveTargetID in(#{receiveTargetID}) AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} ) ORDER BY ordID  LIMIT #{offset},#{limit}")
     List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
     List<Ordermain> selectAllOrderIsBeBooking();
 
