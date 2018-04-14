@@ -70,4 +70,8 @@
     SELECT * FROM listone WHERE attributeID =  #{attributeID}
   </select>
 
+  <select id="getListOne" parameterType="int" resultType="listone">
+    SELECT * FROM listone WHERE attributeID =  #{attributeID}
+  </select>
+
 </mapper>

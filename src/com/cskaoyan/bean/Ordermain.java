@@ -1026,37 +1026,27 @@ public class Ordermain {
     public String toString() {
         return "Ordermain{" +
                 "ordID='" + ordID + '\'' +
-                ", orderFrom=" + orderFrom +
                 ", passengerOrReceiveID=" + passengerOrReceiveID +
                 ", commodityName='" + commodityName + '\'' +
                 ", name='" + name + '\'' +
                 ", teamname='" + teamname + '\'' +
                 ", receiveTargetID=" + receiveTargetID +
-                ", state=" + state +
-                ", rentOutTypeId=" + rentOutTypeId +
-                ", rentOutTypeName='" + rentOutTypeName + '\'' +
+                ", status=" + state +
+                ", rentOutTypeName=" + rentOutTypeName +
                 ", stayNumber=" + stayNumber +
-                ", predetermineDay=" + predetermineDay +
+                ", predetermineDay='" + predetermineDay + '\'' +
                 ", deposit=" + deposit +
                 ", payWayID=" + payWayID +
                 ", payWayName='" + payWayName + '\'' +
                 ", arriveTime=" + arriveTime +
                 ", roomNumber='" + roomNumber + '\'' +
                 ", guestRoomLevelName='" + guestRoomLevelName + '\'' +
-                ", roomAmount=" + roomAmount +
                 ", orderTime=" + orderTime +
-                ", registerTime='" + registerTime + '\'' +
-                ", payTime='" + payTime + '\'' +
-                ", billUnitID=" + billUnitID +
-                ", billUnitName='" + billUnitName + '\'' +
-                ", passengerTypeName='" + passengerTypeName + '\'' +
-                ", passengerTypeID=" + passengerTypeID +
+                ", registerTime=" + registerTime +
+                ", payTime=" + payTime +
                 ", sumConst=" + sumConst +
-                ", timestamp='" + timestamp + '\'' +
-                ", changingRoomNumber='" + changingRoomNumber + '\'' +
-                ", changRoomMoney=" + changRoomMoney +
-                ", roomStandardPriceDay=" + roomStandardPriceDay +
-                ", del_flag=" + del_flag +
+                ", orderFrom=" + orderFrom +
+                ", delFlag=" + del_flag +
                 '}';
     }
 }

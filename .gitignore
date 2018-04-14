@@ -1,0 +1,26 @@
+
+# 忽略编译的字节码文件
+*.class
+
+# 忽略 jar 包
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# 忽略 .DS_Store
+.DS_Store
+
+# 忽略目录
+out/
+web/WEB-INF/classes/
+web/WEB-INF/lib/
+
+# 忽略 idea 配置
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/misc.xml
+.idea/dataSources/
+*.iml
