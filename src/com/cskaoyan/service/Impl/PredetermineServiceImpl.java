@@ -89,9 +89,10 @@ public class PredetermineServiceImpl implements PredetermineService{
     }
 
     @Override
-    public ArrayList<Ordermain> getAllOrderIsOnBooking() {
-        ArrayList<Ordermain> ordermains = ordermainMapper.getAllOrderIsOnBooking();
+   public ArrayList<Ordermain> getAllOrderIsOnBooking() {
+//      ArrayList<Ordermain> ordermains = ordermainMapper.getAllOrderIsOnBooking();
 
-        return ordermains;
+//      return ordermains;
+        return null;
     }
 }

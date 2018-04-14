@@ -2,19 +2,25 @@ package com.cskaoyan.controller;
 
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.dao.ListoneMapper;
+import com.cskaoyan.dao.OrdermainMapper;
 import com.cskaoyan.dao.PassengerMapper;
+import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.PassengerService;
+import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.utils.PassengerTransfer;
+import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RequestMapping("/StayRegister")
 @Controller
@@ -26,7 +32,14 @@ public class StayRegisterController {
     PassengerService passengerService;
     @Autowired
     PassengerMapper passengerMapper;
-
+@Autowired
+    RoomsetMapper roomsetMapper;
+@Autowired
+OrdermainMapper ordermainMapper;
+@Autowired
+RoomsetService roomsetService;
+@Autowired
+ListoneMapper listoneMapper;
     /**
      * 显示页面和分页
      */
@@ -107,11 +120,67 @@ public class StayRegisterController {
     /**
      * 安排房间
      */
-    @RequestMapping("/toanrrangeroom")
-    public void toanrrangeroom() {
+    @RequestMapping("/toarrangeroom")
+    public String toanrrangeroom(Model model,@RequestParam Integer LvKeLeiXingId) {
 
+        List<Listone> rendWay = listoneMapper.getRendWay(5);
+        List<Listone> passengerType = listoneMapper.getPassengerType(7);
+        List<Listone> measureUnit = listoneMapper.getMeasureUnit(6);
+        List<Listone> payWay = listoneMapper.getPayWay(4);
+        ArrayList<HashMap>listRentOutType=new ArrayList<>();
+        ArrayList<HashMap>listPassengerType=new ArrayList<>();
+        ArrayList<HashMap>listBillUnit=new ArrayList<>();
+        ArrayList<HashMap>listPayWay=new ArrayList<>();
+        listRentOutType=stayRegisterService.getHashMaps(rendWay,listRentOutType);
+        listPassengerType=stayRegisterService.getHashMaps(passengerType,listPassengerType);
+        listBillUnit=stayRegisterService.getHashMaps(measureUnit,listBillUnit);
+        listPayWay=stayRegisterService.getHashMaps(payWay,listPayWay);
+        if(LvKeLeiXingId==55){     //旅客结账单位为旅客自付
+            listBillUnit.remove(1);
+        }
+        if(LvKeLeiXingId==56){   //团队结账单位为团队付款
+            listBillUnit.remove(0);
+        }
+        model.addAttribute("listRentOutType",listRentOutType);   //出租方式
+        model.addAttribute("listPassengerType",listPassengerType);  //旅客类别
+        model.addAttribute("listBillUnit",listBillUnit);   //结账单位
+        model.addAttribute("listPayWay",listPayWay);   //支付方式
+
+        List<Roomset> list=roomsetService.findAllRoomset();
+        model.addAttribute("list",list);
+        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
     }
 
+
+    //选择房间类型，根据房间类型查询。
+    @RequestMapping("/guestRoomLevelSelectRoom")
+    @ResponseBody
+    public List<Roomset> guestRoomLevelSelectRoom(@RequestParam Integer guestRoomLevelID) {
+
+        List<Roomset>result=stayRegisterService.guestRoomLevelSelectRoom(guestRoomLevelID);
+        return result;
+    }
+
+    //保存到数据库并转发
+    @RequestMapping( path = "/arrangeroom" ,method = {RequestMethod.POST,RequestMethod.GET})
+    public String arrangeroom( Ordermain ordermain,HttpServletRequest request,Integer roomID ) {
+        Roomset roomset = roomsetMapper.findById(roomID);
+        ordermain.setRoomNumber(roomset.getRoomNumber());
+        ordermain.setRoomAmount(roomset.getRoomAmount());
+        String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,5);
+        ordermain.setOrdID(ordId);  //生成订单号
+        ordermain.setState(68);  //修改订单状态为未结账
+        int insert = ordermainMapper.insert(ordermain);
+        roomset.setRoomStateName("满");
+        roomset.setRoomStateID(6);
+        int j = roomsetMapper.updateById(roomset);
+        if(insert==1&&j==1){
+
+            return "/WEB-INF/jsp/stayregister/list.jsp";
+        }
+        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
+    }
     /*
     * 换房
     * */

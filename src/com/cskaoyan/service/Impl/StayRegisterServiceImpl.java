@@ -2,13 +2,17 @@ package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.OrdermainMapper;
 import com.cskaoyan.dao.RoomsetMapper;
+import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
+import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     @Autowired
     RoomsetMapper roomsetMapper;
+
 
     /**
      * ordermain的分页处理和显示
@@ -44,6 +49,28 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
         return page;
+    }
+
+    @Override
+    public List<Roomset> guestRoomLevelSelectRoom(Integer guestRoomLevelID) {
+        if(guestRoomLevelID==0){
+            List<Roomset> result=roomsetMapper.findAllRoomset();
+            return result;
+        }
+
+        List<Roomset> result = roomsetMapper.findRoomsetByLevelID(guestRoomLevelID);
+        return result;
+    }
+
+    @Override
+    public ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType) {
+        for (Listone i:payWay) {
+            HashMap<String, String> j = new HashMap<>();
+            j.put("far_id", i.getId().toString());
+            j.put("attributeDetailsName", i.getAttributeDetailsName());
+            listRentOutType.add(j);
+        }
+        return listRentOutType;
     }
 
     private int findAllOrderMainCount() {
