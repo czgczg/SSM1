@@ -43,8 +43,8 @@ public class CommodityController {
                 list.addLast(c);
             }
         }
-        model.addAttribute("list", page);
         model.addAttribute("listOne", list);
+        model.addAttribute("list", page);
         return "/WEB-INF/jsp/commodity/list.jsp";
     }
 

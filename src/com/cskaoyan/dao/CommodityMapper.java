@@ -4,8 +4,10 @@ import com.cskaoyan.bean.Commodity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public interface CommodityMapper {
@@ -68,4 +70,12 @@ public interface CommodityMapper {
      */
     @Select("SELECT * FROM commodity WHERE del_flag=0 AND commodityTypeID=#{commodityTypeID} AND commodityName LIKE #{txtname} LIMIT #{offset},#{limit}")
     List<Commodity> findPartCommodity(HashMap<String, Object> hashMap);
+
+    /**
+     * 发现部分商品并且没有limit
+     * @param hashMap
+     * @return
+     */
+    @Select("SELECT * FROM commodity WHERE del_flag=0 AND commodityTypeID LIKE #{commodityTypeID} AND commodityName LIKE #{txtname}")
+    LinkedList<Commodity> findPartCommodityNotLimit(HashMap<String, String> hashMap);
 }

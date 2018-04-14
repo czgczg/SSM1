@@ -1,8 +1,11 @@
 package com.cskaoyan.controller;
 
+import com.cskaoyan.bean.Commodity;
+import com.cskaoyan.bean.Commoditytype;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.dao.PassengerMapper;
+import com.cskaoyan.service.CommodityService;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
@@ -13,12 +16,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.LinkedList;
+import java.util.List;
 
 @RequestMapping("/StayRegister")
 @Controller
 public class StayRegisterController {
+
+    @Autowired
+    CommodityService commodityService;
 
     @Autowired
     StayRegisterService stayRegisterService;
@@ -147,31 +156,43 @@ public class StayRegisterController {
     * 旅客消费
     * */
     @RequestMapping("/toconsumption")
-    public void toconsumption(HttpServletRequest request) {
+    public String toconsumption(HttpServletRequest request, Model model){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
         String lvKeName = request.getParameter("lvKeName");
         String id = request.getParameter("id");
         String roomNumber = request.getParameter("roomNumber");
         String isBillID = request.getParameter("isBillID");//68未结账，69已结账
         String number = request.getParameter("Number");
+        List<Commoditytype> commoditytype = commodityService.findAllCommoditytype();
+        model.addAttribute("listOne", commoditytype);
         request.getParameter("consumptionStayRegisterID");
+        model.addAttribute("LvKeLeiXingId", lvKeLeiXingId);
+        model.addAttribute("lvKeName",lvKeName);
+        model.addAttribute("id", id);
+        model.addAttribute("roomNumber", roomNumber);
+        model.addAttribute("isBillID", isBillID);
+        model.addAttribute("Number", number);
+        return "/WEB-INF/jsp/stayregister/consumption.jsp";
 
+    }
+    //发现所有商品
+    @RequestMapping("/findAllCommodity")
+    @ResponseBody
+    public List<Commodity> findAllCommodity(String name, String cboid){
+        return commodityService.findPartCommodity(name, cboid);
 
     }
 
-    //添加商品
-    @RequestMapping("/tianJiaShangPin")
-    public void tianJiaShangPin() {
-
-    }
-
-    //选择商品
+    //添加消费
     @RequestMapping("/consumption")
     public void consumption(HttpServletRequest request) {
         String id = request.getParameter("id");
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
         String number = request.getParameter("Number");
         String consumptionStayRegisterID = request.getParameter("consumptionStayRegisterID");
+
+
+        // 写入数据库并且回显
 
     }
 
@@ -205,7 +226,6 @@ public class StayRegisterController {
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
         return "redirect:tolist.do";
     }
-
 
     /*
     * 结账

@@ -909,8 +909,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage}10086,
-     current:${list.currentPage}10086,
+     pageCount:${list.totalPage},
+     current:${list.currentPage},
      backFn:function(p){
       var isBillID=document.getElementById("isBillID").value;
       var txtname=document.getElementById("txtnameid").value;

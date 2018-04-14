@@ -340,7 +340,7 @@
      $.ajax({      
          cache:false,
          type: "POST",
-         url: '${ctx}/StayRegister/tianJiaShangPin.do',
+         url: '${ctx}/StayRegister/findAllCommodity.do',
          data:"name="+name+"&cboid="+cboid,
          async:false,
          success: function (result) { 
@@ -359,8 +359,8 @@
                 tdcheckbox.innerHTML = "<input type='checkbox' name='idTwo' value='"+item.id+"'>";
                 tdCommodityName.innerHTML = item.commodityName;
                 tdCommodityTypeName.innerHTML = item.commodityTypeName;
-                tdUOMName.innerHTML =item.uOMName;         //中间这个是数据
-                tdSalePrice.innerHTML =item.salePrice;
+                tdUOMName.innerHTML =item.commodityTypeName;         //中间这个是数据
+                tdSalePrice.innerHTML =item.commodityMeasurementName;
                 tdNumber.innerHTML ="<input style='width:100%;border-color:green'>";
             }
             if(i==0){
@@ -407,15 +407,15 @@
 	}
   	if(chk_value!=""){
 	   parent.document.getElementById("Mainid").src='${ctx}/StayRegister/consumption.do?id='+chk_value
-	   +'&Number='+Number+'&consumptionStayRegisterID='+consumptionStayRegisterID+'&LvKeLeiXingId='+LvKeLeiXingId;
+	   +'&Number='+Number+'&consumptionStayRegisterID='+consumptionStayRegisterID+'&LvKeLeiXingId='+LvKeLeiXingId + '&or';
 	}else{
 	}
    }
    
     /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage},
-     current:${list.currentPage},
+     pageCount:${list.totalPage}10086,
+     current:${list.currentPage}10086,
      backFn:function(p){
      location.href="${ctx}/StayRegister/toconsumption.do?currentPage="+p;
      }
