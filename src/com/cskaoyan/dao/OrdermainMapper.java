@@ -66,6 +66,7 @@ public interface OrdermainMapper {
     List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
     List<Ordermain> selectAllOrderIsBeBooking();
 
+
     /**
     *修改订单状态为未结账
      */

@@ -59,6 +59,7 @@ public class PredetermineController {
         String name = request.getParameter("name");   //
         String type = request.getParameter("type");  //1为团队 2为散客
 
+
         request.setAttribute("name",name);
         request.setAttribute("id",id);
         request.setAttribute("type",type);

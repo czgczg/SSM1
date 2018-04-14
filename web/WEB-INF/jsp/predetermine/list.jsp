@@ -588,6 +588,7 @@
   		contactPhoneNUmber=table.rows[selectedIndex-1].cells[6].innerHTML;     // 获取选中的索引的 单元格的值
   		registerTime=table.rows[selectedIndex-1].cells[5].innerHTML;     // 获取选中的索引的 单元格的值
   	});
+
   	document.getElementById("oneId").value=chk_value;
   	document.getElementById("teamNameId").value=teamName;
   	document.getElementById("teamCodeId").value=teamCode;

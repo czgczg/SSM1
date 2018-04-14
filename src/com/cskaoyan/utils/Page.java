@@ -61,6 +61,7 @@ public class Page<T>
         this.prevPageNum = prevPageNum;
     }
 
+
     public int getNextPageNum() {
         return nextPageNum;
     }
