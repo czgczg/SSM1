@@ -169,6 +169,7 @@
           <label style="float:left;">房间号：</label>
           <label>${list[0].roomNumber}</label>
         </div>
+
         <div class="span3">
           <label style="float:left;">旅客姓名：</label>
           <label>${lvKeName}</label>
