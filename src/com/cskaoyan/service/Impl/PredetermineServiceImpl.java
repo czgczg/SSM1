@@ -145,10 +145,10 @@ public class PredetermineServiceImpl implements PredetermineService{
 
         //获取当前类别总数
         //int sumCount = 0;
-       // String[] states = state.split(",");
-       // for (String receiveTargetID : states) {
-             Integer sumCount = ordermainMapper.getPageOfOrdermains(state);
-       // }
+        // String[] states = state.split(",");
+        // for (String receiveTargetID : states) {
+        Integer sumCount = ordermainMapper.getPageOfOrdermains(state);
+        // }
 
         if(null != sumCount){
             System.out.println("currentPage1-"+ordermainPage.getCurrentPage());

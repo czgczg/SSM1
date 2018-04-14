@@ -7,6 +7,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+
     
     <title></title>
     
@@ -188,7 +189,28 @@
 		     </div>
 		     <div class="span3">
 		        <label>性别：</label>
-		        <select id="genderId" name="genderID" onchange="gender(this.value)" style="width:100%;height:27px;">
+		        <select id="genderId" name="genderID" onchange
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						="gender(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listGender}" var="item">
 			          <option value="${item.far_id}" <c:if test="${item.far_id==31}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}

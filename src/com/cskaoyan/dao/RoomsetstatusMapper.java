@@ -77,5 +77,4 @@ public interface RoomsetstatusMapper {
     @Select("SELECT * FROM roomsetstatus WHERE far_id=#{far_id}")
     Roomsetstatus findStatusByPrimaryKey(int far_id);
 
-
 }

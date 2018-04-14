@@ -9,6 +9,8 @@ public class Page<T>
 
 
     public static final int PASSENGER__NUM_PER_PAGE =5;
+    //修改分页要显示的每页的记录条数
+    public static final int ORDERMAIN__NUM_PER_PAGE =8;
 
     private  int totalCount;  //总记录数
 
@@ -92,7 +94,6 @@ public class Page<T>
         this.setNextPageNum(num_int-1==0?num_int:num_int-1);
         this.setPrevPageNum(num_int+1>totalPageNum?num_int:num_int+1);
     }
-
 
     @Override
     public String toString() {

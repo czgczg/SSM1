@@ -25,7 +25,7 @@
         <property name="converters">
             <set>
                 <bean class="com.cskaoyan.utils.MyDateConverter"/>
-                <bean class="com.cskaoyan.utils.StringToPhoneNumberConverter"/>
+                <!--<bean class="com.cskaoyan.utils.StringToPhoneNumberConverter"/>-->
             </set>
         </property>
     </bean>
@@ -48,8 +48,8 @@
     <bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
         <property name="user" value="root"/>
-        <property name="password" value="123"/>
-        <property name="jdbcUrl" value="jdbc:mysql://192.168.3.47:3308/ssm01"/>
+        <property name="password" value="123456"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/ssm01"/>
     </bean>
 
     <!-- 产生sqlsessionfactory -->

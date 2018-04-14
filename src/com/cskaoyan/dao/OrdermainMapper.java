@@ -63,4 +63,17 @@ public interface OrdermainMapper {
     //查询部分订单
     @Select("SELECT * FROM ordermain WHERE del_flag=0 AND receiveTargetID=#{receiveTargetID} AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} )  LIMIT #{offset},#{limit}")
     List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
+    List<Ordermain> selectAllOrderIsBeBooking();
+
+    /**
+    *修改订单状态为未结账
+     */
+    @Update("update ordermain set state=68")
+    int modifyOrderStatus();
+
+    @Select("select count(*) from ordermain WHERE del_flag=0")
+    int findAllOrderCount();
+
+    List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
+
 }

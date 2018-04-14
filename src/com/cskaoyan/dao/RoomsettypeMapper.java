@@ -34,9 +34,10 @@ public interface RoomsettypeMapper {
 
     /**
      * 根据主键返回房间状态
-     * @param guestRoomLevelID
+     * @param id
      * @return
      */
-    @Select("SELECT * FROM roomsettype WHERE far_id = #{guestRoomLevelID}")
-    Roomsettype findByPrimaryKey(Integer guestRoomLevelID);
+    @Select("SELECT * FROM roomsettype WHERE far_id = #{id}")
+    Roomsettype findByPrimaryKey(int id);
+
 }
