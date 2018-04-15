@@ -21,18 +21,12 @@ import java.util.*;
 @RequestMapping("/Predetermine")
 @Controller
 public class PredetermineController {
-
-
     @Autowired
     PredetermineService predetermineService;
-
-
     @RequestMapping("/tolist")
     public String roomsetToList(HttpServletRequest request,Integer currentPage, String txtname,String state){
-
         //下拉框 已安排未安排
         ArrayList<Listone> allStats = predetermineService.getAllStats();
-
         if(null == state){
             state = "66";
         }
@@ -167,7 +161,7 @@ arriveTime: 2018-04-25 17:58:14
             predetermineService.arrangeRoom(id);
             return "/StayRegister/tolist.do";
         }else {
-            return "Predetermine/tolist.do";
+            return "/Predetermine/tolist.do";
         }
     }
 

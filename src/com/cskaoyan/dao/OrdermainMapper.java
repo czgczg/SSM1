@@ -104,4 +104,6 @@ public interface OrdermainMapper {
     //根据ID将订单状态修改已删除
     @Update("update ordermain set del_flag=1 where ordID = #{id}")
     void removeOrderMain(String oid);
+
+    int updateByPrimaryKey(Ordermain record);
 }

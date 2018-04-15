@@ -632,6 +632,10 @@
        alert("很抱歉！该数据已经结账没法进行此操作！");
        return;
      }
+     if(${LoginFlag==0}){
+         alert("请先登记再结账！");
+         return;
+	 }
   	if(chk_value!=""){
 		if(chk_value.toString().indexOf(",")>0){
 		   alert("只能选择一个房间进行结账哦");

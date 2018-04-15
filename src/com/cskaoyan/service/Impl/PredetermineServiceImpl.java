@@ -1,3 +1,4 @@
+/*
 package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.*;
@@ -268,3 +269,4 @@ public class PredetermineServiceImpl implements PredetermineService{
 
 
 }
+*/

@@ -203,7 +203,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>新房间号：</label>
-		        <input id="newRoomNumberId" type="text" style="width:100%;height:27px;" readonly="readonly"> 
+		        <input id="newRoomNumberId" type="text" style="width:100%;height:27px;" readonly="readonly">
 		      </div>
 		     <div class="span3">
 		        <label>新房价/天：</label>
@@ -237,7 +237,7 @@
 		     <div class="span3">
 		        <label>接待对象：</label>
 		        <input type="text" style="width:100%;height:27px;" readonly="readonly" 
-		        value="${list[0].receiveTargetID==2?'散客':list[0].receiveTeamName}"> 
+		        value="${list[0].receiveTargetID==2?'散客':list[0].receiveTeamName}">
 		     </div>
 		     <div class="span3">
                <label>出租方式：</label>
@@ -259,7 +259,7 @@
 		      </div>
 		     <div class="span3">
 		        <label>天数：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuDianTianShu}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${zhuDianTianShu}">
 		     </div>
 		     <div class="span3">
                <label>住宿费：</label>
@@ -277,7 +277,7 @@
 		     </div>
 		     <div class="span3">
 		        <label>押金：</label>
-		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${yaJin}"> 
+		        <input type="text" style="width:100%;height:27px;" readonly="readonly" value="${yaJin}">
 		     </div>
 		     <div class="span3">
 		        <label>本次需交换房费：</label>

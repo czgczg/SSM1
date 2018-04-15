@@ -142,7 +142,6 @@ public class PassengerController {
 
     @RequestMapping("/delete.do")
     public String deletePassenger(Passenger passenger) {
-
         passengerService.deletePassenger(passenger);
         return "/Passenger/tolist.do";
     }
