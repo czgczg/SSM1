@@ -167,8 +167,8 @@
  
   <body > 
   <div class="container" style="height:630px;overflow-x:auto;">
-    <input type="hidden" id="id" value="${id}"/>
-    <input type="hidden" id="isBillID" value="${list.isBillID}"/>
+    <input type="hidden" id="id" value="${list.ordID}"/>
+    <input type="hidden" id="isBillID" value="${list.billUnitID}"/>
     
     <div class="span11" style=" border: solid; border-color: #DDDDDD;">
     <div class="span9 margin-top-one">
@@ -208,11 +208,11 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">接待对象：</label> <!-- 散客 -->
-		        <label class="yanseblue">${list.receiveTeamName==""?"散客":list.receiveTeamName}</label>
+		        <label class="yanseblue">${list.receiveTargetID==55?"散客":list.teamName}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客姓名：</label>
-		        <label class="yanseblue">${list.passengerName}</label>
+		        <label class="yanseblue">${list.name}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -225,7 +225,7 @@
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客级别：</label>
-		        <label class="yanseblue">${list.passengerLevelName}</label>
+		        <label class="yanseblue">${list.passengerTypeName}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">结账单位：</label>
@@ -255,15 +255,15 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">房价/天：</label>
-		        <label class="yanseblue">${list.roomStandardPriceDay}</label>
+		        <label class="yanseblue">${list.ordID}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">房价/小时：</label>
-		        <label class="yanseblue">${list.roomStandardPrice}</label>
+		        <label class="yanseblue">${list.ordID}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">首段价格：</label>
-		        <label class="yanseblue">${list.roomFirstPrice}</label>
+		        <label class="yanseblue">${list.ordID}</label>
 		     </div>
 		  </div>
 	    </div>
@@ -272,11 +272,12 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">天数或钟点数：</label>
-		        <label class="yanseblue">${list.stayNumber}</label>
+		        <label class="yanseblue">
+					${list.rentOutTypeId=="1"?list.predetermineDay:list.stayNumber}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">住宿费：</label>
-		        <label class="yanseblue">${zhuSuFei}</label>
+		        <label class="yanseblue">${list.ordID}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">换房费：</label>
@@ -289,11 +290,11 @@
 	      <div class="row-fluid">
 		     <div class="span4">
 		        <label class="floatont">其他消费：</label>
-		        <label class="yanseblue">${qiTaXiaoFei}</label>
+		        <label class="yanseblue">${list.ordID}</label>
 		     </div>
 		     <div class="span4">
 		        <label class="floatont">旅客押金：</label>
-		        <label class="yanseblue">${yaJin}</label>
+		        <label class="yanseblue">${list.deposit}</label>
 		     </div>
 		     <div class="span3">
 		        <label class="floatont">总费用：</label>

@@ -2,10 +2,9 @@ package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Recepobject;
 import com.cskaoyan.bean.Roomset;
-import com.cskaoyan.dao.OrdermainMapper;
-import com.cskaoyan.dao.RegistrationMapper;
-import com.cskaoyan.dao.RoomsetMapper;
+import com.cskaoyan.dao.*;
 import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
@@ -31,6 +30,12 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     @Autowired
     RegistrationMapper registrationMapper;
 
+    @Autowired
+    RecepobjectMapper recepobjectMapper;
+
+    @Autowired
+    PassengerMapper passengerMapper;
+
 
     /**
      * author:czg
@@ -55,6 +60,50 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
         return 0;
     }
+
+    @Override
+    public List<Ordermain> getOrderMain(String oid) {
+        return ordermainMapper.findOrderById(oid);
+    }
+
+    @Override
+    public void changOverOrderMain(String oid,String passengerOrReceiveID) {
+        //改变旅客状态55-》56，删除（？）预定人名字，加入团队信息在里面,结账方式变更1.旅客自付 2.团队付款
+        Ordermain ordermain = ordermainMapper.findOrderById(oid).get(0);
+        ordermain.setPassengerOrReceiveID(Integer.valueOf(passengerOrReceiveID));
+        Integer type = ordermain.getReceiveTargetID();
+        if(type == 56){
+            ordermain.setReceiveTargetID(55);
+            ordermain.setBillUnitID(1);
+            ordermain.setBillUnitName("旅客自付");
+            ordermain.setTeamname("");
+            Passenger passengerById = passengerMapper.findPassengerById(Integer.valueOf(passengerOrReceiveID));
+            ordermain.setName(passengerById.getName());
+            ordermain.setCommodityPhone(passengerById.getContactPhoneNumber());
+        }else if(type == 55){
+            ordermain.setReceiveTargetID(56);
+            ordermain.setBillUnitID(2);
+            ordermain.setBillUnitName("团队付款");
+            ordermain.setName("");
+            Recepobject receptById = recepobjectMapper.findReceptById(Integer.parseInt(passengerOrReceiveID));
+            ordermain.setTeamname(receptById.getTeamName());
+            ordermain.setCommodityPhone(receptById.getContactPhoneNUmber());
+        }
+        ordermainMapper.updateByPrimaryKeySelective(ordermain);
+
+
+    }
+
+    @Override
+    public List<Recepobject> getAllReceiveObject() {
+        return recepobjectMapper.findAllObj();
+    }
+
+    @Override
+    public List<Passenger> getAllPassers() {
+        return passengerMapper.findAllPassenger();
+    }
+
     /**
      * ordermain的分页处理和显示
      * @param currentPage

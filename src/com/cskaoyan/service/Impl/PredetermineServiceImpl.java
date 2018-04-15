@@ -60,6 +60,7 @@ public class PredetermineServiceImpl implements PredetermineService{
 
         if(null == ordermain.getRentOutTypeName()){
             ordermain.setRentOutTypeId(1);
+            ordermain.setRentOutTypeName("全日");
         }
 
 

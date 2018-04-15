@@ -231,7 +231,7 @@
 			          <td>${item.sumConst}</td>
 			          <td hidden>${item.orderFrom}</td>
 							<%--不知道干嘛的 先删除--%>
-							<%--<td hidden>${item.stayregisterdetailsId}</td>--%>
+							<td hidden>${item.loginFlag}</td>
 			        </tr>
 		        </c:if>
 				<%--默认是散客，原来是0，为了和数据库对应，改为55--%>
@@ -256,7 +256,8 @@
 			          <td>${item.sumConst}</td>
 			          <td hidden>${item.orderFrom}</td>
 						<%--不知道干嘛的 先删除--%>
-			          <%--<td hidden>${item.stayregisterdetailsId}</td>--%>
+						<%--换队散客转换使用，好像也没用--%>
+			          <td hidden>${item.loginFlag}</td>
 			        </tr>
 		        </c:if>
 	        </c:forEach>
@@ -682,7 +683,7 @@
 	  		selectedIndex=this.parentNode.parentNode.rowIndex;
   		    stayregisterdetailsId=table.rows[selectedIndex-1].cells[13].innerHTML;
 	  	});
-	  	if(stayregisterdetailsId==""){
+	  	if(stayregisterdetailsId==0){
 	  	   alert("此房间还没有登记哦！不能进行此操作");
 	  	   return false;
 	  	}

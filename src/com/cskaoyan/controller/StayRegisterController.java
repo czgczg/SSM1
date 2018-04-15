@@ -255,21 +255,37 @@ public class StayRegisterController {
     /*
     * 转换
     * */
-//转入团队房间信息
+    //转入团队房间信息
     @RequestMapping("/toshiftteam")
-    public void toshiftteam(HttpServletRequest request) {
+    public String toshiftteam(String id,String stayregisterdetailsId,HttpServletRequest request) {
+        List<Ordermain> ordermains = stayRegisterService.getOrderMain(id);
+
+        List<Recepobject> recepobjects = stayRegisterService.getAllReceiveObject();
+        request.setAttribute("listRT",recepobjects);
+        request.setAttribute("list",ordermains.get(0));
+        return "/WEB-INF/jsp/stayregister/shiftteam.jsp";
+
+    }
+
+    @RequestMapping("/changOver")
+    public String changOver(String id,String receiveTargetID,HttpServletRequest request) {
+        stayRegisterService.changOverOrderMain(id,receiveTargetID);
+        return "redirect:tolist.do";
 
     }
 
     //转为散客
     @RequestMapping("/toshiftpersonage")
-    public void toshiftpersonage(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String stayregisterdetailsId = request.getParameter("stayregisterdetailsId");
+    public String toshiftpersonage(String id,String stayregisterdetailsId,HttpServletRequest request) {
+        List<Ordermain> ordermains = stayRegisterService.getOrderMain(id);
+        List<Passenger> passengers = stayRegisterService.getAllPassers();
+
+        request.setAttribute("listRT",passengers);
+        request.setAttribute("list",ordermains.get(0));
+        return "/WEB-INF/jsp/tayregister/shiftpersonage.jsp";
     }
 
-    //转入
-    @RequestMapping("/changeOver")
+    @RequestMapping("/changeOver2")
     public String changeOver(HttpServletRequest request) {
         String id = request.getParameter("id");
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
