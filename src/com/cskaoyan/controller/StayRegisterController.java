@@ -19,7 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -53,7 +55,8 @@ public class StayRegisterController {
     optionService optionService;
     @Autowired
     OrdextconsumMapper ordextconsumMapper;
-
+    @Autowired
+    RegistrationMapper registrationMapper;
     @Autowired
     OrdermainService ordermainService;
 
@@ -63,37 +66,44 @@ public class StayRegisterController {
      * 显示页面和分页
      */
     @RequestMapping("/tolist.do")
-    public String roomsetToList(HttpServletRequest request,Integer currentPage,Model model) {
+    public String stayRegisterToList(HttpServletRequest request, Integer currentPage, Model model, HttpSession session) {
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
         String isBillID = request.getParameter("isBillID");//68未结账，69已结账
-        //去数据库查到orderMain数据去给到前台jsp页面
-
-        if (currentPage == null || currentPage == 0) {
-            currentPage = 1;
-        }
-
-        //拿到输入用户名
+        System.out.println("isBillID = " + isBillID);
+        if (currentPage == null || currentPage == 0) currentPage = 1;
         String roomNumber = request.getParameter("txtname");
         if (roomNumber == null || "".equals(roomNumber)) {
             roomNumber = "%";
         } else {
             roomNumber = "%" + roomNumber + "%";
         }
-        //根据分页，查出限定的记录条数
-        Page<Ordermain> page = stayRegisterService.findPage(currentPage, roomNumber);
+        Page<Ordermain> page;
+        //去数据库查到orderMain数据去给到前台jsp页面
+        if (null == lvKeLeiXingId) {
+            lvKeLeiXingId="55";
+        }
+        if (null == isBillID) {
+            isBillID="68";
+        }
+        page = stayRegisterService.findPage(currentPage, roomNumber,lvKeLeiXingId,isBillID);
 
-        //将分页的记录数返回给前台
+        request.setAttribute("LvKeLeiXingId",lvKeLeiXingId);
         model.addAttribute("list", page);
-//        //返回视图层
-//        stayRegisterService.queryOrderMain();
+        List<Listone> list = optionService.getPayMoney();
+        session.setAttribute("listOne", list);
+        model.addAttribute("isBillID", isBillID);
         return "/WEB-INF/jsp/stayregister/list.jsp";
+
     }
 
     /**
      * 登记   //55旅客，56团队StayRegister/register.do?LvKeLeiXingId=55
+     * 1.点击登记转到register的jsp文件。并填充下拉option和房间号等数据到表单
      */
     @GetMapping("/toregister.do")
-    public String toregister(HttpServletRequest request, String roomNumber, HttpSession session) {
+    public String toregister(HttpServletRequest request, String roomNumber, HttpSession session, HttpServletResponse response) throws IOException {
+        Boolean flag=false;
+
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
         String id = request.getParameter("id");
 
@@ -101,22 +111,39 @@ public class StayRegisterController {
         session.setAttribute("id", id);
         //先将旅客类别和订单号存入登记表
 
-        List<Listone> sex = optionService.getSex();
-        List<Listone> nation = optionService.getNation();
-        List<Listone> educationDegree = optionService.getEducationDegree();
-        //旅客级别
-        List<Listone> level = optionService.getpassengerLevel();
-        List<Listone> identifyCard = optionService.getIdentifyCard();
-        List<Listone> thingReason = optionService.getThingReason();
-        session.setAttribute("listGender", sex);
-        session.setAttribute("listNation", nation);
-        session.setAttribute("listEducationDegree", educationDegree);
-        session.setAttribute("listPassengerLevel", level);
-        session.setAttribute("listPapers", identifyCard);
-        session.setAttribute("listThingReason", thingReason);
+        //判断房间人数，如果该房间登记人数超过了房间的床位，则不让去登记，提示用户 alert 警告！下
+        //去roomset表去查对应房间号的房间床位数   roomAmount
+        Roomset roomset = roomsetService.queryroomAmountByRoomNumber(roomNumber);
 
-        session.setAttribute("roomNumber", roomNumber);
-        return "/WEB-INF/jsp/stayregister/register.jsp";
+        //查登记表的该房间登记的人数  根据什么去查 订单号
+        int count = registrationMapper.queryRegisterPersonCount(id);
+        if (count >= roomset.getRoomAmount()) {
+            flag=true;
+            response.setContentType("text/html;charset=UTF-8");
+            response.setHeader("refresh", "3;url='/StayRegister/tolist.do'");
+            response.getWriter().write("该房间登记人数超过床位数，请重新选择其他房间进行登记...@_@...");
+        }
+        if (!flag) {
+            List<Listone> sex = optionService.getSex();
+            List<Listone> nation = optionService.getNation();
+            List<Listone> educationDegree = optionService.getEducationDegree();
+            //旅客级别
+            List<Listone> level = optionService.getpassengerLevel();
+            List<Listone> identifyCard = optionService.getIdentifyCard();
+            List<Listone> thingReason = optionService.getThingReason();
+            session.setAttribute("listGender", sex);
+            session.setAttribute("listNation", nation);
+            session.setAttribute("listEducationDegree", educationDegree);
+            session.setAttribute("listPassengerLevel", level);
+            session.setAttribute("listPapers", identifyCard);
+            session.setAttribute("listThingReason", thingReason);
+            session.setAttribute("roomNumber", roomNumber);
+            return "/WEB-INF/jsp/stayregister/register.jsp";
+        }
+        //这样真的可以吗？感觉return nul不合理的啊
+
+        return null;
+
     }
 
     /**
@@ -130,6 +157,8 @@ public class StayRegisterController {
 //        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
 //        String roomNumber = request.getParameter("roomNumber");
 //        String id = request.getParameter("id");//id是复选框的value我们是订单号
+
+
 
         String name = passenger.getName();
 
@@ -146,16 +175,18 @@ public class StayRegisterController {
 //            //兰姐说这个好像不用了，吴同学处理了
 //            passengerService.addPassenger(passenger);
             //更新订单的状态为未结账
-            stayRegisterService.modifyOrderStatus();
+//            stayRegisterService.modifyOrderStatus();
             //更新房态为满
-            stayRegisterService.modifyRoomStatus(roomNumber);
+            //stayRegisterService.modifyRoomStatus(roomNumber);
             //更新登记表信息
             stayRegisterService.registration(id, passenger, lvKeLeiXingId, passengerID);
 
         }
+        else {
+            stayRegisterService.registration(id, passenger, lvKeLeiXingId, passengerID);
+        }
 
-
-        return "/StayRegister/tolist.do";
+        return "redirect:/StayRegister/tolist.do";
 
     }
 //选择旅客
@@ -308,33 +339,34 @@ public class StayRegisterController {
     }
 
 
+        /**
+         * 押金记录
+         * 接待对象，为2的时候为旅客类型 散客
+         *          不为2的时候为接待对象，团队名
+         * todeposit
+         * @param request
+         */
+        /**
+         * 押金记录
+         */
+        @RequestMapping("/todeposit")
+        public String todeposit (HttpServletRequest request){
+            //旅客类型id，为56
+            String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+            //旅客名字，需要传递。
+            String lvKeName = request.getParameter("lvKeName");
+            //订单表ordermain ordId ，主键id
+            String id = request.getParameter("id");
 
-    /**
-     * 押金记录
-     * 接待对象，为2的时候为旅客类型 散客
-     *          不为2的时候为接待对象，团队名
-     * todeposit
-     * @param request
-     */
+            //根据订单表id查找押金记录。
+            List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
 
-    @RequestMapping("/todeposit")
-    public String todeposit(HttpServletRequest request) {
-        //旅客类型id，为56
-        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
-        //旅客名字，需要传递。
-        String lvKeName = request.getParameter("lvKeName");
-        //订单表ordermain ordId ，主键id
-        String id = request.getParameter("id");
+            //将押金记录放入request 域中
+            request.setAttribute("list", depositRecordsByOrdId);
 
-        //根据订单表id查找押金记录。
-        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
+            return "/WEB-INF/jsp/stayregister/deposit.jsp";
 
-        //将押金记录放入request 域中
-        request.setAttribute("list",depositRecordsByOrdId);
-
-        return "/WEB-INF/jsp/stayregister/deposit.jsp";
-
-    }
+        }
 
 
     /**

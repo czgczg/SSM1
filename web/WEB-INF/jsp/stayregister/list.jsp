@@ -773,7 +773,7 @@
     parent.document.getElementById("Mainid").src='${ctx}/StayRegister/tolist.do?isBillID='+isBillID+
     '&LvKeLeiXingId='+55;
   }
-  
+
   
   function selectfunction(){
     var isBillID=document.getElementById("isBillID").value;
@@ -781,8 +781,8 @@
     parent.document.getElementById("Mainid").src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+55+
     '&isBillID='+isBillID+"&txtname="+txtname;
   }
-  
-  
+
+
   function teamSelect(){
     var isBillID=document.getElementById("teamIsBillId").value;
     var txtname=document.getElementById("roomNumberId").value;
@@ -920,8 +920,8 @@
      "&isBillID="+isBillID+"&LvKeLeiXingId="+LvKeLeiXingId;
      }
    });
-   
-  
+
+
  </script>
    
   </body>

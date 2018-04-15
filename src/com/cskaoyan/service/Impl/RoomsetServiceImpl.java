@@ -103,6 +103,11 @@ public class RoomsetServiceImpl implements RoomsetService{
     }
 
     @Override
+    public Roomset queryroomAmountByRoomNumber(String roomNumber) {
+        return roomsetMapper.queryroomAmountByRoomNumber(roomNumber);
+    }
+
+    @Override
     public List<Roomset> findSpecial(String txtname) {
         if("".equals(txtname)||txtname==null){
             txtname = "%";

@@ -14,12 +14,11 @@ import java.util.List;
 
 public interface StayRegisterService {
 
-    void modifyOrderStatus();
+//    void modifyOrderStatus();
 
-    void modifyRoomStatus(String roomNumber);
+//    void modifyRoomStatus(String roomNumber);
 
-
-    Page<Ordermain> findPage(Integer currentPage, String roomNumber);
+    Page<Ordermain> findPage(Integer currentPage, String roomNumber,String lvKeLeiXingId,String isBillID);
 
      List<Roomset> guestRoomLevelSelectRoom(Integer guestRoomLevelID);
 
@@ -49,4 +48,3 @@ public interface StayRegisterService {
 
 
 }
-

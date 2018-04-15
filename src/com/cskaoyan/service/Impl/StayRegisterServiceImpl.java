@@ -63,7 +63,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     @Override
     public List<Ordermain> getOrderMain(String oid) {
-        return ordermainMapper.findOrderById(oid);
+        return ordermainMapper.findOrderByRoomNum(oid);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
      * @return
      */
     @Override
-    public Page<Ordermain> findPage(Integer currentPage, String roomNumber) {
+    public Page<Ordermain> findPage(Integer currentPage, String roomNumber,String lvKeLeiXingId,String isBillID) {
         Page<Ordermain> page = new Page<>();
         int totalNumber = findAllOrderMainCount();
         page.setTotalCount(totalNumber);
@@ -122,6 +122,8 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         HashMap<String, Object> map = new HashMap<>();
         map.put("limit", Page. ORDERMAIN__NUM_PER_PAGE);
         map.put ("offset",(num - 1) * Page. ORDERMAIN__NUM_PER_PAGE);
+        map.put("receiveTargetID",lvKeLeiXingId);
+        map.put("isBillID",isBillID);
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
@@ -180,15 +182,15 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     }
 
-    @Override
-    public void modifyRoomStatus(String roomNumber) {
-        roomsetMapper.modifyRoomStatus(roomNumber);
-    }
+//    @Override
+//    public void modifyRoomStatus(String roomNumber) {
+//        roomsetMapper.modifyRoomStatus(roomNumber);
+//    }
 
-    @Override
-    public void modifyOrderStatus() {
-        ordermainMapper.modifyOrderStatus();
-    }
+//    @Override
+//    public void modifyOrderStatus() {
+//        ordermainMapper.modifyOrderStatus();
+//    }
 
 
 }

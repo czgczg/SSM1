@@ -38,7 +38,7 @@ public class FinancialStatisticsServiceImpl implements FinancialStatisticsServic
                 hashMap.put("name", "%");
                 hashMap.put("datemin", datemin);
                 hashMap.put("datemax", datemax);
-                List<Ordermain> list = ordermainMapper.findPartOrder(hashMap);
+                List<Ordermain> list = ordermainMapper.findPartOrder2(hashMap);
                 page.setResult(list);
             }
         } else if (datemax == null||datemin ==null) {
@@ -53,7 +53,7 @@ public class FinancialStatisticsServiceImpl implements FinancialStatisticsServic
                 hashMap.put("name", "%");
                 hashMap.put("datemin", datemin);
                 hashMap.put("datemax", datemax);
-                List<Ordermain> list = ordermainMapper.findPartOrder(hashMap);
+                List<Ordermain> list = ordermainMapper.findPartOrder2(hashMap);
                 page.setResult(list);
             }
         }else{

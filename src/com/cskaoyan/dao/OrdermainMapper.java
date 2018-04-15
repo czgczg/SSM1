@@ -91,6 +91,8 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
+    List<Ordermain> findPartOrder2(HashMap<String, Object> map) ;
+
     @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
     List<Ordermain> findOrderById(String ordID);
 

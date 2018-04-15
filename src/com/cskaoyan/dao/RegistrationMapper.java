@@ -1,6 +1,8 @@
 package com.cskaoyan.dao;
 
 
+import org.apache.ibatis.annotations.Select;
+
 import java.util.HashMap;
 
 /**
@@ -10,4 +12,8 @@ import java.util.HashMap;
 public interface RegistrationMapper {
 
     int  insertToRistration(HashMap<String, Object> map);
+
+
+    @Select("select count(*) from registration where orderId=#{orderId}")
+    int queryRegisterPersonCount(String orderId);
 }

@@ -50,7 +50,7 @@ public interface RoomsetService {
 
     /**
      * 修改Roomset
-     * @param id
+     * @param
      * @return 修改成功返回true，失败返回false
      */
     boolean updateRoomsetById(Roomset roomset);
@@ -69,5 +69,8 @@ public interface RoomsetService {
      * @return
      */
     List<Roomset> findSpecial(String txtname);
+
+    Roomset queryroomAmountByRoomNumber(String roomNumber);
+
 
 }
