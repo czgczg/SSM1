@@ -75,7 +75,7 @@ public class PredetermineController {
     @PostMapping("/selectRoom")
     @ResponseBody
     public List<Roomset> predetermineSelectRoom(Roomset roomset){
-        List<Roomset> roomsets = predetermineService.getAllRoomset();
+        List<Roomset> roomsets = predetermineService.getAllRoomset(1);
         return roomsets;
     }
 

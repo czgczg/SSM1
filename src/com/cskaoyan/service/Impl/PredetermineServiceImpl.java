@@ -82,6 +82,7 @@ public class PredetermineServiceImpl implements PredetermineService{
             ordermain.setRoomId(roomset.getId());
             ordermain.setRoomNumber(roomset.getRoomNumber());
             ordermain.setGuestRoomLevelName(roomset.getGuestRoomLevelName());
+            ordermain.setRoomAmount(roomset.getRoomAmount());
             ordermain.setSumConst(roomset.getStandardPriceDay()*Integer.valueOf(ordermain.getPredetermineDay()));
             ordermainMapper.insert(ordermain);
         }
@@ -97,8 +98,8 @@ public class PredetermineServiceImpl implements PredetermineService{
     }
 
     @Override
-    public List<Roomset> getAllRoomset() {
-        List<Roomset> roomsets = roomsetMapper.findAllRoomset();
+    public List<Roomset> getAllRoomset(int roomStateID) {
+        List<Roomset> roomsets = roomsetMapper.findRoomsetByroomStateID(roomStateID);
 
         return roomsets;
     }

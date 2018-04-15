@@ -96,6 +96,8 @@ public interface OrdermainMapper {
     @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
     List<Ordermain> findOrderById(String ordID);
 
+
+
     /**
      * 根据订单号找到订单
      */

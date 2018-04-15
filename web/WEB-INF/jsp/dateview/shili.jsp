@@ -77,7 +77,7 @@
 	        },
 	        {
 	            name:'团队',
-	            type:'pictorialBar',
+	            type:'line',
 	            stack: '总量',
 	            label: {
                 normal: {

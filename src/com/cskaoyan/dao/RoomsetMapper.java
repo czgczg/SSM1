@@ -17,6 +17,9 @@ public interface RoomsetMapper {
     @Select("SELECT * FROM roomset where del_flag = 0")
     List<Roomset> findAllRoomset();
 
+    @Select("SELECT * FROM roomset where roomStateID=#{roomStateID} and del_flag = 0")
+    List<Roomset> findRoomsetByroomStateID(int roomStateID);
+
     /**
      * 根据RoomNumber将del_flag置为0
      * @param id RoomNumber

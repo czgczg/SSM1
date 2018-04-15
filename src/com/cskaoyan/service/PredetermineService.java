@@ -20,7 +20,7 @@ public interface PredetermineService {
 
     ArrayList<Orderpayment> getAllOrderPayment();
 
-    List<Roomset> getAllRoomset();
+    List<Roomset> getAllRoomset(int roomStateID);
 
     //获取所有旅客
     List<Passenger> getAllPassenger();
