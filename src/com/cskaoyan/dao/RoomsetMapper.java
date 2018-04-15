@@ -107,6 +107,18 @@ public interface RoomsetMapper {
     List<Roomset> findRoomsetByLevelID(Integer guestRoomLevelID);
 
     /**
+     * 通过查询roomStateID为1来找出房间状态为空的房间
+     * @return
+     * SELECT * FROM roomset WHERE roomStateID = 1;
+     */
+    @Select("SELECT * FROM roomset WHERE roomStateID = 1 and roomNumber like #{roomNumber};")
+    List<Roomset> findRoomsetAsEmpty(String roomNumber);
+
+    //@Select("select standardPriceDay from roomset where roomNumber = #{roomNumber}")
+    //double findPriceDayByNum(Ordermain orderById);
+
+
+    /**
      * 根据房间号查询Rommset
      * @param roomNumber
      * @return

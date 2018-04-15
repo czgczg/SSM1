@@ -1,5 +1,6 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -105,6 +106,13 @@ public interface OrdermainMapper {
     @Select("select predetermineDay from ordermain where ordID = #{ordID} and del_flag=0")
     int getDuringDay(String ordID);
 
+    /**
+     *  修改数据库中订单表的房间号，实现换房
+     * @param roomNumber
+     * @return
+     */
+    @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
+    int changeOrderRoomNumber(String roomNumber);
 
     //根据ID将订单状态修改已删除
     @Update("update ordermain set del_flag=1 where ordID = #{id}")
@@ -124,4 +132,6 @@ public interface OrdermainMapper {
      */
     @Update("UPDATE ordermain SET sumConst=sumConst-#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
     Integer deleteSumConstByOrdID(HashMap<String, Object> hashMap);
+
+    int updateByPrimaryKey(Ordermain record);
 }

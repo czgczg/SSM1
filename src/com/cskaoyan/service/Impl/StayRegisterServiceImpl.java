@@ -1,11 +1,11 @@
 package com.cskaoyan.service.Impl;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Recepobject;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.*;
-import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.vo.Listone;
@@ -116,12 +116,11 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         int totalNumber = findAllOrderMainCount();
         page.setTotalCount(totalNumber);
         int num = currentPage;
-
-        page.init2(totalNumber);
+        page.initOrder(totalNumber,num);
         page.setCurrentPage(num);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("limit",Page. ORDERMAIN__NUM_PER_PAGE);
+        map.put("limit", Page. ORDERMAIN__NUM_PER_PAGE);
         map.put ("offset",(num - 1) * Page. ORDERMAIN__NUM_PER_PAGE);
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
@@ -153,6 +152,26 @@ public class StayRegisterServiceImpl implements StayRegisterService {
             listRentOutType.add(j);
         }
         return listRentOutType;
+    }
+
+    @Override
+    public List<Deposit> findDepositRecordsByOrdId(String id) {
+        return null;
+    }
+
+    @Override
+    public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
+        return null;
+    }
+
+    @Override
+    public Ordermain findOrderById(String id) {
+        return null;
+    }
+
+    @Override
+    public List<Ordermain> findOrderByRoomNum(String roomNumber) {
+        return null;
     }
 
     private int findAllOrderMainCount() {

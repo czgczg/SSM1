@@ -65,6 +65,7 @@ public interface OrdextconsumMapper {
     @Select("SELECT count(*) FROM ordextconsum WHERE del_flag=0 AND ord_id=#{ord_id}")
     Integer findAllConsumCount(String ord_id);
 
+
     /**
      *
      * @param hashMap
@@ -80,6 +81,14 @@ public interface OrdextconsumMapper {
      */
     @Select("SELECT * FROM ordextconsum WHERE del_flag=0 AND id=#{id}")
     Ordextconsum findOrdextConsumById(String id);
+
+    /**
+     * 通过一个ord_id查找详细信息
+     * @param ord_id
+     * @return
+     */
+    @Select("SELECT * FROM ordextconsum WHERE del_flag=0 AND ord_id=#{ord_id}")
+    Ordextconsum findOrdextConsumByOrd_Id(String ord_id);
 
     /**
      * 发现总价通过id

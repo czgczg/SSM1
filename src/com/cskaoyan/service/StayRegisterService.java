@@ -1,5 +1,6 @@
 package com.cskaoyan.service;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Recepobject;
@@ -24,6 +25,13 @@ public interface StayRegisterService {
 
     ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType);
 
+    List<Deposit> findDepositRecordsByOrdId(String id);
+
+    List<Roomset> findRoomsetAsEmpty(String roomNumber);
+
+    Ordermain findOrderById(String id);
+
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
 
     int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID);
 
