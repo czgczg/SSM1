@@ -68,7 +68,7 @@ public class PredetermineController {
     @ResponseBody
     public List<Roomset> predetermineSelectRoom(Roomset roomset){
         //System.out.println(roomset.getRoomNumber());
-        List<Roomset> roomsets = roomsetMapper.selectAllRoomset();
+        List<Roomset> roomsets = roomsetMapper.findAllRoomset();
         //System.out.println(roomsets);
         return roomsets;
     }

@@ -1,5 +1,6 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Roomset;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -116,4 +117,7 @@ public interface RoomsetMapper {
 
     @Select("select standardPriceDay from roomset where roomNumber = #{roomNumber}")
     double findPriceDayByNum(Ordermain orderById);
+
+    @Select("select * from roomset where roomNumber= #{roomNumber}")
+    Roomset queryroomAmountByRoomNumber(String roomNumber);
 }

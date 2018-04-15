@@ -2,10 +2,9 @@ package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
+import com.cskaoyan.bean.Recepobject;
 import com.cskaoyan.bean.Roomset;
-import com.cskaoyan.dao.OrdermainMapper;
-import com.cskaoyan.dao.RegistrationMapper;
-import com.cskaoyan.dao.RoomsetMapper;
+import com.cskaoyan.dao.*;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.vo.Listone;
@@ -28,6 +27,12 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     @Autowired
     RegistrationMapper registrationMapper;
+
+    @Autowired
+    RecepobjectMapper recepobjectMapper;
+
+    @Autowired
+    PassengerMapper passengerMapper;
 
 
     /**
@@ -53,6 +58,53 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
         return 0;
     }
+
+    @Override
+    public List<Ordermain> getOrderMain(String oid) {
+        return ordermainMapper.findOrderByRoomNum(oid);
+    }
+
+    @Override
+    public void changOverOrderMain(String oid, String PassengerOrReceiveID) {
+
+    }
+
+//    @Override
+//    public void changOverOrderMain(String oid,String passengerOrReceiveID) {
+//        //改变旅客状态55-》56，删除（？）预定人名字，加入团队信息在里面,结账方式变更1.旅客自付 2.团队付款
+//        Ordermain ordermain = ordermainMapper.findOrderById(oid).get(0);
+//        ordermain.setPassengerOrReceiveID(Integer.valueOf(passengerOrReceiveID));
+//        Integer type = ordermain.getReceiveTargetID();
+//        if(type == 56){
+//            ordermain.setReceiveTargetID(55);
+//            ordermain.setBillUnitID(1);
+//            ordermain.setBillUnitName("旅客自付");
+//            ordermain.setTeamname("");
+//            Passenger passengerById = passengerMapper.findPassengerById(Integer.valueOf(passengerOrReceiveID));
+//            ordermain.setName(passengerById.getName());
+//            ordermain.setCommodityPhone(passengerById.getContactPhoneNumber());
+//        }else if(type == 55){
+//            ordermain.setReceiveTargetID(56);
+//            ordermain.setBillUnitID(2);
+//            ordermain.setBillUnitName("团队付款");
+//            ordermain.setName("");
+//            Recepobject receptById = recepobjectMapper.findReceptById(Integer.parseInt(passengerOrReceiveID));
+//            ordermain.setTeamname(receptById.getTeamName());
+//            ordermain.setCommodityPhone(receptById.getContactPhoneNUmber());
+//        }
+//        ordermainMapper.updateByPrimaryKeySelective(ordermain);
+//    }
+
+    @Override
+    public List<Recepobject> getAllReceiveObject() {
+        return recepobjectMapper.findAllObj();
+    }
+
+    @Override
+    public List<Passenger> getAllPassers() {
+        return passengerMapper.findAllPassenger();
+    }
+
     /**
      * ordermain的分页处理和显示
      * @param currentPage
@@ -60,7 +112,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
      * @return
      */
     @Override
-    public Page<Ordermain> findPage(Integer currentPage, String roomNumber) {
+    public Page<Ordermain> findPage(Integer currentPage, String roomNumber,String lvKeLeiXingId,String isBillID) {
         Page<Ordermain> page = new Page<>();
         int totalNumber = findAllOrderMainCount();
         page.setTotalCount(totalNumber);
@@ -71,12 +123,11 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         HashMap<String, Object> map = new HashMap<>();
         map.put("limit", Page. ORDERMAIN__NUM_PER_PAGE);
         map.put ("offset",(num - 1) * Page. ORDERMAIN__NUM_PER_PAGE);
+        map.put("receiveTargetID",lvKeLeiXingId);
+        map.put("isBillID",isBillID);
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
-
-
-
 
         return page;
     }
@@ -103,6 +154,12 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         return listRentOutType;
     }
 
+
+    private int findAllOrderMainCount() {
+
+        return ordermainMapper.findAllOrderCount();
+
+    }
     @Override
     public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
         return null;
@@ -118,21 +175,16 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         return null;
     }
 
-    private int findAllOrderMainCount() {
 
-       return ordermainMapper.findAllOrderCount();
+//    @Override
+//    public void modifyRoomStatus(String roomNumber) {
+//        roomsetMapper.modifyRoomStatus(roomNumber);
+//    }
 
-    }
-
-    @Override
-    public void modifyRoomStatus(String roomNumber) {
-        roomsetMapper.modifyRoomStatus(roomNumber);
-    }
-
-    @Override
-    public void modifyOrderStatus() {
-        ordermainMapper.modifyOrderStatus();
-    }
+//    @Override
+//    public void modifyOrderStatus() {
+//        ordermainMapper.modifyOrderStatus();
+//    }
 
 
 }

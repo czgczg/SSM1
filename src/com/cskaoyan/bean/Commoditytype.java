@@ -5,7 +5,6 @@ package com.cskaoyan.bean;
  */
 public class Commoditytype {
 
-
     private Integer far_id;
     private String attributeDetailsName;
     private Integer del_flag;
@@ -21,7 +20,6 @@ public class Commoditytype {
     public String getAttributeDetailsName() {
         return attributeDetailsName;
     }
-
     public void setAttributeDetailsName(String attributeDetailsName) {
         this.attributeDetailsName = attributeDetailsName;
     }

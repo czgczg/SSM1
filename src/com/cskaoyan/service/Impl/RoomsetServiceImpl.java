@@ -25,7 +25,7 @@ public class RoomsetServiceImpl implements RoomsetService{
 
     @Autowired
     RoomsettypeMapper roomsettypeMapper;
-/*
+
     @Override
     public List<Roomsetstatus> findAllRoomsetstatus() {
         return roomsetstatusMapper.findAllRoomsetstatus();
@@ -103,6 +103,11 @@ public class RoomsetServiceImpl implements RoomsetService{
     }
 
     @Override
+    public Roomset queryroomAmountByRoomNumber(String roomNumber) {
+        return roomsetMapper.queryroomAmountByRoomNumber(roomNumber);
+    }
+
+    @Override
     public List<Roomset> findSpecial(String txtname) {
         if("".equals(txtname)||txtname==null){
             txtname = "%";
@@ -111,6 +116,6 @@ public class RoomsetServiceImpl implements RoomsetService{
         }
         List<Roomset> roomsetList = roomsetMapper.findSpecial(txtname);
         return roomsetList;
-    }*/
+    }
 
 }

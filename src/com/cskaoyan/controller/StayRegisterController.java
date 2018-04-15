@@ -1,13 +1,7 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Commoditytype;
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
-import com.cskaoyan.dao.ListoneMapper;
-import com.cskaoyan.dao.OrdermainMapper;
-import com.cskaoyan.dao.PassengerMapper;
-import com.cskaoyan.dao.RoomsetMapper;
+import com.cskaoyan.bean.*;
+import com.cskaoyan.dao.*;
 import com.cskaoyan.service.PassengerService;
 import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
@@ -16,12 +10,15 @@ import com.cskaoyan.utils.Page;
 import com.cskaoyan.utils.PassengerTransfer;
 import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -31,6 +28,8 @@ import java.util.*;
 @Controller
 public class StayRegisterController {
 
+//    @Autowired
+//    CommodityService commodityService;
     @Autowired
     StayRegisterService stayRegisterService;
     @Autowired
@@ -47,54 +46,42 @@ public class StayRegisterController {
     ListoneMapper listoneMapper;
     @Autowired
     optionService optionService;
+    @Autowired
+    RegistrationMapper registrationMapper;
+//    @Autowired
+//    OrdermainService ordermainService;
     /**
      * 显示页面和分页
      */
     @RequestMapping("/tolist.do")
-    public String roomsetToList(HttpServletRequest request, Integer currentPage, Model model, HttpSession session) {
+    public String stayRegisterToList(HttpServletRequest request, Integer currentPage, Model model, HttpSession session) {
+
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
         String isBillID = request.getParameter("isBillID");//68未结账，69已结账
         System.out.println("isBillID = " + isBillID);
-        //去数据库查到orderMain数据去给到前台jsp页面
-        if ("56".equals(lvKeLeiXingId)) {
-            if (currentPage == null || currentPage == 0) currentPage = 1;
-            //拿到输入用户名
-            String roomNumber = request.getParameter("txtname");
-            if (roomNumber == null || "".equals(roomNumber)) {
-                roomNumber = "%";
-            } else {
-                roomNumber = "%" + roomNumber + "%";
-            }
-            Page<Ordermain> page = stayRegisterService.findPage(currentPage, roomNumber);
-            //将分页的记录数返回给前台
-            model.addAttribute("list", page);
-            //获取结账方式
-            List<Listone> list = optionService.getPayMoney();
-            session.setAttribute("listOne", list);
-            model.addAttribute("isBillID", isBillID);
-            //返回视图层
-            return "/WEB-INF/jsp/stayregister/list.jsp";
+        if (currentPage == null || currentPage == 0) currentPage = 1;
+        String roomNumber = request.getParameter("txtname");
+        if (roomNumber == null || "".equals(roomNumber)) {
+            roomNumber = "%";
+        } else {
+            roomNumber = "%" + roomNumber + "%";
         }
+        Page<Ordermain> page;
+        //去数据库查到orderMain数据去给到前台jsp页面
+        if (null == lvKeLeiXingId) {
+            lvKeLeiXingId="55";
+        }
+        if (null == isBillID) {
+            isBillID="68";
+        }
+        page = stayRegisterService.findPage(currentPage, roomNumber,lvKeLeiXingId,isBillID);
 
-            if (currentPage == null || currentPage == 0) currentPage = 1;
-            //拿到输入用户名
-            String roomNumber = request.getParameter("txtname");
-            if (roomNumber == null || "".equals(roomNumber)) {
-                roomNumber = "%";
-            } else {
-                roomNumber = "%" + roomNumber + "%";
-            }
-            Page<Ordermain> page = stayRegisterService.findPage(currentPage, roomNumber);
-            //将分页的记录数返回给前台
-            model.addAttribute("list", page);
-            //获取结账方式
-            List<Listone> list = optionService.getPayMoney();
-            session.setAttribute("listOne", list);
-            model.addAttribute("isBillID", isBillID);
-            //返回视图层
-            return "/WEB-INF/jsp/stayregister/list.jsp";
-
-
+        request.setAttribute("LvKeLeiXingId",lvKeLeiXingId);
+        model.addAttribute("list", page);
+        List<Listone> list = optionService.getPayMoney();
+        session.setAttribute("listOne", list);
+        model.addAttribute("isBillID", isBillID);
+        return "/WEB-INF/jsp/stayregister/list.jsp";
 
     }
     /**
@@ -102,7 +89,9 @@ public class StayRegisterController {
      * 1.点击登记转到register的jsp文件。并填充下拉option和房间号等数据到表单
      */
     @GetMapping("/toregister.do")
-    public String toregister(HttpServletRequest request, String roomNumber, HttpSession session) {
+    public String toregister(HttpServletRequest request, String roomNumber, HttpSession session, HttpServletResponse response) throws IOException {
+        Boolean flag=false;
+
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
         String id = request.getParameter("id");
 
@@ -110,22 +99,42 @@ public class StayRegisterController {
         session.setAttribute("id", id);
         //先将旅客类别和订单号存入登记表
 
-        List<Listone> sex = optionService.getSex();
-        List<Listone> nation = optionService.getNation();
-        List<Listone> educationDegree = optionService.getEducationDegree();
-        //旅客级别
-        List<Listone> level = optionService.getpassengerLevel();
-        List<Listone> identifyCard = optionService.getIdentifyCard();
-        List<Listone> thingReason = optionService.getThingReason();
-        session.setAttribute("listGender", sex);
-        session.setAttribute("listNation", nation);
-        session.setAttribute("listEducationDegree", educationDegree);
-        session.setAttribute("listPassengerLevel", level);
-        session.setAttribute("listPapers", identifyCard);
-        session.setAttribute("listThingReason", thingReason);
+        //判断房间人数，如果该房间登记人数超过了房间的床位，则不让去登记，提示用户 alert 警告！下
 
-        session.setAttribute("roomNumber", roomNumber);
-        return "/WEB-INF/jsp/stayregister/register.jsp";
+        //去roomset表去查对应房间号的房间床位数   roomAmount
+        Roomset roomset = roomsetService.queryroomAmountByRoomNumber(roomNumber);
+
+        //查登记表的该房间登记的人数  根据什么去查 订单号
+        int count = registrationMapper.queryRegisterPersonCount(id);
+        if (count >= roomset.getRoomAmount()) {
+            flag=true;
+            response.setContentType("text/html;charset=UTF-8");
+            response.setHeader("refresh", "3;url='/StayRegister/tolist.do'");
+            response.getWriter().write("该房间登记人数超过床位数，请重新选择其他房间进行登记...@_@...");
+        }
+
+        if (!flag) {
+
+            List<Listone> sex = optionService.getSex();
+            List<Listone> nation = optionService.getNation();
+            List<Listone> educationDegree = optionService.getEducationDegree();
+            //旅客级别
+            List<Listone> level = optionService.getpassengerLevel();
+            List<Listone> identifyCard = optionService.getIdentifyCard();
+            List<Listone> thingReason = optionService.getThingReason();
+            session.setAttribute("listGender", sex);
+            session.setAttribute("listNation", nation);
+            session.setAttribute("listEducationDegree", educationDegree);
+            session.setAttribute("listPassengerLevel", level);
+            session.setAttribute("listPapers", identifyCard);
+            session.setAttribute("listThingReason", thingReason);
+            session.setAttribute("roomNumber", roomNumber);
+            return "/WEB-INF/jsp/stayregister/register.jsp";
+        }
+        //这样真的可以吗？感觉return nul不合理的啊
+
+        return null;
+
     }
 
     /**
@@ -139,6 +148,8 @@ public class StayRegisterController {
 //        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
 //        String roomNumber = request.getParameter("roomNumber");
 //        String id = request.getParameter("id");//id是复选框的value我们是订单号
+
+
 
         String name = passenger.getName();
 
@@ -155,15 +166,19 @@ public class StayRegisterController {
 //            //兰姐说这个好像不用了，吴同学处理了
 //            passengerService.addPassenger(passenger);
             //更新订单的状态为未结账
-            stayRegisterService.modifyOrderStatus();
+//            stayRegisterService.modifyOrderStatus();
             //更新房态为满
-            stayRegisterService.modifyRoomStatus(roomNumber);
+            //stayRegisterService.modifyRoomStatus(roomNumber);
             //更新登记表信息
             stayRegisterService.registration(id, passenger, lvKeLeiXingId, passengerID);
 
         }
+        else {
+            stayRegisterService.registration(id, passenger, lvKeLeiXingId, passengerID);
+        }
 
-        return "/StayRegister/tolist.do";
+        return "redirect:/StayRegister/tolist.do";
+
     }
 
     /**
@@ -331,21 +346,37 @@ public class StayRegisterController {
     /**
      * 转换
      */
-//转入团队房间信息
+    //转入团队房间信息
     @RequestMapping("/toshiftteam")
-    public void toshiftteam(HttpServletRequest request) {
+    public String toshiftteam(String id,String stayregisterdetailsId,HttpServletRequest request) {
+        List<Ordermain> ordermains = stayRegisterService.getOrderMain(id);
+
+        List<Recepobject> recepobjects = stayRegisterService.getAllReceiveObject();
+        request.setAttribute("listRT",recepobjects);
+        request.setAttribute("list",ordermains.get(0));
+        return "/WEB-INF/jsp/stayregister/shiftteam.jsp";
+
+    }
+
+    @RequestMapping("/changOver")
+    public String changOver(String id,String receiveTargetID,HttpServletRequest request) {
+        stayRegisterService.changOverOrderMain(id,receiveTargetID);
+        return "redirect:tolist.do";
 
     }
 
     //转为散客
     @RequestMapping("/toshiftpersonage")
-    public void toshiftpersonage(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        String stayregisterdetailsId = request.getParameter("stayregisterdetailsId");
+    public String toshiftpersonage(String id,String stayregisterdetailsId,HttpServletRequest request) {
+        List<Ordermain> ordermains = stayRegisterService.getOrderMain(id);
+        List<Passenger> passengers = stayRegisterService.getAllPassers();
+
+        request.setAttribute("listRT",passengers);
+        request.setAttribute("list",ordermains.get(0));
+        return "/WEB-INF/jsp/tayregister/shiftpersonage.jsp";
     }
 
-    //转入
-    @RequestMapping("/changeOver")
+    @RequestMapping("/changeOver2")
     public String changeOver(HttpServletRequest request) {
         String id = request.getParameter("id");
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
@@ -370,5 +401,39 @@ public class StayRegisterController {
         return "redirect:tolist.do";
     }
 
+
+    /**
+     * author:czg
+     * //?LvKeLeiXingId=56&isBillID=68 团队未结账
+     * @param currentPage
+     * @param request
+     * @param lvKeLeiXingId
+     * @param isBillID
+     * @param model
+     * @param session
+     * @return
+     */
+    @RequestMapping("/toteamlist.do")
+    public String toTeamList(Integer currentPage,HttpServletRequest request,String LvKeLeiXingId,String isBillID,
+    Model model,HttpSession session) {
+        if (currentPage == null || currentPage == 0) currentPage = 1;
+
+        String roomNumber = request.getParameter("txtname");
+        if (roomNumber == null || "".equals(roomNumber)) {
+            roomNumber = "%";
+        } else {
+            roomNumber = "%" + roomNumber + "%";
+        }
+        Page<Ordermain> page;
+        //去数据库查到orderMain数据去给到前台jsp页面
+        page = stayRegisterService.findPage(currentPage, roomNumber,LvKeLeiXingId,isBillID);
+        request.setAttribute("LvKeLeiXingId",LvKeLeiXingId);
+        model.addAttribute("list", page);
+        List<Listone> list = optionService.getPayMoney();
+        session.setAttribute("listOne", list);
+        model.addAttribute("isBillID", isBillID);
+        return "/WEB-INF/jsp/stayregister/list.jsp";
+
+    }
 
 }

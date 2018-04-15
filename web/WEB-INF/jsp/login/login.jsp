@@ -49,7 +49,7 @@
             <div class="control-group">
               <label class="control-label">用户名</label>
               <div class="controls">
-                  <input name="userName" type="text"name=""${admin.userName}">
+                  <input name="userName" type="text" name=""${admin.userName}">
               </div>
             </div>
              <div class="control-group">

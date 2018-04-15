@@ -478,7 +478,7 @@
   </select>
 
   <select id="findPartOrder" parameterType="map" resultType="ordermain">
-    SELECT * FROM ordermain  WHERE  `name` LIKE #{name}  and del_flag=0  limit #{limit}  offset #{offset}
+    SELECT * FROM ordermain  WHERE  `roomNumber` LIKE #{name} and receiveTargetID = #{receiveTargetID} and orderFrom=#{isBillID}  and del_flag=0  limit #{limit}  offset #{offset}
   </select>
 </mapper>
 

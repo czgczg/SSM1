@@ -214,7 +214,7 @@
 			        <tr style="color: red;">
 			          <td><input type="checkbox" name="id" value="${item.ordID}"></td>
 			          <td>${item.roomNumber}</td>
-			          <td>${item.roomGuestRoomLevelName}</td>
+			          <td>${item.guestRoomLevelName}</td>
 			          <td>${item.roomAmount}</td>
 			          <c:if test="${item.receiveTargetID==56}">
 			              <td>${item.teamname}</td>
@@ -222,7 +222,7 @@
 			          <c:if test="${item.receiveTargetID!=56}">
 			              <td style="width:12%;">${item.receiveTeamName}</td>
 			          </c:if>
-			          <td>${item.passengerName}</td>
+			          <td>${item.commodityName}</td>
 			          <td>${item.passengerTypeName}</td>
 			          <td>${item.changingRoomNumber}</td>
 			          <td>${item.changRoomMoney}</td>
@@ -231,7 +231,7 @@
 			          <td>${item.sumConst}</td>
 			          <td hidden>${item.orderFrom}</td>
 							<%--不知道干嘛的 先删除--%>
-							<%--<td hidden>${item.stayregisterdetailsId}</td>--%>
+							<td hidden>${item.loginFlag}</td>
 			        </tr>
 		        </c:if>
 				<%--默认是散客，原来是0，为了和数据库对应，改为55--%>
@@ -256,7 +256,8 @@
 			          <td>${item.sumConst}</td>
 			          <td hidden>${item.orderFrom}</td>
 						<%--不知道干嘛的 先删除--%>
-			          <%--<td hidden>${item.stayregisterdetailsId}</td>--%>
+						<%--换队散客转换使用，好像也没用--%>
+			          <td hidden>${item.loginFlag}</td>
 			        </tr>
 		        </c:if>
 	        </c:forEach>
@@ -682,7 +683,7 @@
 	  		selectedIndex=this.parentNode.parentNode.rowIndex;
   		    stayregisterdetailsId=table.rows[selectedIndex-1].cells[13].innerHTML;
 	  	});
-	  	if(stayregisterdetailsId==""){
+	  	if(stayregisterdetailsId==0){
 	  	   alert("此房间还没有登记哦！不能进行此操作");
 	  	   return false;
 	  	}
@@ -773,7 +774,6 @@
     '&LvKeLeiXingId='+55;
   }
 
-
   
   function selectfunction(){
     var isBillID=document.getElementById("isBillID").value;
@@ -781,6 +781,7 @@
     parent.document.getElementById("Mainid").src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+55+
     '&isBillID='+isBillID+"&txtname="+txtname;
   }
+
 
   function teamSelect(){
     var isBillID=document.getElementById("teamIsBillId").value;
@@ -880,7 +881,7 @@
   	/* $.ajax({
   	      cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
           type: "POST",                                           //上面3行都是必须要的
-        <%--url: '${ctx}/StayRegister/ajaxSelectTeamSumcont.do',   //地址 type 带参数--%>
+          url: '${ctx}/StayRegister/ajaxSelectTeamSumcont.do',   //地址 type 带参数
           data:"tuanDuiID="+tuanDuiID+"&isBillID="+isBillID,     // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
           async:false,                                          // 是否 异步 提交
           success: function (result) {  
@@ -919,6 +920,8 @@
      "&isBillID="+isBillID+"&LvKeLeiXingId="+LvKeLeiXingId;
      }
    });
+
+
  </script>
    
   </body>
