@@ -30,7 +30,7 @@ public interface StayRegisterService {
 
     List<Ordermain> findOrderByRoomNum(String roomNumber);
 
-    int changeOrderRoomNumber(String roomId);
+    int changeOrderRoomNumber(Ordermain ordermain);
 
     boolean changeRoom(String oldRoomNum, String newRoomNum);
 

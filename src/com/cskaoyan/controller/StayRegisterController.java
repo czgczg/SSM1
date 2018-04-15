@@ -186,34 +186,7 @@ public class StayRegisterController {
         String roomId = request.getParameter("roomId");
 
         //实现换房事务，放到service层
-
-        //根据房间号查找对应的订单,数据问题，有多个重复房间数据，只取第一个
-        List<Ordermain> orderById = stayRegisterService.findOrderByRoomNum(id);
-        Ordermain ordermain = orderById.get(0);
-
-        //需要将订单房间号更改
-        ordermain.setRoomNumber(roomId);
-        //还需要修改数据库
-        stayRegisterService.changeOrderRoomNumber(roomId);
-
-        //订单id，需要放入changeroom实例中
-        String ordID = ordermain.getOrdID();
-
-
-        //新建一个changeroom实例，填充数据，并保存进数据库
-        Changeroom changeroom = new Changeroom();
-        changeroom.setOrdId(ordID);
-        changeroom.setOldRoomset(id);
-        changeroom.setNewRoomset(roomId);
-        changeroom.setAffterPay(200);//换房费
-
-        //获取当前时间作为换房时间
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String format = df.format(new Date());
-        changeroom.setChangRoomTime(format);
-
-        //插入数据库
-        changeroomMapper.insertChangeRoom(changeroom);
+        stayRegisterService.changeRoom(id,roomId);
 
         return "/StayRegister/tolist.do";
 

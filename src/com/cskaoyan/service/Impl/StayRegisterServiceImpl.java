@@ -121,11 +121,11 @@ public class StayRegisterServiceImpl implements StayRegisterService {
 
     /**
      * 修改订单表（ordermain中的roomNumber）
-     * @param roomId
+     * @param ordermain
      */
     @Override
-    public int changeOrderRoomNumber(String roomId) {
-       return ordermainMapper.changeOrderRoomNumber(roomId);
+    public int changeOrderRoomNumber(Ordermain ordermain) {
+       return ordermainMapper.changeOrderRoomNumber(ordermain);
     }
 
     /**
@@ -141,10 +141,21 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         List<Ordermain> orderById = ordermainMapper.findOrderByRoomNum(oldRoomNum);
         Ordermain ordermain = orderById.get(0);
 
-        //需要将订单房间号更改
+        //需要将订单房间号更改,将实例房间号改变
         ordermain.setRoomNumber(newRoomNum);
-        //还需要修改数据库
-        ordermainMapper.changeOrderRoomNumber(newRoomNum);
+        //换房次数+1，换房时间
+        int changingRoomNumber = ordermain.getChangingRoomNumber() + 1;
+        ordermain.setChangingRoomNumber(changingRoomNumber);
+        //获取当前时间作为换房时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String format = df.format(new Date());
+        ordermain.setTimestamp(format);
+        //换房费changRoomMoney
+        double changRoomMoney = changingRoomNumber * 200;
+        ordermain.setChangRoomMoney(changRoomMoney);
+        //还需要修改数据库，传入ordId不变，房间号改命的实例，使得数据库中房间号改变。
+        //玩家换房次数和换房时间
+        int result = ordermainMapper.changeOrderRoomNumber(ordermain);
 
         //订单id，需要放入changeroom实例中
         String ordID = ordermain.getOrdID();
@@ -157,9 +168,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         changeroom.setNewRoomset(newRoomNum);
         changeroom.setAffterPay(200);//换房费
 
-        //获取当前时间作为换房时间
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        String format = df.format(new Date());
+
         changeroom.setChangRoomTime(format);
 
         //插入数据库

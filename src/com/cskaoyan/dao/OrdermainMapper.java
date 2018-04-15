@@ -81,7 +81,7 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
-    @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
+    @Select("select * from ordermain WHERE ordID=#{ordID} and del_flag=0")
     List<Ordermain> findOrderById(String ordID);
 
     //根据ID将订单状态修改为未结账
@@ -96,7 +96,7 @@ public interface OrdermainMapper {
      * @return
      * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
      */
-    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    @Select("select * from ordermain where roomNumber = #{roomNumber} and del_flag = 0;")
     List<Ordermain> findOrderByRoomNum(String roomNumber);
     //根据ID将订单状态修改为已安排
     @Update("update ordermain set state=67 where ordID = #{id}")
@@ -116,13 +116,18 @@ public interface OrdermainMapper {
     //根据ID将订单状态修改已删除
     @Update("update ordermain set del_flag=1 where ordID = #{id}")
     void removeOrderMain(String oid);
+
+
     /**
      *  修改数据库中订单表的房间号，实现换房
-     * @param roomNumber
+     *  ordId
+     *
+     * @param ordermain
      * @return
+     * UPDATE ordermain SET roomNumber = '102' WHERE ordID = '2018041312182273';
      */
-    @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
-    int changeOrderRoomNumber(String roomNumber);
+    @Update("UPDATE ordermain SET roomNumber = #{roomNumber},changingRoomNumber = #{changingRoomNumber},timestamp = #{timestamp},changRoomMoney = #{changRoomMoney} WHERE ordID = #{ordID}")
+    int changeOrderRoomNumber(Ordermain ordermain);
 
     /**
      * 根据订单表id查找押金记录

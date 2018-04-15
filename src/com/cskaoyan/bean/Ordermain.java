@@ -286,7 +286,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    private Date timestamp;
+    private String timestamp;
 
     /**
      *
@@ -295,7 +295,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    private String changingRoomNumber;
+    private int changingRoomNumber;
 
     /**
      *
@@ -326,6 +326,8 @@ public class Ordermain {
      */
 
     private String receiveTeamName;
+
+
 
     public String getReceiveTeamName() {
         return receiveTeamName;
@@ -1073,7 +1075,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public Date getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
@@ -1085,7 +1087,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
@@ -1097,7 +1099,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public String getChangingRoomNumber() {
+    public int getChangingRoomNumber() {
         return changingRoomNumber;
     }
 
@@ -1109,8 +1111,8 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public void setChangingRoomNumber(String changingRoomNumber) {
-        this.changingRoomNumber = changingRoomNumber == null ? null : changingRoomNumber.trim();
+    public void setChangingRoomNumber(int changingRoomNumber) {
+        this.changingRoomNumber = changingRoomNumber;
     }
 
     /**
