@@ -1,5 +1,6 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -130,6 +131,24 @@ public interface OrdermainMapper {
      * @param hashMap
      * @return
      */
+
+    /**
+     *  修改数据库中订单表的房间号，实现换房
+     * @param roomNumber
+     * @return
+     */
+    @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
+    int changeOrderRoomNumber(String roomNumber);
+
+    /**
+     * 根据订单表id查找押金记录
+     * @param ordId
+     * @return
+     */
+    @Select("select * from depositrecord where ordId = #{ordId}")
+    List<Deposit> findDepositRecordsByOrdId(String ordId);
+
+
     @Update("UPDATE ordermain SET sumConst=sumConst-#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
     Integer deleteSumConstByOrdID(HashMap<String, Object> hashMap);
 }

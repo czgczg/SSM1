@@ -23,6 +23,8 @@ public interface StayRegisterService {
 
     ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType);
 
+    List<Deposit> findDepositRecordsByOrdId(String id);
+
     List<Roomset> findRoomsetAsEmpty(String roomNumber);
 
     Ordermain findOrderById(String id);
