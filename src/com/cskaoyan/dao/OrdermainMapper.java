@@ -53,7 +53,7 @@ public interface OrdermainMapper {
     /**
     *修改订单状态为未结账
      */
-    @Update("update ordermain set state=68")
+    @Update("update ordermain set state=68 and  loginFlag=1")
     int modifyOrderStatus();
 
     @Select("select count(*) from ordermain WHERE del_flag=0")
