@@ -54,7 +54,7 @@ public interface OrdermainMapper {
     /**
     *修改订单状态为未结账
      */
-    @Update("update ordermain set state=68")
+    @Update("update ordermain set state=68 and  loginFlag=1")
     int modifyOrderStatus();
 
     @Select("select count(*) from ordermain WHERE del_flag=0")
@@ -62,6 +62,20 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
+    /**
+     * 根据订单号找到订单
+     */
+    @Select("select * from ordermain where ordID = #{id}")
+    Ordermain findOrderById(String id);
+
+    /**
+     * 根据房间号找到订单
+     * @param roomNumber
+     * @return
+     * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
+     */
+    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
     /**
      * 根据订单号找到订单
      */

@@ -4,15 +4,15 @@ import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
 import com.cskaoyan.dao.OrdermainMapper;
+import com.cskaoyan.dao.RegistrationMapper;
 import com.cskaoyan.dao.RoomsetMapper;
-import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +26,33 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     RoomsetMapper roomsetMapper;
 
 
+    @Autowired
+    RegistrationMapper registrationMapper;
+
+
+    /**
+     * author:czg
+     *登记旅客信息到登记表，因为一个房间可能登记多人，限制，房间床位数
+     * @param id
+     * @param passenger
+     * @param lvKeLeiXingId
+     * @param passengerID
+     * @return
+     */
+    @Override
+    public int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID) {
+
+        Date date = new Date();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("id", id);
+        map.put("passenger", passenger);
+        map.put("passengerType", lvKeLeiXingId);
+        map.put("registerTime", date);
+        map.put("passengerID", passengerID);
+        registrationMapper.insertToRistration(map);
+
+        return 0;
+    }
     /**
      * ordermain的分页处理和显示
      * @param currentPage
@@ -38,16 +65,19 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         int totalNumber = findAllOrderMainCount();
         page.setTotalCount(totalNumber);
         int num = currentPage;
-
-        page.init(totalNumber);
+        page.initOrder(totalNumber,num);
         page.setCurrentPage(num);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("limit",Page. ORDERMAIN__NUM_PER_PAGE);
+        map.put("limit", Page. ORDERMAIN__NUM_PER_PAGE);
         map.put ("offset",(num - 1) * Page. ORDERMAIN__NUM_PER_PAGE);
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
+
+
+
+
         return page;
     }
 
@@ -71,6 +101,21 @@ public class StayRegisterServiceImpl implements StayRegisterService {
             listRentOutType.add(j);
         }
         return listRentOutType;
+    }
+
+    @Override
+    public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
+        return null;
+    }
+
+    @Override
+    public Ordermain findOrderById(String id) {
+        return null;
+    }
+
+    @Override
+    public List<Ordermain> findOrderByRoomNum(String roomNumber) {
+        return null;
     }
 
     private int findAllOrderMainCount() {

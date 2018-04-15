@@ -1,3 +1,4 @@
+/*
 package com.cskaoyan.service.Impl;
 
 import com.cskaoyan.bean.Ordermain;
@@ -96,3 +97,4 @@ public class PredetermineServiceImpl implements PredetermineService{
         return null;
     }
 }
+*/

@@ -4,6 +4,7 @@ package com.cskaoyan.dao;
 
 import com.cskaoyan.vo.Listone;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ListoneMapper {
@@ -39,6 +40,8 @@ public interface ListoneMapper {
     List<Listone> getMeasureUnit(int i);
 
     List<Listone> getOrderStatus(int i);
+
+    ArrayList<Listone> getListOne(int type);
 
     List<Listone> getPayMoney(int i);
 }

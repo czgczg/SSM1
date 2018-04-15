@@ -61,7 +61,7 @@ public interface RoomsetMapper {
     @Update("UPDATE roomset SET roomStateID = #{roomStateID}, roomStateName = #{roomStateName} WHERE id = #{id}")
     Integer updateRoomStateById(HashMap hashMap);
 
-    @Update("update roomset set roomStateID= 3 where roomNumber=#{roomNumber}")
+    @Update("update roomset set roomStateID= 2 where roomNumber=#{roomNumber}")
     int modifyRoomStatus(String roomNumber);
     /**
      * 插入房间
@@ -105,4 +105,15 @@ public interface RoomsetMapper {
      */
     @Select("SELECT * FROM roomset WHERE  del_flag=0 AND guestRoomLevelID=#{guestRoomLevelID}")
     List<Roomset> findRoomsetByLevelID(Integer guestRoomLevelID);
+
+    /**
+     * 通过查询roomStateID为1来找出房间状态为空的房间
+     * @return
+     * SELECT * FROM roomset WHERE roomStateID = 1;
+     */
+    @Select("SELECT * FROM roomset WHERE roomStateID = 1 and roomNumber like #{roomNumber};")
+    List<Roomset> findRoomsetAsEmpty(String roomNumber);
+
+    @Select("select standardPriceDay from roomset where roomNumber = #{roomNumber}")
+    double findPriceDayByNum(Ordermain orderById);
 }
