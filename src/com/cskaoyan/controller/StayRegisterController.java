@@ -1,26 +1,27 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
-import com.cskaoyan.dao.ListoneMapper;
-import com.cskaoyan.dao.OrdermainMapper;
+import com.cskaoyan.bean.*;
+import com.cskaoyan.dao.ChangeroomMapper;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.dao.RoomsetMapper;
 import com.cskaoyan.service.PassengerService;
-import com.cskaoyan.service.RoomsetService;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
 import com.cskaoyan.utils.PassengerTransfer;
-import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @RequestMapping("/StayRegister")
 @Controller
@@ -32,14 +33,11 @@ public class StayRegisterController {
     PassengerService passengerService;
     @Autowired
     PassengerMapper passengerMapper;
-@Autowired
+    @Autowired
     RoomsetMapper roomsetMapper;
-@Autowired
-OrdermainMapper ordermainMapper;
-@Autowired
-RoomsetService roomsetService;
-@Autowired
-ListoneMapper listoneMapper;
+    @Autowired
+    ChangeroomMapper changeroomMapper;
+
     /**
      * 显示页面和分页
      */
@@ -120,94 +118,74 @@ ListoneMapper listoneMapper;
     /**
      * 安排房间
      */
-    @RequestMapping("/toarrangeroom")
-    public String toanrrangeroom(Model model,@RequestParam Integer LvKeLeiXingId) {
+    @RequestMapping("/toanrrangeroom")
+    public void toanrrangeroom() {
 
-        List<Listone> rendWay = listoneMapper.getRendWay(5);
-        List<Listone> passengerType = listoneMapper.getPassengerType(7);
-        List<Listone> measureUnit = listoneMapper.getMeasureUnit(6);
-        List<Listone> payWay = listoneMapper.getPayWay(4);
-        ArrayList<HashMap>listRentOutType=new ArrayList<>();
-        ArrayList<HashMap>listPassengerType=new ArrayList<>();
-        ArrayList<HashMap>listBillUnit=new ArrayList<>();
-        ArrayList<HashMap>listPayWay=new ArrayList<>();
-        listRentOutType=stayRegisterService.getHashMaps(rendWay,listRentOutType);
-        listPassengerType=stayRegisterService.getHashMaps(passengerType,listPassengerType);
-        listBillUnit=stayRegisterService.getHashMaps(measureUnit,listBillUnit);
-        listPayWay=stayRegisterService.getHashMaps(payWay,listPayWay);
-        if(LvKeLeiXingId==55){     //旅客结账单位为旅客自付
-            listBillUnit.remove(1);
-        }
-        if(LvKeLeiXingId==56){   //团队结账单位为团队付款
-            listBillUnit.remove(0);
-        }
-        model.addAttribute("listRentOutType",listRentOutType);   //出租方式
-        model.addAttribute("listPassengerType",listPassengerType);  //旅客类别
-        model.addAttribute("listBillUnit",listBillUnit);   //结账单位
-        model.addAttribute("listPayWay",listPayWay);   //支付方式
+    }
 
-        List<Roomset> list=roomsetService.findAllRoomset();
-        model.addAttribute("list",list);
-        model.addAttribute("LvKeLeiXingId",LvKeLeiXingId);
-        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
+    /**
+     * 换房
+     * jsp 中返回的是list集合，单个换房用list[0]表示。
+     * @param request
+     * @param ordermain
+     */
+    @RequestMapping("/tochangroom")
+    public String tochangeroom(HttpServletRequest request, HttpSession session){
+
+
+
+        return "/WEB-INF/jsp/stayregister/changroom.jsp";
     }
 
 
-    //选择房间类型，根据房间类型查询。
-    @RequestMapping("/guestRoomLevelSelectRoom")
+
+    @RequestMapping("/changRoomSelectPassenger")
     @ResponseBody
-    public List<Roomset> guestRoomLevelSelectRoom(@RequestParam Integer guestRoomLevelID) {
+    public  List<Roomset> changeRoomSelectPassenger(HttpServletRequest request){
 
-        List<Roomset>result=stayRegisterService.guestRoomLevelSelectRoom(guestRoomLevelID);
-        return result;
-    }
 
-    //保存到数据库并转发
-    @RequestMapping( path = "/arrangeroom" ,method = {RequestMethod.POST,RequestMethod.GET})
-    public String arrangeroom( Ordermain ordermain,HttpServletRequest request,Integer roomID ) {
-        Roomset roomset = roomsetMapper.findById(roomID);
-        ordermain.setRoomNumber(roomset.getRoomNumber());
-        ordermain.setRoomAmount(roomset.getRoomAmount());
-        String ordId = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + UUID.randomUUID().toString().substring(0,5);
-        ordermain.setOrdID(ordId);  //生成订单号
-        ordermain.setState(68);  //修改订单状态为未结账
-        int insert = ordermainMapper.insert(ordermain);
-        roomset.setRoomStateName("满");
-        roomset.setRoomStateID(6);
-        int j = roomsetMapper.updateById(roomset);
-        if(insert==1&&j==1){
-
-            return "/WEB-INF/jsp/stayregister/list.jsp";
-        }
-        return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
-    }
-    /*
-    * 换房
-    * */
-    @RequestMapping("/tochangeroom")
-    public void tochangeroom(HttpServletRequest request) {
-        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
-        String id = request.getParameter("id");
-        String lvKeName = request.getParameter("lvKeName");
-
-    }
-
-    //选择房间
-    @RequestMapping("/changeRoomSelectPassenger")
-    public void changeRoomSelectPassenger() {
+        return null;
 
 
     }
 
 
-    /*
-    * 押金记录
-    * */
+    /**
+     * http://192.168.2.100:8080/hotelms/StayRegister/confirmChangRoom.do?
+     * id=398&roomId=&changRoomMoney=0.0&changRoomTime=2018-04-14%2022:34:12.0&LvKeLeiXingId=55
+     * 确认换房
+     */
+    @RequestMapping("/confirmChangRoom")
+    public String confirmChangRoom(HttpServletRequest request){
+
+        return "/StayRegister/tolist.do";
+
+    }
+
+
+    /**
+     * 押金记录
+     * 接待对象，为2的时候为旅客类型 散客
+     *          不为2的时候为接待对象，团队名
+     * todeposit
+     * @param request
+     */
     @RequestMapping("/todeposit")
-    public void todeposit(HttpServletRequest request) {
+    public String todeposit(HttpServletRequest request) {
+        //旅客类型id，为56
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+        //旅客名字，需要传递。
         String lvKeName = request.getParameter("lvKeName");
+        //订单表ordermain ordId ，主键id
         String id = request.getParameter("id");
+
+        //根据订单表id查找押金记录。
+        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
+
+        //将押金记录放入request 域中
+        request.setAttribute("list",depositRecordsByOrdId);
+
+        return "/WEB-INF/jsp/stayregister/deposit.jsp";
 
     }
 

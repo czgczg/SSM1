@@ -1,5 +1,6 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -61,4 +62,34 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
+    /**
+     * 根据订单号找到订单
+     */
+    @Select("select * from ordermain where ordID = #{id}")
+    Ordermain findOrderById(String id);
+
+    /**
+     * 根据房间号找到订单
+     * @param roomNumber
+     * @return
+     * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
+     */
+    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
+
+    /**
+     *  修改数据库中订单表的房间号，实现换房
+     * @param roomNumber
+     * @return
+     */
+    @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
+    int changeOrderRoomNumber(String roomNumber);
+
+    /**
+     * 根据订单表id查找押金记录
+     * @param ordId
+     * @return
+     */
+    @Select("select * from depositrecord where ordId = #{ordId}")
+    List<Deposit> findDepositRecordsByOrdId(String ordId);
 }
