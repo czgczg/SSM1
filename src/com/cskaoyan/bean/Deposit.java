@@ -9,6 +9,7 @@ public class Deposit {
     private String ordId;
     private String receiveTeamName;
     private int receiveTargetID;
+    private int isBillID;
     private String roomNumber;
 
     public String getRoomNumber() {
@@ -17,6 +18,14 @@ public class Deposit {
 
     public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
+    }
+
+    public int getIsBillID() {
+        return isBillID;
+    }
+
+    public void setIsBillID(int isBillID) {
+        this.isBillID = isBillID;
     }
 
     public String getReceiveTeamName() {

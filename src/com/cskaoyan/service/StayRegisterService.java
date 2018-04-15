@@ -25,6 +25,7 @@ public interface StayRegisterService {
     ArrayList<HashMap> getHashMaps(List<Listone> payWay, ArrayList<HashMap> listRentOutType);
 
     List<Deposit> findDepositRecordsByOrdId(String id);
+    boolean addDeposit(Deposit deposit);
 
     List<Roomset> findRoomsetAsEmpty(String roomNumber);
 
@@ -36,6 +37,9 @@ public interface StayRegisterService {
 
     //根据id获取订单详情
     List<Ordermain> getOrderMain(String oid);
+    int changeOrderRoomNumber(Ordermain ordermain);
+    boolean changeRoom(String oldRoomNum, String newRoomNum);
+
 
     //团队与散客互相转换
     void changOverOrderMain(String oid,String PassengerOrReceiveID);

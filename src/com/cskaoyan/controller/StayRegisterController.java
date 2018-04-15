@@ -62,6 +62,8 @@ public class StayRegisterController {
 
     @Autowired
     OrderpaymentMapper orderpaymentMapper;
+
+
     /**
      * 显示页面和分页
      */
@@ -311,20 +313,56 @@ public class StayRegisterController {
         return "/WEB-INF/jsp/stayregister/arrangeroom.jsp";
     }
 
-    /*
-    * 换房
-    * */
-    @RequestMapping("/tochangeroom")
-    public void tochangeroom(HttpServletRequest request) {
+    /**
+     * 换房
+     * jsp 中返回的是list集合，单个换房用list[0]表示。
+     * @param request
+     * @param session
+     */
+    @RequestMapping("/tochangroom")
+    public String tochangeroom(HttpServletRequest request, HttpSession session){
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");//55旅客，56团队
+        //订单id,将之作为stayId 传递。可以从订单id中找到房间id
         String id = request.getParameter("id");
-        String lvKeName = request.getParameter("lvKeName");
+        String lvKeName = request.getParameter("lvKeName"); //旅客名字
+
+
+        //根据订单id查询数据库得到该订单实例
+        Ordermain orderById = stayRegisterService.findOrderById(id);
+        //根据ordermain中的roomnum 查询standardPriceDay
+        double standardPriceDay = roomsetMapper.findPriceDayByNum(orderById);
+        //将之作为stayId 传递。从订单id中找到房间id
+        String roomNumber = orderById.getRoomNumber();
+        session.setAttribute("stayId",roomNumber);
+
+        orderById.setRoomStandardPriceDay(standardPriceDay);
+        //新建一个list，将order放入list中，再将list作为元素放入request
+        List<Ordermain> list = new ArrayList<>();
+        list.add(orderById);
+        request.setAttribute("list",list);
+
+
+
+        return "/WEB-INF/jsp/stayregister/changroom.jsp";
+    }
+
+
+
+    @RequestMapping("/changRoomSelectPassenger")
+    @ResponseBody
+    public  List<Roomset> changeRoomSelectPassenger(HttpServletRequest request){
+
+        String roomNumber = request.getParameter("roomNumber");
+        //模糊查询房间号
+
+        //搜索room状态为空的房间
+        List<Roomset> roomsetAsEmpty = stayRegisterService.findRoomsetAsEmpty(roomNumber);
+        //返回数据
+        return roomsetAsEmpty;
+
 
     }
 
-    //选择房间
-    @RequestMapping("/changeRoomSelectPassenger")
-    public void changeRoomSelectPassenger() {}
 
     /**
      * http://192.168.2.100:8080/hotelms/StayRegister/confirmChangRoom.do?
@@ -333,41 +371,91 @@ public class StayRegisterController {
      */
     @RequestMapping("/confirmChangRoom")
     public String confirmChangRoom(HttpServletRequest request){
+        //获取新旧两个房间号参数
+        String id = request.getParameter("id"); //旧房间id
+        String roomId = request.getParameter("roomId");
+
+        //实现换房事务，放到service层
+        stayRegisterService.changeRoom(id,roomId);
 
         return "/StayRegister/tolist.do";
 
     }
 
 
-        /**
-         * 押金记录
-         * 接待对象，为2的时候为旅客类型 散客
-         *          不为2的时候为接待对象，团队名
-         * todeposit
-         * @param request
-         */
-        /**
-         * 押金记录
-         */
-        @RequestMapping("/todeposit")
-        public String todeposit (HttpServletRequest request){
-            //旅客类型id，为56
-            String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
-            //旅客名字，需要传递。
-            String lvKeName = request.getParameter("lvKeName");
-            //订单表ordermain ordId ，主键id
-            String id = request.getParameter("id");
+    /**
+     * 押金记录
+     * 接待对象，为2的时候为旅客类型 散客
+     *          不为2的时候为接待对象，团队名
+     * todeposit
+     * @param request
+     */
+    @RequestMapping("/todeposit")
+    public String todeposit(HttpServletRequest request) {
+        //旅客类型id，为56
+        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+        //旅客名字，需要传递。
+        String lvKeName = request.getParameter("lvKeName");
+        //订单表ordermain ordId ，主键id
+        String id = request.getParameter("id");
 
-            //根据订单表id查找押金记录。
-            List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
+        //根据订单表id查找押金记录。
+        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
 
-            //将押金记录放入request 域中
-            request.setAttribute("list", depositRecordsByOrdId);
+        //将押金记录放入request 域中
+        request.setAttribute("list",depositRecordsByOrdId);
+        //将订单表id放入域中
+        request.getSession().setAttribute("ordId",id);
+        //将旅客类型id放入域中
+        request.setAttribute("LvKeLeiXingId",55);
+        request.setAttribute("lvKeName",lvKeName);
 
-            return "/WEB-INF/jsp/stayregister/deposit.jsp";
+        //创建listtwo并放入域中
+        List<String> listTwo = new ArrayList<>();
+        listTwo.add(0,"现金");
+        listTwo.add(0,"信用卡");
+        listTwo.add(0,"转账");
+        request.setAttribute("listTwo",listTwo);
 
-        }
 
+        return "/WEB-INF/jsp/stayregister/deposit.jsp";
+
+    }
+
+    /**
+     * 追加押金，追加完返回押金记录页面
+     * /StayRegister/deposit.do?LvKeLeiXingId="+LvKeLeiXingId
+     * @param request
+     */
+    @RequestMapping("/deposit.do")
+    public String addDeposit(HttpServletRequest request){
+
+        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+        String deposit = request.getParameter("deposit");
+        String lvKeName = request.getParameter("lvKeName");
+        String ordId = (String) request.getSession().getAttribute("ordId");//订单表id
+        //根据订单表id查找押金记录。
+        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(ordId);
+        //拿出第一个数据，改变押金值，然后插入。
+        Deposit deposit1 = depositRecordsByOrdId.get(0);
+        deposit1.setDeposit(Double.parseDouble(deposit));
+        //拿到了追加押金，插入数据
+
+        //》》》》》》》》》》》》》》》》》》》》》》》》》未更新主表
+        boolean ret = stayRegisterService.addDeposit(deposit1);
+
+        Ordermain orderByOrdId = ordermainService.findOrderByOrdId(ordId);
+        orderByOrdId.setDeposit(orderByOrdId.getDeposit()+Float.valueOf(deposit));
+        ordermainMapper.updateByPrimaryKeySelective(orderByOrdId);
+        System.out.println("ret = " +ret);
+        //押金追加成功，返回.
+        /*
+        /StayRegister/todeposit.do?id='+chk_value+'&lvKeName='+lvKeName+'&LvKeLeiXingId='+56;
+		*/
+
+        return "/StayRegister/todeposit.do?id="+ ordId+"&lvKeName=" + lvKeName+ "&LvKeLeiXingId="+56;
+
+    }
 
     /**
      * 旅客消费

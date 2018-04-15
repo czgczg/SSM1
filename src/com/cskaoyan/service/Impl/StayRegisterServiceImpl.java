@@ -1,10 +1,6 @@
 package com.cskaoyan.service.Impl;
 
-import com.cskaoyan.bean.Deposit;
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Recepobject;
-import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.bean.*;
 import com.cskaoyan.dao.*;
 import com.cskaoyan.service.StayRegisterService;
 import com.cskaoyan.utils.Page;
@@ -12,6 +8,7 @@ import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -36,6 +33,8 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     @Autowired
     PassengerMapper passengerMapper;
 
+    @Autowired
+    ChangeroomMapper changeroomMapper;
 
     /**
      * author:czg
@@ -157,23 +156,90 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     }
 
     @Override
-    public List<Deposit> findDepositRecordsByOrdId(String id) {
-        return null;
-    }
-
-    @Override
     public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
-        return null;
+        return roomsetMapper.findRoomsetAsEmpty("%" + roomNumber+ "%");
     }
 
     @Override
     public Ordermain findOrderById(String id) {
-        return null;
+        return ordermainMapper.findOrderById(id).get(0);
     }
 
     @Override
-    public List<Ordermain> findOrderByRoomNum(String roomNumber) {
-        return null;
+    public  List<Ordermain> findOrderByRoomNum(String roomNumber) {
+        return ordermainMapper.findOrderByRoomNum(roomNumber);
+    }
+
+    /**
+     * 修改订单表（ordermain中的roomNumber）
+     * @param ordermain
+     */
+    @Override
+    public int changeOrderRoomNumber(Ordermain ordermain) {
+       return ordermainMapper.changeOrderRoomNumber(ordermain);
+    }
+
+    /**
+     * 实现换房。
+     * @param oldRoomNum
+     * @param newRoomNum
+     * @return
+     */
+
+    @Override
+    //》》》》》》》》》》》》》》》》》》》》》》》》》》》》》Roomnum不是主键需要迭代
+    public boolean changeRoom(String oldRoomNum, String newRoomNum) {
+        //根据房间号查找对应的订单,数据问题，有多个重复房间数据，只取第一个
+        List<Ordermain> orderById = ordermainMapper.findOrderByRoomNum(oldRoomNum);
+        Ordermain ordermain = orderById.get(0);
+
+        //需要将订单房间号更改,将实例房间号改变
+        ordermain.setRoomNumber(newRoomNum);
+        //换房次数+1，换房时间
+        int changingRoomNumber = ordermain.getChangingRoomNumber() + 1;
+        ordermain.setChangingRoomNumber(changingRoomNumber);
+        //获取当前时间作为换房时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String format = df.format(new Date());
+        ordermain.setTimestamp(new Date());
+        //换房费changRoomMoney
+        double changRoomMoney = changingRoomNumber * 200;
+        ordermain.setChangRoomMoney(changRoomMoney);
+
+        //》》》》》》》》》》》》》》》》》》》总金额需要迭代
+        //ordermain.setSumConst( roomsetMapper.findRoomsetByRoomNumber(oldRoomNum).get(0).getStandardPriceDay() + ordermain.getSumConst()+200);
+
+        //还需要修改数据库，传入ordId不变，房间号改命的实例，使得数据库中房间号改变。
+        //玩家换房次数和换房时间
+        int result = ordermainMapper.changeOrderRoomNumber(ordermain);
+
+        //订单id，需要放入changeroom实例中
+        String ordID = ordermain.getOrdID();
+
+
+        //新建一个changeroom实例，填充数据，并保存进数据库
+        Changeroom changeroom = new Changeroom();
+        changeroom.setOrdId(ordID);
+        changeroom.setOldRoomset(oldRoomNum);
+        changeroom.setNewRoomset(newRoomNum);
+        changeroom.setAffterPay(200);//换房费
+
+
+        changeroom.setChangRoomTime(format);
+
+        //插入数据库
+        int ret = changeroomMapper.insertChangeRoom(changeroom);
+        return ret == 1;
+    }
+
+    @Override
+    public List<Deposit> findDepositRecordsByOrdId(String id) {
+        return ordermainMapper.findDepositRecordsByOrdId(id);
+    }
+
+    @Override
+    public boolean addDeposit(Deposit deposit) {
+        return ordermainMapper.addDeposit(deposit) == 1;
     }
 
     private int findAllOrderMainCount() {

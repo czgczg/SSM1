@@ -295,7 +295,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    private String changingRoomNumber;
+    private int changingRoomNumber;
 
     /**
      *
@@ -318,6 +318,23 @@ public class Ordermain {
 
     public void setRoomStandardPriceDay(double roomStandardPriceDay) {
         this.roomStandardPriceDay = roomStandardPriceDay;
+    }
+
+
+    /**
+     * receiveTeamName 接收对象
+     */
+
+    private String receiveTeamName;
+
+
+
+    public String getReceiveTeamName() {
+        return receiveTeamName;
+    }
+
+    public void setReceiveTeamName(String receiveTeamName) {
+        this.receiveTeamName = receiveTeamName;
     }
 
     /**
@@ -1082,7 +1099,7 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public String getChangingRoomNumber() {
+    public int getChangingRoomNumber() {
         return changingRoomNumber;
     }
 
@@ -1094,8 +1111,8 @@ public class Ordermain {
      *
      * @mbg.generated Fri Apr 13 16:17:05 CST 2018
      */
-    public void setChangingRoomNumber(String changingRoomNumber) {
-        this.changingRoomNumber = changingRoomNumber == null ? null : changingRoomNumber.trim();
+    public void setChangingRoomNumber(int changingRoomNumber) {
+        this.changingRoomNumber = changingRoomNumber;
     }
 
     /**

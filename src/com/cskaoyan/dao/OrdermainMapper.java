@@ -121,11 +121,14 @@ public interface OrdermainMapper {
 
     /**
      *  修改数据库中订单表的房间号，实现换房
-     * @param roomNumber
+     *  ordId
+     *
+     * @param ordermain
      * @return
+     * UPDATE ordermain SET roomNumber = '102' WHERE ordID = '2018041312182273';
      */
-    @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
-    int changeOrderRoomNumber(String roomNumber);
+    @Update("UPDATE ordermain SET roomNumber = #{roomNumber},changingRoomNumber = #{changingRoomNumber},timestamp = #{timestamp},changRoomMoney = #{changRoomMoney} WHERE ordID = #{ordID}")
+    int changeOrderRoomNumber(Ordermain ordermain);
 
     //根据ID将订单状态修改已删除
     @Update("update ordermain set del_flag=1 where ordID = #{id}")
@@ -136,7 +139,7 @@ public interface OrdermainMapper {
      * @return
      * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
      */
-    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    @Select("select * from ordermain where roomNumber = #{roomNumber} and del_flag = 0;")
     List<Ordermain> findOrderByRoomNum(String roomNumber);
 
 
@@ -180,4 +183,19 @@ public interface OrdermainMapper {
     Integer deleteSumConstByOrdID(HashMap<String, Object> hashMap);
 
     int updateByPrimaryKey(Ordermain record);
+    /**
+     * 添加押金记录
+     * @param deposit
+     * @return
+     *  private int id;
+    private String depositRegisterTime;
+    private double deposit;
+    private String depositPayWayName;
+    private String receiveTargeTypeName;
+    private String ordId;
+    private String receiveTeamName;
+    private int receiveTargetID;
+     */
+    @Insert("insert into depositrecord values (null,#{ordId},#{depositRegisterTime},#{deposit},#{depositPayWayName},#{receiveTargeTypeName},#{receiveTeamName},#{receiveTargetID},#{roomNumber});")
+    int addDeposit(Deposit deposit);
 }
