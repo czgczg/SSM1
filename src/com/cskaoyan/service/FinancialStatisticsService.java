@@ -1,7 +1,10 @@
 package com.cskaoyan.service;
 
 import com.cskaoyan.bean.Ordermain;
+import com.cskaoyan.bean.Ordextconsum;
 import com.cskaoyan.utils.Page;
+
+import java.util.List;
 
 public interface FinancialStatisticsService {
 
@@ -13,4 +16,11 @@ public interface FinancialStatisticsService {
      * @return
      */
     Page<Ordermain> findPage(Integer currentPage, String datemin, String datemax);
+
+    /**
+     * 根据订单号发现所有消费记录
+     * @param id
+     * @return
+     */
+    List<Ordextconsum> findAllOrdextconsumByOrd_id(String id);
 }

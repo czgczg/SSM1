@@ -184,12 +184,12 @@
      $('input[name="id"]:checked').each(function(){             // 遍历获取input被checked的
   		id.push($(this).val());                             // 获取选中的ID
   	    selectedIndex=this.parentNode.parentNode.rowIndex;
-  	    stayregisterdetailsId=table.rows[selectedIndex-1].cells[9].innerHTML;
+  	    // stayregisterdetailsId=table.rows[selectedIndex-1].cells[9].innerHTML;
   	});
-  	if(stayregisterdetailsId==""){
-  	   alert("请选择一个房间再按 详情");
-  	   return false;
-	}
+  	// if(stayregisterdetailsId==""){
+  	//    alert("请选择一个房间再按 详情");
+  	//    return false;
+	// }
   	if(id!=""){
   	   parent.document.getElementById('Mainid').src='${ctx}/FinancialStatistics/toinformation.do?id='
   	   +id+'&stayregisterdetailsId='+stayregisterdetailsId+'&min='+datemin+'&max='+datemax;

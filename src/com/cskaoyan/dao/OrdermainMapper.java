@@ -69,9 +69,15 @@ public interface OrdermainMapper {
     List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
     List<Ordermain> selectAllOrderIsBeBooking();
 
+//    /**
+//    *修改订单状态为未结账
+//     */
+//    @Update("update ordermain set state=68 and  loginFlag=1")
+//    int modifyOrderStatus();
 
     /**
-    *修改订单状态为未结账
+     * 查找所有订单记录
+     * @return
      */
     @Update("update ordermain set state=68")
     int modifyOrderStatus();
@@ -88,6 +94,11 @@ public interface OrdermainMapper {
     @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
     List<Ordermain> findOrderById(String ordID);
 
+    /**
+     * 根据订单号找到订单
+     */
+    @Select("select * from ordermain where ordID = #{id}")
+    Ordermain findOneOrderById(String id);
     //根据ID将订单状态修改为未结账
     @Update("update ordermain set orderFrom=68 where ordID = #{id}")
     int updateOrderFormByOrdId(String id);
@@ -118,10 +129,32 @@ public interface OrdermainMapper {
     @Update("update ordermain set del_flag=1 where ordID = #{id}")
     void removeOrderMain(String oid);
     /**
-     * 根据用户下单修改总价
+     * 根据房间号找到订单
+     * @param roomNumber
+     * @return
+     * SELECT * FROM ordermain WHERE roomNumber = '天字二号'
+     */
+    @Select("select * from ordermain where roomNumber = #{roomNumber}")
+    List<Ordermain> findOrderByRoomNum(String roomNumber);
+
+
+    /**
+     * 查询日期区间内的账单
      * @param hashMap
      * @return
      */
+    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND payTime BETWEEN #{datemin} AND #{datemax}")
+    List<Ordermain> findPartOrderByDate(HashMap<String, Object> hashMap);
+
+    /**
+     * 通过订单id发现一个ordermain
+     * @param id
+     * @return
+     */
+    @Select("SELECT * FROM ordermain WHERE ordID = #{id}")
+    Ordermain findOrdermainByOrdId(String id);
+
+
     @Update("UPDATE ordermain SET sumConst=sumConst+#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
     Integer updateSumConstByOrdID(HashMap<String, Object> hashMap);
 
@@ -130,6 +163,17 @@ public interface OrdermainMapper {
      * @param hashMap
      * @return
      */
+
+
+    /**
+     * 根据订单表id查找押金记录
+     * @param ordId
+     * @return
+     */
+    @Select("select * from depositrecord where ordId = #{ordId}")
+    List<Deposit> findDepositRecordsByOrdId(String ordId);
+
+
     @Update("UPDATE ordermain SET sumConst=sumConst-#{sumConst} WHERE del_flag=0 AND ordID=#{ord_id}")
     Integer deleteSumConstByOrdID(HashMap<String, Object> hashMap);
 

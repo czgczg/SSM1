@@ -105,4 +105,13 @@ public interface OrdextconsumMapper {
      */
     @Update("UPDATE ordextconsum SET del_flag = 1 WHERE id = #{id}")
     Integer deleteConsumptionById(String id);
+
+
+    /**
+     * 根据订单ordid发现所有消费商品
+     * @param id
+     * @return
+     */
+    @Select("SELECT * FROM ordextconsum WHERE ord_id=#{id}")
+    List<Ordextconsum> findAllOrdextconsumByOrd_id(String id);
 }
