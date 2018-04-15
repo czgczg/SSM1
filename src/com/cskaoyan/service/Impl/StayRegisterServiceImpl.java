@@ -1,8 +1,7 @@
 package com.cskaoyan.service.Impl;
 
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.bean.*;
+import com.cskaoyan.dao.ChangeroomMapper;
 import com.cskaoyan.dao.OrdermainMapper;
 import com.cskaoyan.dao.RegistrationMapper;
 import com.cskaoyan.dao.RoomsetMapper;
@@ -13,6 +12,7 @@ import com.cskaoyan.vo.Listone;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,9 +27,11 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     @Autowired
     RoomsetMapper roomsetMapper;
 
-
     @Autowired
     RegistrationMapper registrationMapper;
+
+    @Autowired
+    ChangeroomMapper changeroomMapper;
 
 
     /**
@@ -68,7 +70,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         page.setTotalCount(totalNumber);
         int num = currentPage;
 
-        page.init2(totalNumber);
+        page.init(totalNumber);
         page.setCurrentPage(num);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -77,10 +79,6 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         map.put("name", roomNumber);
         List<Ordermain> order = ordermainMapper.findPartOrder(map);
         page.setResult(order);
-
-
-
-
         return page;
     }
 
@@ -106,6 +104,79 @@ public class StayRegisterServiceImpl implements StayRegisterService {
         return listRentOutType;
     }
 
+    @Override
+    public List<Roomset> findRoomsetAsEmpty(String roomNumber) {
+        return roomsetMapper.findRoomsetAsEmpty("%" + roomNumber+ "%");
+    }
+
+    @Override
+    public Ordermain findOrderById(String id) {
+        return ordermainMapper.findOrderById(id).get(0);
+    }
+
+    @Override
+    public  List<Ordermain> findOrderByRoomNum(String roomNumber) {
+        return ordermainMapper.findOrderByRoomNum(roomNumber);
+    }
+
+    /**
+     * 修改订单表（ordermain中的roomNumber）
+     * @param roomId
+     */
+    @Override
+    public int changeOrderRoomNumber(String roomId) {
+       return ordermainMapper.changeOrderRoomNumber(roomId);
+    }
+
+    /**
+     * 实现换房。
+     * @param oldRoomNum
+     * @param newRoomNum
+     * @return
+     */
+
+    @Override
+    public boolean changeRoom(String oldRoomNum, String newRoomNum) {
+        //根据房间号查找对应的订单,数据问题，有多个重复房间数据，只取第一个
+        List<Ordermain> orderById = ordermainMapper.findOrderByRoomNum(oldRoomNum);
+        Ordermain ordermain = orderById.get(0);
+
+        //需要将订单房间号更改
+        ordermain.setRoomNumber(newRoomNum);
+        //还需要修改数据库
+        ordermainMapper.changeOrderRoomNumber(newRoomNum);
+
+        //订单id，需要放入changeroom实例中
+        String ordID = ordermain.getOrdID();
+
+
+        //新建一个changeroom实例，填充数据，并保存进数据库
+        Changeroom changeroom = new Changeroom();
+        changeroom.setOrdId(ordID);
+        changeroom.setOldRoomset(oldRoomNum);
+        changeroom.setNewRoomset(newRoomNum);
+        changeroom.setAffterPay(200);//换房费
+
+        //获取当前时间作为换房时间
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String format = df.format(new Date());
+        changeroom.setChangRoomTime(format);
+
+        //插入数据库
+        int ret = changeroomMapper.insertChangeRoom(changeroom);
+        return ret == 1;
+    }
+
+    @Override
+    public List<Deposit> findDepositRecordsByOrdId(String id) {
+        return ordermainMapper.findDepositRecordsByOrdId(id);
+    }
+
+    @Override
+    public boolean addDeposit(Deposit deposit) {
+        return ordermainMapper.addDeposit(deposit) == 1;
+    }
+
     private int findAllOrderMainCount() {
 
        return ordermainMapper.findAllOrderCount();
@@ -121,6 +192,7 @@ public class StayRegisterServiceImpl implements StayRegisterService {
     public void modifyOrderStatus() {
         ordermainMapper.modifyOrderStatus();
     }
+
 
 
 }

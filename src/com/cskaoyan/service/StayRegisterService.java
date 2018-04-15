@@ -1,5 +1,6 @@
 package com.cskaoyan.service;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
 import com.cskaoyan.bean.Passenger;
 import com.cskaoyan.bean.Roomset;
@@ -25,10 +26,15 @@ public interface StayRegisterService {
     List<Roomset> findRoomsetAsEmpty(String roomNumber);
 
     Ordermain findOrderById(String id);
+    int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID);
 
     List<Ordermain> findOrderByRoomNum(String roomNumber);
 
     int changeOrderRoomNumber(String roomId);
 
     boolean changeRoom(String oldRoomNum, String newRoomNum);
+
+    List<Deposit> findDepositRecordsByOrdId(String id);
+
+    boolean addDeposit(Deposit deposit);
 }

@@ -1,10 +1,14 @@
 package com.cskaoyan.dao;
 
+import com.cskaoyan.bean.Deposit;
 import com.cskaoyan.bean.Ordermain;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 public interface OrdermainMapper {
@@ -46,12 +50,28 @@ public interface OrdermainMapper {
      *
      * @mbg.generated Thu Apr 12 17:56:44 CST 2018
      */
-    int updateByPrimaryKey(Ordermain record);
 
+    //安排房间
+    Boolean pushRoomset(String ordId);
+
+    //查询所有未安排的订单
+    ArrayList<Ordermain> getAllOrderIsBookingOn();
+
+    //查询所有已安排安排的订单
+    ArrayList<Ordermain> getAllOrderAlreadyBooking();
+
+    //根据状态查询总数
+    @Select("select count(1) from ordermain where state in (#{state}) and del_flag=0")
+    Integer getPageOfOrdermains(String receiveTargetID);
+
+    //查询部分订单
+    @Select("SELECT * FROM ordermain WHERE del_flag=0 AND state in(#{state}) AND ( NAME LIKE #{name} OR teamName LIKE  #{teamname} ) ORDER BY ordID  LIMIT #{offset},#{limit}")
+    List<Ordermain> findPartOrdermains(HashMap<String, Object> hashMap);
     List<Ordermain> selectAllOrderIsBeBooking();
 
+
     /**
-    *修改订单状态为未结账
+     *修改订单状态为未结账
      */
     @Update("update ordermain set state=68")
     int modifyOrderStatus();
@@ -61,11 +81,14 @@ public interface OrdermainMapper {
 
     List<Ordermain> findPartOrder(HashMap<String, Object> map) ;
 
-    /**
-     * 根据订单号找到订单
-     */
-    @Select("select * from ordermain where ordID = #{id}")
-    Ordermain findOrderById(String id);
+    @Select("select * from ordermain WHERE del_flag=0 and ordID=#{ordID} and del_flag=0")
+    List<Ordermain> findOrderById(String ordID);
+
+    //根据ID将订单状态修改为未结账
+    @Update("update ordermain set orderFrom=68 where ordID = #{id}")
+    int updateOrderFormByOrdId(String id);
+
+
 
     /**
      * 根据房间号找到订单
@@ -75,7 +98,24 @@ public interface OrdermainMapper {
      */
     @Select("select * from ordermain where roomNumber = #{roomNumber}")
     List<Ordermain> findOrderByRoomNum(String roomNumber);
+    //根据ID将订单状态修改为已安排
+    @Update("update ordermain set state=67 where ordID = #{id}")
+    int updateStateByOrdId(String id);
 
+    //根据订单号获取房间id
+    @Select("select roomId from ordermain where ordID = #{ordID} and del_flag=0")
+    int getRoomIdByOrdId(String ordID);
+    //根据订单号获取总价
+    @Select("select sumConst from ordermain where ordID = #{ordID} and del_flag=0")
+    float getSumPriceCount(String ordID);
+    //根据订单号获取预定天数
+    @Select("select predetermineDay from ordermain where ordID = #{ordID} and del_flag=0")
+    int getDuringDay(String ordID);
+
+
+    //根据ID将订单状态修改已删除
+    @Update("update ordermain set del_flag=1 where ordID = #{id}")
+    void removeOrderMain(String oid);
     /**
      *  修改数据库中订单表的房间号，实现换房
      * @param roomNumber
@@ -83,4 +123,28 @@ public interface OrdermainMapper {
      */
     @Update("update ordermain set roomNumber = #{roomNumber} where ordID = #{ordID}")
     int changeOrderRoomNumber(String roomNumber);
+
+    /**
+     * 根据订单表id查找押金记录
+     * @param ordId
+     * @return
+     */
+    @Select("select * from depositrecord where ordId = #{ordId}")
+    List<Deposit> findDepositRecordsByOrdId(String ordId);
+
+    /**
+     * 添加押金记录
+     * @param deposit
+     * @return
+     *  private int id;
+    private String depositRegisterTime;
+    private double deposit;
+    private String depositPayWayName;
+    private String receiveTargeTypeName;
+    private String ordId;
+    private String receiveTeamName;
+    private int receiveTargetID;
+     */
+    @Insert("insert into depositrecord values (null,#{ordId},#{depositRegisterTime},#{deposit},#{depositPayWayName},#{receiveTargeTypeName},#{receiveTeamName},#{receiveTargetID},#{roomNumber});")
+    int addDeposit(Deposit deposit);
 }

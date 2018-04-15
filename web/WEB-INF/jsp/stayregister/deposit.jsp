@@ -169,7 +169,6 @@
           <label style="float:left;">房间号：</label>
           <label>${list[0].roomNumber}</label>
         </div>
-
         <div class="span3">
           <label style="float:left;">旅客姓名：</label>
           <label>${lvKeName}</label>
@@ -247,9 +246,12 @@
 			   	  <label class="labelroomnumber">支付方式：</label>
 			      <select name="depositPayWayID" class="cboone" style="width:100%;">
 		            <c:forEach items="${listTwo}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==16}" >selected="selected"</c:if>>
+			          <%--<option value="${item.far_id}" <c:if test="${item.far_id==16}" >selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
-			          </option>
+			          </option>--%>
+						<option value="${item}">
+							${item}
+						</option>
 			        </c:forEach> 
 		          </select>
 			  </div>
@@ -318,6 +320,5 @@
    }
  </script>
    
-  </div>
   </body>
 </html>

@@ -1,9 +1,6 @@
 package com.cskaoyan.controller;
 
-import com.cskaoyan.bean.Changeroom;
-import com.cskaoyan.bean.Ordermain;
-import com.cskaoyan.bean.Passenger;
-import com.cskaoyan.bean.Roomset;
+import com.cskaoyan.bean.*;
 import com.cskaoyan.dao.ChangeroomMapper;
 import com.cskaoyan.dao.PassengerMapper;
 import com.cskaoyan.dao.RoomsetMapper;
@@ -223,14 +220,67 @@ public class StayRegisterController {
     }
 
 
-    /*
-    * 押金记录
-    * */
+    /**
+     * 押金记录
+     * 接待对象，为2的时候为旅客类型 散客
+     *          不为2的时候为接待对象，团队名
+     * todeposit
+     * @param request
+     */
     @RequestMapping("/todeposit")
-    public void todeposit(HttpServletRequest request) {
+    public String todeposit(HttpServletRequest request) {
+        //旅客类型id，为56
         String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+        //旅客名字，需要传递。
         String lvKeName = request.getParameter("lvKeName");
+        //订单表ordermain ordId ，主键id
         String id = request.getParameter("id");
+
+        //根据订单表id查找押金记录。
+        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(id);
+
+        //将押金记录放入request 域中
+        request.setAttribute("list",depositRecordsByOrdId);
+        //将订单表id放入域中
+        request.getSession().setAttribute("ordId",id);
+        //将旅客类型id放入域中
+        request.setAttribute("LvKeLeiXingId",55);
+        request.setAttribute("lvKeName",lvKeName);
+
+        //创建listtwo并放入域中
+        List<String> listTwo = new ArrayList<>();
+        listTwo.add(0,"现金");
+        listTwo.add(0,"信用卡");
+        listTwo.add(0,"转账");
+        request.setAttribute("listTwo",listTwo);
+
+
+        return "/WEB-INF/jsp/stayregister/deposit.jsp";
+
+    }
+
+    /**
+     * 追加押金
+     * /StayRegister/deposit.do?LvKeLeiXingId="+LvKeLeiXingId
+     * @param request
+     */
+    @RequestMapping("/deposit.do")
+    public String addDeposit(HttpServletRequest request){
+
+        String lvKeLeiXingId = request.getParameter("LvKeLeiXingId");
+        String deposit = request.getParameter("deposit");
+        String ordId = (String) request.getSession().getAttribute("ordId");//订单表id
+        //根据订单表id查找押金记录。
+        List<Deposit> depositRecordsByOrdId = stayRegisterService.findDepositRecordsByOrdId(ordId);
+        //拿出第一个数据，改变押金值，然后插入。
+        Deposit deposit1 = depositRecordsByOrdId.get(0);
+        deposit1.setDeposit(Double.parseDouble(deposit));
+        //拿到了追加押金，插入数据
+        boolean ret = stayRegisterService.addDeposit(deposit1);
+        System.out.println("ret = " +ret);
+        //押金追加成功，返回.
+
+        return "/WEB-INF/jsp/stayregister/deposit.jsp";
 
     }
 
