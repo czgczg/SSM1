@@ -110,7 +110,7 @@
 		    </form>
 		    <select id="isBillID" style="width:10%;height:27px; float:left;" onchange="selectChange()">
 	            <c:forEach items="${listOne}" var="item">
-		          <option value="${item.far_id}" <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
+		          <option value="${item.id}" <c:if test="${item.id==isBillID}">selected="selected"</c:if>>
 		            ${item.attributeDetailsName}
 		          </option>
 		        </c:forEach> 
@@ -166,7 +166,7 @@
 		    </form>
 		    <select id="teamIsBillId" style="width:8%;height:27px; float:left; margin-right:5px;" onchange="teamSelect()">
 	            <c:forEach items="${listOne}" var="item">
-		          <option value="${item.far_id}" <c:if test="${item.far_id==isBillID}">selected="selected"</c:if>>
+		          <option value="${item.id}" <c:if test="${item.id==isBillID}">selected="selected"</c:if>>
 		            ${item.attributeDetailsName}
 		          </option>
 		        </c:forEach> 
@@ -355,9 +355,9 @@
     </div>
     </div>
     
-    
-    
-    
+
+
+
     <div class="span11">
       <div class="row-fluid">
         <div class="tcdPageCode" style="text-align:center;"></div>
@@ -772,7 +772,8 @@
     parent.document.getElementById("Mainid").src='${ctx}/StayRegister/tolist.do?isBillID='+isBillID+
     '&LvKeLeiXingId='+55;
   }
-  
+
+
   
   function selectfunction(){
     var isBillID=document.getElementById("isBillID").value;
@@ -780,8 +781,7 @@
     parent.document.getElementById("Mainid").src='${ctx}/StayRegister/tolist.do?LvKeLeiXingId='+55+
     '&isBillID='+isBillID+"&txtname="+txtname;
   }
-  
-  
+
   function teamSelect(){
     var isBillID=document.getElementById("teamIsBillId").value;
     var txtname=document.getElementById("roomNumberId").value;
@@ -880,7 +880,7 @@
   	/* $.ajax({
   	      cache:false,                                             //是否使用缓存提交 如果为TRUE 会调用浏览器的缓存 而不会提交
           type: "POST",                                           //上面3行都是必须要的
-          url: '${ctx}/StayRegister/ajaxSelectTeamSumcont.do',   //地址 type 带参数
+        <%--url: '${ctx}/StayRegister/ajaxSelectTeamSumcont.do',   //地址 type 带参数--%>
           data:"tuanDuiID="+tuanDuiID+"&isBillID="+isBillID,     // IDCardValue 自定义的。相当于name把值赋予给 他可以在servlet 获取
           async:false,                                          // 是否 异步 提交
           success: function (result) {  
@@ -909,8 +909,8 @@
    
   /* 分页要用的 */
   $(".tcdPageCode").createPage({
-     pageCount:${list.totalPage}10086,
-     current:${list.currentPage}10086,
+     pageCount:${list.totalPage},
+     current:${list.currentPage},
      backFn:function(p){
       var isBillID=document.getElementById("isBillID").value;
       var txtname=document.getElementById("txtnameid").value;
@@ -919,8 +919,6 @@
      "&isBillID="+isBillID+"&LvKeLeiXingId="+LvKeLeiXingId;
      }
    });
-   
-  
  </script>
    
   </body>

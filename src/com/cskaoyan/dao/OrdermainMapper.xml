@@ -472,14 +472,13 @@
     INSERT INTO ordermain SET state=67 where ordID = #{ordId};
   </select>
 
+
   <select id="getAllOrderAlreadyBooking" resultType="ordermain">
     select * from ordermain where del_flag=0 and state=67;
   </select>
 
-
-
-
   <select id="findPartOrder" parameterType="map" resultType="ordermain">
-    SELECT * FROM ordermain  WHERE  `name` LIKE #{name} and del_flag=0   limit #{limit}  offset #{offset}
+    SELECT * FROM ordermain  WHERE  `name` LIKE #{name}  and del_flag=0  limit #{limit}  offset #{offset}
   </select>
 </mapper>
+

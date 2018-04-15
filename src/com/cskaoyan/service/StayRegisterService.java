@@ -27,4 +27,7 @@ public interface StayRegisterService {
     Ordermain findOrderById(String id);
 
     List<Ordermain> findOrderByRoomNum(String roomNumber);
+
+    int registration(String id, Passenger passenger, String lvKeLeiXingId, int passengerID);
+
 }

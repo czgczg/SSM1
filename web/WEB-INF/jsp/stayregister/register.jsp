@@ -212,7 +212,7 @@
 
 						="gender(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listGender}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==31}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==31}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -222,7 +222,7 @@
 		        <label>民族：</label>
 		         <select id="nationId" name="nationID" onchange="nation(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listNation}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==33}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==33}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -249,7 +249,7 @@
 		        <label>文化程度：</label>
 		         <select id="educationDegreeId" name="educationDegreeID" onchange="educationDegree(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listEducationDegree}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==43}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==43}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -264,7 +264,7 @@
 		        <label>旅客级别：</label>
 		         <select id="passengerLevelId" name="passengerLevelID" onchange="passengerLevel(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listPassengerLevel}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==52}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==52}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -274,7 +274,7 @@
 		        <label>证件类型：</label>
 		        <select id="papersId" name="papersID" onchange="papers(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listPapers}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==37}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==37}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -306,7 +306,7 @@
 		        <label>事由：</label>
 		        <select id="thingReasonId" name="thingReasonID" onchange="thingReason(this.value)" style="width:100%;height:27px;">
 		            <c:forEach items="${listThingReason}" var="item">
-			          <option value="${item.far_id}" <c:if test="${item.far_id==51}">selected="selected"</c:if>>
+			          <option value="${item.id}" <c:if test="${item.id==51}">selected="selected"</c:if>>
 			            ${item.attributeDetailsName}
 			          </option>
 			        </c:forEach> 
@@ -785,7 +785,7 @@
 	     alert("你输入的   姓名  太过长了  请不要超出  10  位长度");
 	     document.getElementById("nameId").focus();
 	     return false;
-        }else if(document.getElementById("birthDateId").value.length>10){
+        }else if(document.getElementById("birthDateId").value.length>20){
 	     alert("你输入的   出生日期  太过长了  请不要超出  10  位长度：例如（2000-01-01）");
 	     document.getElementById("birthDateId").focus();
 	     return false;
